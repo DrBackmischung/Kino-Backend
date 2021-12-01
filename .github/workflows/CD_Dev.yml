@@ -53,7 +53,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'wi2020seb-cinema-api-test'
-          slot-name: 'Development'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FFC24F7121064A3E9D085BDF7413A3A5 }}
+          app-name: 'wi2020seb-cinema-api-dev'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3F950F015E37442FA06A9F05D715353F }}
           package: '*.jar'
