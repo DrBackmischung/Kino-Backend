@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.Entities;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -7,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
@@ -16,20 +20,33 @@ import org.springframework.lang.NonNull;
 public class User {
 	
 	@Id
+	@Column(columnDefinition= "VARBINARY(16)")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
 	@Column
 	@NonNull
-	private String name;
+	private String userName;
 	
 	@Column
+	@NonNull
+	private String name;
+	
+	@Column	
 	@NonNull
 	private String firstName;
 	
 	@Column
 	@NonNull
 	private String email;
+	
+	@Column
+	@NonNull
+	private String password;
+	
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Role role;
 	
 	public void setName(String name) {
 		this.name = name;
