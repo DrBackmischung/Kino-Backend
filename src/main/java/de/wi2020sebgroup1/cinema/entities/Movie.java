@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema.Entities;
+package de.wi2020sebgroup1.cinema.entities;
 
 import java.util.UUID;
 
@@ -35,6 +35,14 @@ public class Movie {
 	@NotNull
 	private String director;
 	
+	@Column
+	@NotNull
+	private String description;
+	
+	@Column
+	@NotNull
+	private String pictureLink;
+	
 	//ADD KINOSAAL
 	
 	public String getDirector() {
@@ -57,6 +65,14 @@ public class Movie {
 		return titel;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getPictureLink() {
+		return pictureLink;
+	}
+	
 	public void setDirector(String director) {
 		this.director = director;
 	}
@@ -69,8 +85,16 @@ public class Movie {
 		this.language = language;
 	}
 	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	public void setTitel(String titel) {
 		this.titel = titel;
+	}
+	
+	public void setPictureLink(String pictureLink) {
+		this.pictureLink = pictureLink;
 	}
 
 }

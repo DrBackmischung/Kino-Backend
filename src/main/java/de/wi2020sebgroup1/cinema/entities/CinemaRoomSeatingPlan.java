@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema.Entities;
+package de.wi2020sebgroup1.cinema.entities;
 
 import java.util.UUID;
 

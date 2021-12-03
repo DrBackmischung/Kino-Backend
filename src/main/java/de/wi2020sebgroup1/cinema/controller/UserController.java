@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.wi2020sebgroup1.cinema.Entities.UserRepository;
-import de.wi2020sebgroup1.cinema.Entities.User;
-import de.wi2020sebgroup1.cinema.Entities.Cinema;
-import de.wi2020sebgroup1.cinema.Entities.CinemaRepository;
-import de.wi2020sebgroup1.cinema.Entities.City;
-import de.wi2020sebgroup1.cinema.Entities.CityRepository;
+import de.wi2020sebgroup1.cinema.entities.Cinema;
+import de.wi2020sebgroup1.cinema.entities.City;
+import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
+import de.wi2020sebgroup1.cinema.repositories.CityRepository;
+import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @Controller
 @RestController
