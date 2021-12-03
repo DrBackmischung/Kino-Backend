@@ -43,7 +43,7 @@ public class Cinema {
 	
 	@Column
 	@NotNull
-	private int cinemaBalls;
+	private int cinemaRooms;
 	
 	@Column
 	@NotNull
@@ -58,8 +58,8 @@ public class Cinema {
 		return city;
 	}
 	
-	public int getCinemaBalls() {
-		return cinemaBalls;
+	public int getCinemaRooms() {
+		return cinemaRooms;
 	}
 	
 	public UUID getId() {
@@ -94,8 +94,8 @@ public class Cinema {
 		this.street = street;
 	}
 	
-	public void setCinemaBalls(int cinemaBalls) {
-		this.cinemaBalls = cinemaBalls;
+	public void setCinemaRooms(int cinemaRooms) {
+		this.cinemaRooms = cinemaRooms;
 	}
 	
 	public void setCity(City city) {
