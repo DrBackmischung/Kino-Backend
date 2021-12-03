@@ -1,17 +1,27 @@
 package de.wi2020sebgroup1.cinema.Entities;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
-@Table(name="show")
+@Table(name="vorstellung")
 public class Show {
 	
 	@Id
@@ -21,56 +31,80 @@ public class Show {
 	
 	@Column
 	@NotNull
-	private String titel;
+	private java.sql.Date showDate;
 	
 	@Column
 	@NotNull
-	private String language;
+	private java.sql.Time startTime;
 	
 	@Column
 	@NotNull
-	private double duration;
+	private java.sql.Time endTime;
 	
-	@Column
-	@NotNull
-	private String director;
+	@ManyToOne
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "movie_id", referencedColumnName = "id")
+	private Movie movie;
 	
-	//ADD KINOSAAL
+	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "cinema_id", referencedColumnName = "id")
+	private Cinema cinema;
 	
-	public String getDirector() {
-		return director;
+	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
+	private CinemaRoom cinemaRoom;
+	
+	public Cinema getCinema() {
+		return cinema;
 	}
 	
-	public double getDuration() {
-		return duration;
+	public CinemaRoom getCinemaRoom() {
+		return cinemaRoom;
+	}
+	
+	public Date getShowDate() {
+		return showDate;
+	}
+	
+	public Time getEndTime() {
+		return endTime;
 	}
 	
 	public UUID getId() {
 		return id;
 	}
 	
-	public String getLanguage() {
-		return language;
+	public Movie getMovie() {
+		return movie;
 	}
 	
-	public String getTitel() {
-		return titel;
+	public Time getStartTime() {
+		return startTime;
 	}
 	
-	public void setDirector(String director) {
-		this.director = director;
+	public void setCinema(Cinema cinema) {
+		this.cinema = cinema;
 	}
 	
-	public void setDuration(double duration) {
-		this.duration = duration;
+	public void setCinemaRoom(CinemaRoom cinemaRoom) {
+		this.cinemaRoom = cinemaRoom;
 	}
 	
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setShowDate(Date date) {
+		this.showDate = date;
 	}
 	
-	public void setTitel(String titel) {
-		this.titel = titel;
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
 	}
-
+	
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+	
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
+	}
 }

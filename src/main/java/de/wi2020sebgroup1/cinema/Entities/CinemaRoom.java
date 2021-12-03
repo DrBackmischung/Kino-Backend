@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.Entities;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -40,7 +42,11 @@ public class CinemaRoom {
 	@JoinColumn(name = "cinema", referencedColumnName = "id")
 	private Cinema cinema;
 	
-	//ADD KINOSITZPLANID
+
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "cinemaRoomSeatingPlan_id", referencedColumnName = "id")
+	private CinemaRoomSeatingPlan cinemaRoomSeatingPlan;
+	
 	
 	public Cinema getCinema() {
 		return cinema;

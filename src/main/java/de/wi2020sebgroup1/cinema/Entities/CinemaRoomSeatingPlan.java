@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="price")
-public class Price {
+@Table(name="cinemaRoomSeatingPlan")
+public class CinemaRoomSeatingPlan {
 	
 	@Id
 	@Column(columnDefinition= "VARBINARY(16)")
@@ -21,23 +22,11 @@ public class Price {
 	private UUID id;
 	
 	@Column
-	@NonNull
-	private double price;
+	@NotNull
+	private int seats;
 	
-	public UUID getId() {
-		return id;
-	}
-	
-	public double getPrice() {
-		return price;
-	}
-	
-	public void setId(UUID id) {
-		this.id = id;
-	}
-	
-	public void setPrice(double price) {
-		this.price = price;
-	}
+	@OneToOne
+	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
+	private CinemaRoom cinemaRoom;
 
 }
