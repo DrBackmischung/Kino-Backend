@@ -42,7 +42,7 @@ public class Seat {
 	
 	@Column
 	@NotNull
-	private int priceMultiplier;
+	private double priceMultiplier;
 	
 	@ManyToOne
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -57,7 +57,7 @@ public class Seat {
 	public Seat() {}
 	
 	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull boolean blocked,
-			@NotNull int priceMultiplier, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
+			@NotNull double priceMultiplier, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
 		super();
 		this.reihe = reihe;
 		this.place = place;
@@ -96,11 +96,11 @@ public class Seat {
 		return coupleSeat;
 	}
 	
-	public int getPriceMultiplier() {
+	public double getPriceMultiplier() {
 		return priceMultiplier;
 	}
 	
-	public void setPriceMultiplier(int priceMultiplier) {
+	public void setPriceMultiplier(double priceMultiplier) {
 		this.priceMultiplier = priceMultiplier;
 	}
 	
