@@ -29,14 +29,13 @@ public class CityController {
 	
 	@PutMapping("/add")
 	public ResponseEntity<City> addCity(@RequestBody City toAddCity){
-		City toReallyAddCity = toAddCity;
 		List<City> toGetCity = cityRepository.findByPlz(toAddCity.getPlz());
 		if(toGetCity.size() == 1) {
 			return new ResponseEntity<>(toGetCity.get(0), HttpStatus.OK);
 		}
 		try {
-			cityRepository.save(toReallyAddCity);
-			return new ResponseEntity<>( cityRepository.save(toReallyAddCity), HttpStatus.CREATED);
+			cityRepository.save(toAddCity);
+			return new ResponseEntity<>(toAddCity, HttpStatus.CREATED);
 		}catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
 			

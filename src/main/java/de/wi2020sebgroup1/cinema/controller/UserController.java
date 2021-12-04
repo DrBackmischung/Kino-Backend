@@ -22,17 +22,18 @@ import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @Controller
 @RestController
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
 		
-	@GetMapping("/users")
+	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<User>> getUsers(){
 		return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
 	}
 	
-	@PutMapping("/user")
+	@PutMapping("/add")
 	public ResponseEntity<User> addUser(@RequestBody User newUser){
 		return new ResponseEntity<>( userRepository.save(newUser), HttpStatus.CREATED);
 	}
