@@ -22,4 +22,17 @@ public class TicketTest {
         assertEquals(o.getSeat(), s2);
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		User u = new User();
+		Show s = new Show();
+		Price p = new Price();
+		Seat s2 = new Seat();
+		Ticket o = new Ticket(true, u, s, p, s2);
+		Ticket o2 = new Ticket(true, u, s, p, s2);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

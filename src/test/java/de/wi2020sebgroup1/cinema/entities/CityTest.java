@@ -15,4 +15,13 @@ public class CityTest {
         assertEquals(o.getCity(), "Mannheim");
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		City o = new City(68159, "Mannheim");
+		City o2 = new City(68159, "Mannheim");
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

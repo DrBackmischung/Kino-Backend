@@ -15,4 +15,13 @@ public class RoleTest {
         assertEquals(o.getAutorization(), "admin");
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		Role o = new Role("Admin", "admin");
+		Role o2 = new Role("Admin", "admin");
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

@@ -20,4 +20,14 @@ public class CinemaTest {
         assertEquals(o.getCity(), c);
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		City c = new City();
+		Cinema o = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		Cinema o2 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

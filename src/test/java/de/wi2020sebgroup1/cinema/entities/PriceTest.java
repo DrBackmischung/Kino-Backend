@@ -14,4 +14,13 @@ public class PriceTest {
 		assertEquals(o.getPrice(), 5.5);
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		Price o = new Price(5.5);
+		Price o2 = new Price(5.5);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

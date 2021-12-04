@@ -22,4 +22,15 @@ public class SeatTest {
         assertEquals(o.getShow(), s);
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan();
+		Show s = new Show();
+		Seat o = new Seat(1, 3, true, true, 1.1, c, s);
+		Seat o2 = new Seat(1, 3, true, true, 1.1, c, s);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

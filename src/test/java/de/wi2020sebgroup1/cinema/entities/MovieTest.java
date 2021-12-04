@@ -19,4 +19,13 @@ public class MovieTest {
         assertEquals(o.getPictureLink(), "https://ich.bin.ein/link");
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		Movie o = new Movie("Shrek 3", "Japanisch", 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link");
+		Movie o2 = new Movie("Shrek 3", "Japanisch", 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link");
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

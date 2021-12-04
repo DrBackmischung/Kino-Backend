@@ -27,4 +27,18 @@ public class ShowTest {
         assertEquals(o.getCinemaRoom(), c2);
     }
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		Movie m = new Movie();
+		Cinema c = new Cinema();
+		CinemaRoom c2 = new CinemaRoom();
+		Date d = new Date(0);
+		Time t = new Time(0), t2 = new Time(0);
+		Show o = new Show(d, t, t2, m, c, c2);
+		Show o2 = new Show(d, t, t2, m, c, c2);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }

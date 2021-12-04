@@ -18,5 +18,16 @@ public class CinemaRoomTest {
 		assertEquals(o.getCinema(), c);
 		assertEquals(o.getCinemaRoomSeatingPlan(), c2);
     }
+	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		Cinema c = new Cinema();
+		CinemaRoomSeatingPlan c2 = new CinemaRoomSeatingPlan();
+		CinemaRoom o = new CinemaRoom(1, true, c, c2);
+		CinemaRoom o2 = new CinemaRoom(1, true, c, c2);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
 
 }

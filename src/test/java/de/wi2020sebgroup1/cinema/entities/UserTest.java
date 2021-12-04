@@ -20,4 +20,14 @@ public class UserTest {
         assertEquals(o.getRole(), r);
 	}
 	
+	@Test
+	@DisplayName("Equals consistency")
+    public void testCompare() {
+		Role r = new Role();
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		User o2 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o2), true);
+    }
+	
 }
