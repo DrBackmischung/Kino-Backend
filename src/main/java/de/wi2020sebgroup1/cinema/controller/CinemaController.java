@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgroup1.cinema.entities.Cinema;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
@@ -54,26 +55,25 @@ public class CinemaController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cinema> getCinema(@PathVariable UUID id){
+	public ResponseEntity<Object> getCinema(@PathVariable UUID id){
 		Optional<Cinema> search = cinemaRepository.findById(id);
 		try {
 			Cinema found = search.get();
 			return new ResponseEntity<>(found, HttpStatus.FOUND);
 		}catch(NoSuchElementException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<UUID> deleteCinema(@PathVariable UUID id){
+	public ResponseEntity<Object> deleteCinema(@PathVariable UUID id){
 		
 		try {
 			cinemaRepository.deleteById(id);
 			return new ResponseEntity<>(id, HttpStatus.OK);
 		}catch (Exception e) {
-			System.err.println(e);
-			return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 	
