@@ -83,4 +83,12 @@ public class CinemaRoom {
 	public void setWheelchairAccessible(boolean wheelchairAccessible) {
 		this.wheelchairAccessible = wheelchairAccessible;
 	}
+
+	public CinemaRoomSeatingPlan getCinemaRoomSeatingPlan() {
+		return cinemaRoomSeatingPlan;
+	}
+
+	public void setCinemaRoomSeatingPlan(CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
+		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
+	}
 }
