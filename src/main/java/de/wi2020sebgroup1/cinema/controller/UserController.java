@@ -26,16 +26,7 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private CinemaRepository cinemaRepository;
-	
-	@Autowired
-	private CityRepository cityRepo;
-	
-
-	
-	
+		
 	@GetMapping("/users")
 	public ResponseEntity<Iterable<User>> getUsers(){
 		return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
@@ -43,23 +34,7 @@ public class UserController {
 	
 	@PutMapping("/user")
 	public ResponseEntity<User> addUser(@RequestBody User newUser){
-		return new ResponseEntity<>( userRepository.save(newUser), HttpStatus.OK);
-	}
-
-	
-	@PutMapping("/cinema")
-	public ResponseEntity<Cinema> addCinema(@RequestBody Cinema newCinema){
-		return new ResponseEntity<>( cinemaRepository.save(newCinema), HttpStatus.OK);
-	}
-	
-	@GetMapping("/cinemas")
-	public ResponseEntity<Iterable<Cinema>> getCinemas(){
-		return new ResponseEntity<>(cinemaRepository.findAll(),HttpStatus.OK);
-	}
-	
-	@GetMapping("/cities")
-	public ResponseEntity<Iterable<City>> getCities(){
-		return new ResponseEntity<>(cityRepo.findAll(),HttpStatus.OK);
+		return new ResponseEntity<>( userRepository.save(newUser), HttpStatus.CREATED);
 	}
 	
 
