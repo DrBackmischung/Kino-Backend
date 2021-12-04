@@ -91,4 +91,47 @@ public class CinemaRoom {
 	public void setCinemaRoomSeatingPlan(CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cinema == null) ? 0 : cinema.hashCode());
+		result = prime * result + ((cinemaRoomSeatingPlan == null) ? 0 : cinemaRoomSeatingPlan.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + story;
+		result = prime * result + (wheelchairAccessible ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CinemaRoom other = (CinemaRoom) obj;
+		if (cinema == null) {
+			if (other.cinema != null)
+				return false;
+		} else if (!cinema.equals(other.cinema))
+			return false;
+		if (cinemaRoomSeatingPlan == null) {
+			if (other.cinemaRoomSeatingPlan != null)
+				return false;
+		} else if (!cinemaRoomSeatingPlan.equals(other.cinemaRoomSeatingPlan))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (story != other.story)
+			return false;
+		if (wheelchairAccessible != other.wheelchairAccessible)
+			return false;
+		return true;
+	}
 }
