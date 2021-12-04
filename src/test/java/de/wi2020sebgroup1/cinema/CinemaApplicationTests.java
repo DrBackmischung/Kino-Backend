@@ -10,9 +10,6 @@ class CinemaApplicationTests {
 
 	@Test
 	void contextLoads() {
-		int i = 5;
-		int j = 5;
-		assertEquals(i,  j);
 	}
 
 }
