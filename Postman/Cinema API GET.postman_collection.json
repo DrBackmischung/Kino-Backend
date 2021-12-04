@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "5ffa7dbb-a392-4612-b63c-97b388cf83e0",
+		"name": "Cinema API GET",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Cinemas",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cinema/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinema",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Cities",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/city/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"city",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific City",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/city/466b0761-f54c-47c7-b76b-48b6dcc4b6cd",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"city",
+						"466b0761-f54c-47c7-b76b-48b6dcc4b6cd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific Cinema",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cinema/50d90407-97d8-4c46-b8d0-4863edaf9931",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinema",
+						"50d90407-97d8-4c46-b8d0-4863edaf9931"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
