@@ -27,7 +27,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Cineplex\",\r\n    \"street\": \"Biegenstraße\",\r\n    \"number\": \"1a\",\r\n    \"cinemaBalls\": 9,\r\n    \"stories\": 3,\r\n    \"city\": {\r\n        \"plz\": 35037,\r\n        \"city\": \"Marburg\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"Cineplex\",\r\n    \"street\": \"Biegenstraße\",\r\n    \"number\": \"1a\",\r\n    \"cinemaRooms\": 9,\r\n    \"stories\": 3,\r\n    \"city\": {\r\n        \"plz\": 35037,\r\n        \"city\": \"Marburg\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,7 +112,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"plz\": 20095,\r\n    \"city\": \"Hamburg\"\r\n}",
+					"raw": "{\r\n    \"plz\": 68169,\r\n    \"city\": \"Mannheim\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
