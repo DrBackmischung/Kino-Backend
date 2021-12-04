@@ -68,7 +68,7 @@ public class CinemaRoom {
 		return story;
 	}
 	
-	public boolean getWheelchairAccessible() {
+	public boolean isWheelchairAccessible() {
 		return wheelchairAccessible;
 	}
 	
