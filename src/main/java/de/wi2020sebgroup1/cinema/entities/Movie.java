@@ -45,6 +45,19 @@ public class Movie {
 	
 	//ADD KINOSAAL
 	
+	public Movie() {};
+	
+	public Movie(@NotNull String titel, @NotNull String language, @NotNull double duration, @NotNull String director,
+			@NotNull String description, @NotNull String pictureLink) {
+		super();
+		this.titel = titel;
+		this.language = language;
+		this.duration = duration;
+		this.director = director;
+		this.description = description;
+		this.pictureLink = pictureLink;
+	}
+
 	public String getDirector() {
 		return director;
 	}

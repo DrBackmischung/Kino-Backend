@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -56,6 +55,18 @@ public class Show {
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
 	
+	public Show() {}
+	
+	public Show(Date showDate, Time startTime, Time endTime, Movie movie, Cinema cinema, CinemaRoom cinemaRoom) {
+		super();
+		this.showDate = showDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.movie = movie;
+		this.cinema = cinema;
+		this.cinemaRoom = cinemaRoom;
+	}
+
 	public Cinema getCinema() {
 		return cinema;
 	}

@@ -28,6 +28,14 @@ public class Role {
 	@NonNull
 	private String authorization;
 	
+	public Role() {}
+	
+	public Role(String description, String authorization) {
+		super();
+		this.description = description;
+		this.authorization = authorization;
+	}
+
 	public UUID getId() {
 		return id;
 	}

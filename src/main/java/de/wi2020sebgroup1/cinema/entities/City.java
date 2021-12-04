@@ -1,16 +1,12 @@
 package de.wi2020sebgroup1.cinema.entities;
 
-import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +29,14 @@ public class City {
 	@NotNull
 	private String city;
 	
+	public City() {}	
+	
+	public City(int plz, @NotNull String city) {
+		super();
+		this.plz = plz;
+		this.city = city;
+	}
+
 	public UUID getId() {
 		return this.id;
 	}

@@ -54,6 +54,20 @@ public class Seat {
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
+	public Seat() {}
+	
+	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull boolean blocked,
+			@NotNull int priceMultiplier, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
+		super();
+		this.reihe = reihe;
+		this.place = place;
+		this.coupleSeat = coupleSeat;
+		this.blocked = blocked;
+		this.priceMultiplier = priceMultiplier;
+		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
+		this.show = show;
+	}
+
 	public CinemaRoomSeatingPlan getCinemaRoomSeatingPlan() {
 		return cinemaRoomSeatingPlan;
 	}

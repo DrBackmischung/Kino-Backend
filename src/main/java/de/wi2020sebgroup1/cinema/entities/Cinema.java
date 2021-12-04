@@ -16,9 +16,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.springframework.lang.NonNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="cinema")
@@ -48,11 +45,24 @@ public class Cinema {
 	@Column
 	@NotNull
 	private int stories;
-	
+
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "city", referencedColumnName = "id")
 	private City city;
+	
+	public Cinema() {}
+	
+	public Cinema(@NotNull String name, @NotNull String street, @NotNull String number,
+			@NotNull int cinemaRooms, @NotNull int stories, City city) {
+		super();
+		this.name = name;
+		this.street = street;
+		this.number = number;
+		this.cinemaRooms = cinemaRooms;
+		this.stories = stories;
+		this.city = city;
+	}
 	
 	public City getCity_id() {
 		return city;

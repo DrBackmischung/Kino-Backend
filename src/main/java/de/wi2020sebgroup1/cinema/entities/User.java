@@ -1,6 +1,5 @@
 package de.wi2020sebgroup1.cinema.entities;
 
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -10,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
@@ -48,6 +46,18 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
+	public User() {}
+	
+	public User(String userName, String name, String firstName, String email, String password, Role role) {
+		super();
+		this.userName = userName;
+		this.name = name;
+		this.firstName = firstName;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

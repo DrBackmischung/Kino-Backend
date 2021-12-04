@@ -28,5 +28,35 @@ public class CinemaRoomSeatingPlan {
 	@OneToOne
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
+	
+	public CinemaRoomSeatingPlan() {}
+
+	public CinemaRoomSeatingPlan(@NotNull int seats, CinemaRoom cinemaRoom) {
+		super();
+		this.seats = seats;
+		this.cinemaRoom = cinemaRoom;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
+	public CinemaRoom getCinemaRoom() {
+		return cinemaRoom;
+	}
+
+	public void setCinemaRoom(CinemaRoom cinemaRoom) {
+		this.cinemaRoom = cinemaRoom;
+	}
+	
+	
 
 }
