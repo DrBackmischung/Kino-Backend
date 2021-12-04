@@ -10,7 +10,7 @@ public class CinemaTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		City c = new City();
+		City c = new City(0, null);
 		Cinema o = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
         assertEquals(o.getName(), "Kino Mannheim");
         assertEquals(o.getStreet(), "Q6");
@@ -23,7 +23,7 @@ public class CinemaTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
-		City c = new City();
+		City c = new City(0, null);
 		Cinema o = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
 		Cinema o2 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
 		assertEquals(o.hashCode(), o2.hashCode());

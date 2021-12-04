@@ -50,8 +50,6 @@ public class Ticket {
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
 	
-	public Ticket() {}
-	
 	public Ticket(@NotNull boolean paid, User user, Show show, Price price, Seat seat) {
 		super();
 		this.paid = paid;

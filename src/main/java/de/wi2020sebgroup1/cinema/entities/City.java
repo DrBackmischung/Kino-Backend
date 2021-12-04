@@ -29,8 +29,6 @@ public class City {
 	@NotNull
 	private String city;
 	
-	public City() {}	
-	
 	public City(int plz, @NotNull String city) {
 		super();
 		this.plz = plz;

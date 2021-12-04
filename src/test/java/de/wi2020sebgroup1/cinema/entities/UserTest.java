@@ -10,7 +10,7 @@ public class UserTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		Role r = new Role();
+		Role r = new Role(null, null);
 		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
 		assertEquals(o.getUserName(), "DrBackmischung");
         assertEquals(o.getName(), "Neunzig");
@@ -23,7 +23,7 @@ public class UserTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
-		Role r = new Role();
+		Role r = new Role(null, null);
 		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
 		User o2 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
 		assertEquals(o.hashCode(), o2.hashCode());

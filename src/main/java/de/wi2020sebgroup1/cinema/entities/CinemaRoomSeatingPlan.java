@@ -28,8 +28,6 @@ public class CinemaRoomSeatingPlan {
 	@OneToOne
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
-	
-	public CinemaRoomSeatingPlan() {}
 
 	public CinemaRoomSeatingPlan(@NotNull int seats, CinemaRoom cinemaRoom) {
 		super();

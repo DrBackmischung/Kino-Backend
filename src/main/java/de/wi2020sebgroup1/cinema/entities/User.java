@@ -46,8 +46,6 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
-	public User() {}
-	
 	public User(String userName, String name, String firstName, String email, String password, Role role) {
 		super();
 		this.userName = userName;

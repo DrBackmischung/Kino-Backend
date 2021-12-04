@@ -10,8 +10,8 @@ public class SeatTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan();
-		Show s = new Show();
+		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0, null);
+		Show s = new Show(null, null, null, null, null, null);
 		Seat o = new Seat(1, 3, true, true, 1.1, c, s);
         assertEquals(o.getReihe(), 1);
         assertEquals(o.getPlace(), 3);
@@ -25,8 +25,8 @@ public class SeatTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
-		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan();
-		Show s = new Show();
+		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0, null);
+		Show s = new Show(null, null, null, null, null, null);
 		Seat o = new Seat(1, 3, true, true, 1.1, c, s);
 		Seat o2 = new Seat(1, 3, true, true, 1.1, c, s);
 		assertEquals(o.hashCode(), o2.hashCode());

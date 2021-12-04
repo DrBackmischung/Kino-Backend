@@ -10,10 +10,10 @@ public class TicketTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		User u = new User();
-		Show s = new Show();
-		Price p = new Price();
-		Seat s2 = new Seat();
+		User u = new User(null, null, null, null, null, null);
+		Show s = new Show(null, null, null, null, null, null);
+		Price p = new Price(0);
+		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
 		Ticket o = new Ticket(true, u, s, p, s2);
         assertEquals(o.isPaid(), true);
         assertEquals(o.getUser(), u);
@@ -25,10 +25,10 @@ public class TicketTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
-		User u = new User();
-		Show s = new Show();
-		Price p = new Price();
-		Seat s2 = new Seat();
+		User u = new User(null, null, null, null, null, null);
+		Show s = new Show(null, null, null, null, null, null);
+		Price p = new Price(0);
+		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
 		Ticket o = new Ticket(true, u, s, p, s2);
 		Ticket o2 = new Ticket(true, u, s, p, s2);
 		assertEquals(o.hashCode(), o2.hashCode());

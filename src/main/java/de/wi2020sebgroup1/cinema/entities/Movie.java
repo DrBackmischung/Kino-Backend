@@ -45,8 +45,6 @@ public class Movie {
 	
 	//ADD KINOSAAL
 	
-	public Movie() {};
-	
 	public Movie(@NotNull String titel, @NotNull String language, @NotNull double duration, @NotNull String director,
 			@NotNull String description, @NotNull String pictureLink) {
 		super();

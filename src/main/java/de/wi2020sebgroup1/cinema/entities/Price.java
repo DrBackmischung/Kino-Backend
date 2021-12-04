@@ -24,8 +24,6 @@ public class Price {
 	@NonNull
 	private double price;
 	
-	public Price() {}
-	
 	public Price(double price) {
 		super();
 		this.price = price;
