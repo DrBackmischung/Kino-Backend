@@ -29,4 +29,65 @@ public class CinemaRoomSeatingPlan {
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
 
+	public CinemaRoomSeatingPlan(@NotNull int seats) {
+		super();
+		this.seats = seats;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
+	public CinemaRoom getCinemaRoom() {
+		return cinemaRoom;
+	}
+
+	public void setCinemaRoom(CinemaRoom cinemaRoom) {
+		this.cinemaRoom = cinemaRoom;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cinemaRoom == null) ? 0 : cinemaRoom.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + seats;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CinemaRoomSeatingPlan other = (CinemaRoomSeatingPlan) obj;
+		if (cinemaRoom == null) {
+			if (other.cinemaRoom != null)
+				return false;
+		} else if (!cinemaRoom.equals(other.cinemaRoom))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (seats != other.seats)
+			return false;
+		return true;
+	}
+	
+	
+
 }
