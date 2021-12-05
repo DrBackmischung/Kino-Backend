@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
 	
 	@Test
-	@DisplayName("Test the constructor")
+	@DisplayName("Test the 1st constructor")
     public void testConstructor() {
 		Role r = new Role(null, null);
 		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
@@ -18,6 +18,19 @@ public class UserTest {
         assertEquals(o.getEmail(), "mathis.neunzig@gmail.com");
         assertEquals(o.getPassword(), "ichBinDumm");
         assertEquals(o.getRole(), r);
+	}
+	
+	@Test
+	@DisplayName("Test the 2nd constructor")
+    public void testConstructor2() {
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm");
+		assertEquals(o.getUserName(), "DrBackmischung");
+        assertEquals(o.getName(), "Neunzig");
+        assertEquals(o.getFirstName(), "Mathis");
+        assertEquals(o.getEmail(), "mathis.neunzig@gmail.com");
+        assertEquals(o.getPassword(), "ichBinDumm");
+        assertEquals(o.getRole().getDescription(), "Default User");
+        assertEquals(o.getRole().getAutorization(), "user");
 	}
 	
 	@Test

@@ -55,6 +55,16 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
+	
+	public User(String userName, String name, String firstName, String email, String password) {
+		super();
+		this.userName = userName;
+		this.name = name;
+		this.firstName = firstName;
+		this.email = email;
+		this.password = password;
+		this.role = new Role("Default User", "user");
+	}
 
 	public String getUserName() {
 		return userName;
