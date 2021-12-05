@@ -118,6 +118,10 @@ public class Cinema {
 		this.stories = stories;
 	}
 
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -90,6 +90,10 @@ public class CinemaRoom {
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
 	}
 
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

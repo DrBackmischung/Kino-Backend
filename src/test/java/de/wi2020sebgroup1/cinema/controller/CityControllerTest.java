@@ -40,18 +40,10 @@ public class CityControllerTest {
 	JacksonTester<City> jt;
 	
 	static City c1;
-	static City c2;
-	static City c3;
-	static List<City> cities = new ArrayList<>();
 	
 	@BeforeAll
 	static void beforeAll() {
-		c1 = new City(68159, "Mannheim");
-		c2 = new City(26127, "Oldenburg");
-		c3 = new City(26133, "Berlin");
-    	cities.add(c1);
-    	cities.add(c2);
-    	cities.add(c3);
+		
 	}
 
     @BeforeEach
@@ -62,15 +54,22 @@ public class CityControllerTest {
     
     @Test
     void testGetAll() throws Exception {
+    	when(repo.findAll()).thenReturn(new ArrayList<City>());
+        mvc.perform(get("/city/getAll"))
+                .andExpect(status().isOk());
+    }
+    
+    @Test
+    void testGetById() throws Exception {
     	when(repo.findAll()).thenReturn(cities);
-        MvcResult result = this.mvc.perform(get("/cinema/getAll"))
+        MvcResult result = this.mvc.perform(get("/city/getAll"))
                 .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
             
-        assertTrue(result.getResponse().getContentAsString().contains("\"id\":1"));
-        assertTrue(result.getResponse().getContentAsString().contains("\"id\":2"));
-        assertTrue(result.getResponse().getContentAsString().contains("\"id\":3"));
+        assertTrue(result.getResponse().getContentAsString().contains("\"plz\":68159"));
+        assertTrue(result.getResponse().getContentAsString().contains("\"plz\":26127"));
+        assertTrue(result.getResponse().getContentAsString().contains("\"plz\":26133"));
     }
 
 }

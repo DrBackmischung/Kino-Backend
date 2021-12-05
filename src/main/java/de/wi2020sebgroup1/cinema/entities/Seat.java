@@ -126,6 +126,10 @@ public class Seat {
 		this.show = show;
 	}
 
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
