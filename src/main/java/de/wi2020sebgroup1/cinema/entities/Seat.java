@@ -42,7 +42,7 @@ public class Seat {
 	
 	@Column
 	@NotNull
-	private double priceMultiplier;
+	private int surcharge;
 	
 	@ManyToOne
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -55,13 +55,13 @@ public class Seat {
 	private Show show;
 	
 	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull boolean blocked,
-			@NotNull double priceMultiplier, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
+			@NotNull int surcharge, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
 		super();
 		this.reihe = reihe;
 		this.place = place;
 		this.coupleSeat = coupleSeat;
 		this.blocked = blocked;
-		this.priceMultiplier = priceMultiplier;
+		this.surcharge = surcharge;
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
 		this.show = show;
 	}
@@ -94,12 +94,12 @@ public class Seat {
 		return coupleSeat;
 	}
 	
-	public double getPriceMultiplier() {
-		return priceMultiplier;
+	public double getSurcharge() {
+		return surcharge;
 	}
 	
-	public void setPriceMultiplier(double priceMultiplier) {
-		this.priceMultiplier = priceMultiplier;
+	public void setSurcharge(int surcharge) {
+		this.surcharge = surcharge;
 	}
 	
 	public void setBlocked(boolean blocked) {
@@ -136,7 +136,7 @@ public class Seat {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + place;
 		long temp;
-		temp = Double.doubleToLongBits(priceMultiplier);
+		temp = Double.doubleToLongBits(surcharge);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + reihe;
 		result = prime * result + ((show == null) ? 0 : show.hashCode());
@@ -168,7 +168,7 @@ public class Seat {
 			return false;
 		if (place != other.place)
 			return false;
-		if (Double.doubleToLongBits(priceMultiplier) != Double.doubleToLongBits(other.priceMultiplier))
+		if (Double.doubleToLongBits(surcharge) != Double.doubleToLongBits(other.surcharge))
 			return false;
 		if (reihe != other.reihe)
 			return false;

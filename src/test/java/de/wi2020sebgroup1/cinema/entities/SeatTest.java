@@ -12,12 +12,12 @@ public class SeatTest {
     public void testConstructor() {
 		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0);
 		Show s = new Show(null, null, null, null, null, null);
-		Seat o = new Seat(1, 3, true, true, 1.1, c, s);
+		Seat o = new Seat(1, 3, true, true, 20, c, s);
         assertEquals(o.getReihe(), 1);
         assertEquals(o.getPlace(), 3);
         assertEquals(o.isBlocked(), true);
         assertEquals(o.isCoupleSeat(), true);
-        assertEquals(o.getPriceMultiplier(), 1.1);
+        assertEquals(o.getSurcharge(), 20);
         assertEquals(o.getCinemaRoomSeatingPlan(), c);
         assertEquals(o.getShow(), s);
     }
@@ -27,8 +27,8 @@ public class SeatTest {
     public void testCompare() {
 		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0);
 		Show s = new Show(null, null, null, null, null, null);
-		Seat o = new Seat(1, 3, true, true, 1.1, c, s);
-		Seat o2 = new Seat(1, 3, true, true, 1.1, c, s);
+		Seat o = new Seat(1, 3, true, true, 20, c, s);
+		Seat o2 = new Seat(1, 3, true, true, 20, c, s);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
     }
