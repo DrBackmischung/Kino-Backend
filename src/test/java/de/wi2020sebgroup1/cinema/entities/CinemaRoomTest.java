@@ -11,7 +11,7 @@ public class CinemaRoomTest {
 	@DisplayName("Test the constructor")
     public void testConstructor() {
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoomSeatingPlan c2 = new CinemaRoomSeatingPlan(0, null);
+		CinemaRoomSeatingPlan c2 = new CinemaRoomSeatingPlan(0);
 		CinemaRoom o = new CinemaRoom(1, true, c, c2);
 		assertEquals(o.getStory(), 1);
 		assertEquals(o.isWheelchairAccessible(), true);
@@ -23,7 +23,7 @@ public class CinemaRoomTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoomSeatingPlan c2 = new CinemaRoomSeatingPlan(0, null);
+		CinemaRoomSeatingPlan c2 = new CinemaRoomSeatingPlan(0);
 		CinemaRoom o = new CinemaRoom(1, true, c, c2);
 		CinemaRoom o2 = new CinemaRoom(1, true, c, c2);
 		assertEquals(o.hashCode(), o2.hashCode());
