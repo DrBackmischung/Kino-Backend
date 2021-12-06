@@ -69,7 +69,7 @@ public class CinemaController {
 		
 		try {
 			cinemaRepository.deleteById(id);
-			return new ResponseEntity<>(id, HttpStatus.OK);
+			return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
 		}catch (Exception e) {
 			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
