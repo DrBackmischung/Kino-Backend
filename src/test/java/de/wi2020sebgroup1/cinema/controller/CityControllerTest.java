@@ -55,8 +55,6 @@ public class CityControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
     
-    // Das ganze hier ist notwendig, weil CrudRepository bei findById nur ein Optional<City> zurückgegeben wird, bei Jpa wäre das ein City.
-    // Für den JacksonTester brauche ich aber eine City.
     City getCity() {
     	City c = new City(68159, "Mannheim");
     	c.setId(uuid);
@@ -76,9 +74,8 @@ public class CityControllerTest {
     }
     
     @Test
-    void testGetById() throws Exception {	
-    	Optional<City> c = getOptionalCity();
-        when(repo.findById(uuid)).thenReturn(c);
+    void testGetById() throws Exception {
+        when(repo.findById(uuid)).thenReturn(getOptionalCity());
         MockHttpServletResponse response = mvc.perform(get("/city/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().is3xxRedirection())
