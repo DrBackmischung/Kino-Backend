@@ -80,7 +80,7 @@ public class CinemaControllerTest {
         when(repo.findById(uuid)).thenReturn(getOptionalCinema());
         MockHttpServletResponse response = mvc.perform(get("/cinema/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().is3xxRedirection())
+            .andExpect(status().isOk())
             .andReturn().getResponse();
         assertEquals(jt.write(getCinema()).getJson(), response.getContentAsString());
     }
