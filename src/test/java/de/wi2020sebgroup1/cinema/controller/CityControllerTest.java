@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -78,8 +79,17 @@ public class CityControllerTest {
         when(repo.findById(uuid)).thenReturn(getOptionalCity());
         MockHttpServletResponse response = mvc.perform(get("/city/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().is3xxRedirection())
+            .andExpect(status().isOk())
             .andReturn().getResponse();
         assertEquals(jt.write(getCity()).getJson(), response.getContentAsString());
+    }
+
+    @Test
+    void testPut() throws Exception{
+        
+        mvc.perform(
+            put("/city/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCity()).getJson()))
+        		.andExpect(status().isCreated());
+
     }
 }

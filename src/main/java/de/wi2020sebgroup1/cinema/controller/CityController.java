@@ -46,7 +46,7 @@ public class CityController {
 	public ResponseEntity<City> getCity(@PathVariable UUID id){
 		Optional<City> foundCity = cityRepository.findById(id);
 		try {
-			return new ResponseEntity<>(foundCity.get(), HttpStatus.FOUND);
+			return new ResponseEntity<>(foundCity.get(), HttpStatus.OK);
 		}catch(NoSuchElementException e) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}

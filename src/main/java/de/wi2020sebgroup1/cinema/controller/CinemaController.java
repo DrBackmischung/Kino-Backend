@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Cinema;
 import de.wi2020sebgroup1.cinema.entities.City;
-import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
-import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @Controller
 @RestController
@@ -51,7 +49,7 @@ public class CinemaController {
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<Cinema>> getCinemas(){
-		return new ResponseEntity<>(cinemaRepository.findAll(),HttpStatus.FOUND);
+		return new ResponseEntity<>(cinemaRepository.findAll(),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
@@ -59,7 +57,7 @@ public class CinemaController {
 		Optional<Cinema> search = cinemaRepository.findById(id);
 		try {
 			Cinema found = search.get();
-			return new ResponseEntity<>(found, HttpStatus.FOUND);
+			return new ResponseEntity<>(found, HttpStatus.OK);
 		}catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
