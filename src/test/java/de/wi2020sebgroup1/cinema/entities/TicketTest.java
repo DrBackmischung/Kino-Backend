@@ -52,6 +52,7 @@ public class TicketTest {
 		Ticket o = new Ticket(true, u, s, p, s2);
 		Ticket o2 = new Ticket(true, u, s, p, s2);
 		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
     }
 	
