@@ -54,6 +54,10 @@ public class Seat {
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
+	public Seat() {
+		
+	}
+	
 	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull boolean blocked,
 			@NotNull int surcharge, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
 		super();

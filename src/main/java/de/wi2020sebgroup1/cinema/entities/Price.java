@@ -28,6 +28,10 @@ public class Price {
 		super();
 		this.price = price;
 	}
+	
+	public Price() {
+		
+	}
 
 	public UUID getId() {
 		return id;
