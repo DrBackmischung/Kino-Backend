@@ -15,12 +15,33 @@ public class CinemaRoomSeatingPlanTest {
     }
 	
 	@Test
+	@DisplayName("Test Getter/Setter")
+    public void testGetterSetter() {
+		CinemaRoomSeatingPlan o = new CinemaRoomSeatingPlan(50);
+		o.setSeats(10);
+        assertEquals(o.getSeats(), 10);
+    }
+	
+	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		CinemaRoomSeatingPlan o = new CinemaRoomSeatingPlan(50);
 		CinemaRoomSeatingPlan o2 = new CinemaRoomSeatingPlan(50);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+    }
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	@DisplayName("Equals inconsistency fail")
+    public void testCompareFail() {
+		CinemaRoomSeatingPlan o = new CinemaRoomSeatingPlan(50);
+		CinemaRoomSeatingPlan o2 = new CinemaRoomSeatingPlan(20);
+		CinemaRoomSeatingPlan o3 = null;
+		String s = "Test";
+		assertEquals(o.equals(o2), false);
+		assertEquals(o.equals(o3), false);
+		assertEquals(o.equals(s), false);
     }
 	
 }

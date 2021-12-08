@@ -33,4 +33,31 @@ public class SeatTest {
 		assertEquals(o.equals(o2), true);
     }
 	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	@DisplayName("Equals inconsistency fail")
+    public void testCompareFail() {
+		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0);
+		Show s = new Show(null, null, null, null, null, null);
+		Seat o = new Seat(1, 3, true, true, 20, c, s);
+		Seat o2 = new Seat(1, 4, true, true, 20, c, s);
+		Seat o3 = new Seat(1, 3, false, true, 20, c, s);
+		Seat o4 = new Seat(1, 3, true, false, 20, c, s);
+		Seat o5 = new Seat(1, 3, true, true, 30, c, s);
+		Seat o6 = new Seat(1, 3, true, true, 20, null, s);
+		Seat o7 = new Seat(1, 3, true, true, 20, c, null);
+		Seat o8 = new Seat(2, 3, true, true, 20, c, s);
+		Seat o9 = null;
+		String st = "Test";
+		assertEquals(o.equals(o2), false);
+		assertEquals(o.equals(o3), false);
+		assertEquals(o.equals(o4), false);
+		assertEquals(o.equals(o5), false);
+		assertEquals(o.equals(o6), false);
+		assertEquals(o.equals(o7), false);
+		assertEquals(o.equals(o8), false);
+		assertEquals(o.equals(o9), false);
+		assertEquals(o.equals(st), false);
+    }
+	
 }
