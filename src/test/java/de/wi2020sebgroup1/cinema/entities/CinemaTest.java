@@ -49,18 +49,22 @@ public class CinemaTest {
 		assertEquals(o.equals(o2), true);
     }
 	
-	@SuppressWarnings("unlikely-arg-type")
+	@SuppressWarnings({ "unlikely-arg-type" })
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
 		City c = new City(0, null);
-		Cinema o = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		Cinema o = new Cinema(null, null, null, 5, 2, null);
 		Cinema o2 = new Cinema("Kino Mannheim2", "Q6", "14", 5, 2, c);
+		Cinema o22 = new Cinema(null, "Q6", "14", 5, 2, c);
 		Cinema o3 = new Cinema("Kino Mannheim", "Q7", "14", 5, 2, c);
+		Cinema o32 = new Cinema(null, "Strasse", null, 5, 2, null);
 		Cinema o4 = new Cinema("Kino Mannheim", "Q6", "14A", 5, 2, c);
+		Cinema o42 = new Cinema(null, null, "Nr", 5, 2, null);
 		Cinema o5 = new Cinema("Kino Mannheim", "Q6", "14", 6, 2, c);
 		Cinema o6 = new Cinema("Kino Mannheim", "Q6", "14", 5, 1, c);
 		Cinema o7 = new Cinema("Kino Mannheim", "Q6", "14", 5, 1, null);
+		Cinema o72 = new Cinema(null, null, null, 5, 2, null);
 		Cinema o8 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
@@ -71,6 +75,10 @@ public class CinemaTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
+		assertEquals(o.equals(o22), false);
+		assertEquals(o.equals(o32), false);
+		assertEquals(o.equals(o42), false);
+		assertEquals(o.equals(o72), true);
     }
 	
 }

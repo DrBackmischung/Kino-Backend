@@ -23,6 +23,28 @@ public class SeatTest {
     }
 	
 	@Test
+	@DisplayName("Test Getter/Setter")
+    public void testGetterSetter() {
+		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0);
+		Show s = new Show(null, null, null, null, null, null);
+		Seat o = new Seat(1, 3, true, true, 20, c, s);
+		o.setReihe(0);
+        assertEquals(o.getReihe(), 0);
+        o.setPlace(0);
+        assertEquals(o.getPlace(), 0);
+        o.setBlocked(false);
+        assertEquals(o.isBlocked(), false);
+        o.setCoupleSeat(false);
+        assertEquals(o.isCoupleSeat(), false);
+        o.setSurcharge(10);
+        assertEquals(o.getSurcharge(), 10);
+        o.setCinemaRoomSeatingPlan(null);
+        assertEquals(o.getCinemaRoomSeatingPlan(), null);
+        o.setShow(null);
+        assertEquals(o.getShow(), null);
+    }
+	
+	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(0);
