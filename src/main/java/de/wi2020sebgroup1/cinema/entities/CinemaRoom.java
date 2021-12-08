@@ -45,6 +45,10 @@ public class CinemaRoom {
 	@JoinColumn(name = "cinemaRoomSeatingPlan_id", referencedColumnName = "id")
 	private CinemaRoomSeatingPlan cinemaRoomSeatingPlan;
 	
+	public CinemaRoom() {
+		
+	}
+	
 	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema,
 			CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
 		super();

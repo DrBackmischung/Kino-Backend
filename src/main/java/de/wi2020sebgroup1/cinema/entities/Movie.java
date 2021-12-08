@@ -45,6 +45,10 @@ public class Movie {
 	
 	//ADD KINOSAAL
 	
+	public Movie() {
+		
+	}
+	
 	public Movie(@NotNull String titel, @NotNull String language, @NotNull double duration, @NotNull String director,
 			@NotNull String description, @NotNull String pictureLink) {
 		super();
@@ -166,6 +170,11 @@ public class Movie {
 		} else if (!titel.equals(other.titel))
 			return false;
 		return true;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+		
 	}
 
 }
