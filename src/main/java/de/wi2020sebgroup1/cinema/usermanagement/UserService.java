@@ -5,12 +5,14 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import de.wi2020sebgroup1.cinema.entities.Role;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.exceptions.UserAlreadyExistsException;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
+@Service
 public class UserService implements UserServiceInterface {
 
     private final UserRepository repo;
