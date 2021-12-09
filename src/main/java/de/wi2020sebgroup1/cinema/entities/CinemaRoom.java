@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
+
 @Entity
 @Table(name="cinemaRoom")
 public class CinemaRoom {
@@ -49,6 +51,12 @@ public class CinemaRoom {
 		
 	}
 	
+	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible) {
+		super();
+		this.story = story;
+		this.wheelchairAccessible = wheelchairAccessible;
+	}
+	
 	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema,
 			CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
 		super();
@@ -76,6 +84,10 @@ public class CinemaRoom {
 	
 	public void setCinema(Cinema cinema) {
 		this.cinema = cinema;
+	}
+	
+	public void setId(UUID id) {
+		this.id = id;
 	}
 	
 	public void setStory(int story) {
