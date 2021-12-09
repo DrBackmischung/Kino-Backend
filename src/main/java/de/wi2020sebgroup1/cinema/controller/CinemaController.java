@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Cinema;
 import de.wi2020sebgroup1.cinema.entities.City;
-import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
-import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @Controller
 @RestController
