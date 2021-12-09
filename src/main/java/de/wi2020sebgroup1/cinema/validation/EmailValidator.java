@@ -21,7 +21,7 @@ public class EmailValidator implements ConstraintValidator<EmailValid, String> {
         return (validateEmail(email));
     }
 
-    private boolean validateEmail(String email) {
+    protected boolean validateEmail(String email) {
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);
         return matcher.matches();
