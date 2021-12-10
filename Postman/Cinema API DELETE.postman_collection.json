@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "3f4ce2ab-e770-40a1-a8e6-e9c42a627825",
+		"name": "Cinema API DELETE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Delete a cinema",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cinema/50d90407-97d8-4c46-b8d0-4863edaf9931",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinema",
+						"50d90407-97d8-4c46-b8d0-4863edaf9931"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Movie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/31444aed-4f9c-4701-add7-a6137019bd1a",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"31444aed-4f9c-4701-add7-a6137019bd1a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a CinemaRoom",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cinemaRoom/0a789032-eba6-4fa7-acde-92ca380780ff",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinemaRoom",
+						"0a789032-eba6-4fa7-acde-92ca380780ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/seatingPlan/f31e33ad-efcb-47f2-995f-35af05b6828b",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"seatingPlan",
+						"f31e33ad-efcb-47f2-995f-35af05b6828b"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "user",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

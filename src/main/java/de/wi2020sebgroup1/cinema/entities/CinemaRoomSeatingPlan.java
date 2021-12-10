@@ -53,6 +53,10 @@ public class CinemaRoomSeatingPlan {
 	public CinemaRoom getCinemaRoom() {
 		return cinemaRoom;
 	}
+	
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
 	public void setCinemaRoom(CinemaRoom cinemaRoom) {
 		this.cinemaRoom = cinemaRoom;

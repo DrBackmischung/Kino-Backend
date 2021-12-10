@@ -133,6 +133,173 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Add a new Movie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titel\" : \"Alita: Battle Angle\",\r\n    \"language\": \"German\",\r\n    \"duration\": 2.45,\r\n    \"director\": \"James Cameron\",\r\n    \"description\": \"A deactivated cyborg's revived, but can't remember anything of her past and goes on a quest to find out who she is.\",\r\n    \"pictureLink\": \"https://m.media-amazon.com/images/M/MV5BMTQzYWYwYjctY2JhZS00NTYzLTllM2UtZWY5ZTk0NmYwYzIyXkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/movie",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Cinema",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"50d90407-97d8-4c46-b8d0-4863edaf9931\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cinemaRoom",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinemaRoom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new SeatingPlan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"seats\": 300\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/seatingPlan/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"seatingPlan",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Movie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titel\" : \"Avatar - Aufbruch nach Pandora\",\r\n    \"language\": \"German\",\r\n    \"duration\": 2.35,\r\n    \"director\": \"James Cameron\",\r\n    \"description\": \"Testbeschreibung für Avatar.\",\r\n    \"pictureLink\": \"https://static.wikia.nocookie.net/jamescameronsavatar/images/d/d3/Avatar_Aufbruch_nach_Pandora-Poster.jpg/revision/latest?cb=20100302184147&path-prefix=de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/movie/update/1e164544-d41d-45f5-9137-6c18810a2019",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"update",
+						"1e164544-d41d-45f5-9137-6c18810a2019"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a CinemaRoom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": false,\r\n    \"cinemaID\": \"e479597a-d147-4667-8cfe-970b3a595049\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cinemaRoom/d495b31a-7c5a-46de-8009-770f0fe1e11e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinemaRoom",
+						"d495b31a-7c5a-46de-8009-770f0fe1e11e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a SeatingPlan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"seats\": 300,\r\n    \"cinemaRoomID\": \"0a789032-eba6-4fa7-acde-92ca380780ff\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/seatingPlan/0a789032-eba6-4fa7-acde-92ca380780ff",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"seatingPlan",
+						"0a789032-eba6-4fa7-acde-92ca380780ff"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
