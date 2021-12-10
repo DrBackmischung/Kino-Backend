@@ -11,8 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users",
-					"protocol": "http",
+					"raw": "localhost:8080/users",
 					"host": [
 						"localhost"
 					],
@@ -93,19 +92,76 @@
 			"response": []
 		},
 		{
+			"name": "Get All Movies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All CinemaRooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cinemaRoom/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cinemaRoom",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Seatingplans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/seatingPlan/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"seatingPlan",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get specific City",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/city/466b0761-f54c-47c7-b76b-48b6dcc4b6cd",
+					"raw": "localhost:8080/city/e479597a-d147-4667-8cfe-970b3a595049",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"city",
-						"466b0761-f54c-47c7-b76b-48b6dcc4b6cd"
+						"e479597a-d147-4667-8cfe-970b3a595049"
 					]
 				}
 			},
@@ -132,14 +188,33 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cinema/50d90407-97d8-4c46-b8d0-4863edaf9931",
+					"raw": "localhost:8080/cinema/e479597a-d147-4667-8cfe-970b3a595049",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"cinema",
-						"50d90407-97d8-4c46-b8d0-4863edaf9931"
+						"e479597a-d147-4667-8cfe-970b3a595049"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific Movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/1e164544-d41d-45f5-9137-6c18810a2019",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"1e164544-d41d-45f5-9137-6c18810a2019"
 					]
 				}
 			},
