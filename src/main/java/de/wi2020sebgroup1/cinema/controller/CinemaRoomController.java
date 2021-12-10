@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.wi2020sebgroup1.cinema.communicationObjects.CinemaRoomCommunicationObject;
+import de.wi2020sebgroup1.cinema.configurationObject.CinemaRoomConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Cinema;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
@@ -39,43 +39,43 @@ public class CinemaRoomController {
 	@Autowired
 	CinemaRoomSeatingPlanRepository cinemaRoomSeatingPlanRepository;
 	
-	@PutMapping
-	public ResponseEntity<Object> addCinemaRoom(@RequestBody CinemaRoomCommunicationObject cinemaRoomCommunicationObject){
+	@PutMapping("/add")
+	public ResponseEntity<Object> addCinemaRoom(@RequestBody CinemaRoomConfigurationObject cinemaRoomConfigurationObject){
 		
 		CinemaRoom toBuild = new CinemaRoom();
 		Cinema toAddCinema = new Cinema();
 		CinemaRoomSeatingPlan toAddSeatingPlan = new CinemaRoomSeatingPlan();
 		
-		if(cinemaRoomCommunicationObject.cinemaRoomSeatingPlan != null) {
+		if(cinemaRoomConfigurationObject.cinemaRoomSeatingPlan != null) {
 			try {
-				toAddSeatingPlan = cinemaRoomSeatingPlanRepository.findById(cinemaRoomCommunicationObject.cinemaRoomSeatingPlan).get();
+				toAddSeatingPlan = cinemaRoomSeatingPlanRepository.findById(cinemaRoomConfigurationObject.cinemaRoomSeatingPlan).get();
 				toBuild.setCinemaRoomSeatingPlan(toAddSeatingPlan);
 			}
 			catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String("No CinemaRoomSeatingPlan with id \"" + cinemaRoomCommunicationObject.cinemaRoomSeatingPlan + "\" found!"), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Object>(new String("No CinemaRoomSeatingPlan with id \"" + cinemaRoomConfigurationObject.cinemaRoomSeatingPlan + "\" found!"), HttpStatus.NOT_FOUND);
 			}
 		}
 		
-		if(cinemaRoomCommunicationObject.cinemaID != null) {
+		if(cinemaRoomConfigurationObject.cinemaID != null) {
 			try {
-				toAddCinema = cinemaRepository.findById(cinemaRoomCommunicationObject.cinemaID).get();
+				toAddCinema = cinemaRepository.findById(cinemaRoomConfigurationObject.cinemaID).get();
 				toBuild.setCinema(toAddCinema);
 			}
 			catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String("No CinemaRoom with id \"" + cinemaRoomCommunicationObject.cinemaID + "\" found!"), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Object>(new String("No CinemaRoom with id \"" + cinemaRoomConfigurationObject.cinemaID + "\" found!"), HttpStatus.NOT_FOUND);
 			}
 		}
 		
 		
-		toBuild.setStory(cinemaRoomCommunicationObject.story);
-		toBuild.setWheelchairAccessible(cinemaRoomCommunicationObject.wheelchairAccessible);
+		toBuild.setStory(cinemaRoomConfigurationObject.story);
+		toBuild.setWheelchairAccessible(cinemaRoomConfigurationObject.wheelchairAccessible);
 		
 		
 		return new ResponseEntity<Object>(cinemaRoomRepository.save(toBuild), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateCinemaRoom(@PathVariable UUID id, @RequestBody CinemaRoomCommunicationObject cinemaRoomCommunicationObject){
+	public ResponseEntity<Object> updateCinemaRoom(@PathVariable UUID id, @RequestBody CinemaRoomConfigurationObject cinemaRoomConfigurationObject){
 		
 		Optional<CinemaRoom> oldRoomSearch = cinemaRoomRepository.findById(id);
 		CinemaRoom toBuild = new CinemaRoom();
@@ -87,29 +87,29 @@ public class CinemaRoomController {
 			toBuild = new CinemaRoom();
 			toBuild.setId(oldRoom.getId());
 			
-			if(cinemaRoomCommunicationObject.cinemaRoomSeatingPlan != null) {
+			if(cinemaRoomConfigurationObject.cinemaRoomSeatingPlan != null) {
 				try {
-					toAddSeatingPlan = cinemaRoomSeatingPlanRepository.findById(cinemaRoomCommunicationObject.cinemaRoomSeatingPlan).get();
+					toAddSeatingPlan = cinemaRoomSeatingPlanRepository.findById(cinemaRoomConfigurationObject.cinemaRoomSeatingPlan).get();
 					toBuild.setCinemaRoomSeatingPlan(toAddSeatingPlan);
 				}
 				catch(NoSuchElementException e) {
-					return new ResponseEntity<Object>(new String("No CinemaRoomSeatingPlan with id \"" + cinemaRoomCommunicationObject.cinemaRoomSeatingPlan + "\" found!"), HttpStatus.NOT_FOUND);
+					return new ResponseEntity<Object>(new String("No CinemaRoomSeatingPlan with id \"" + cinemaRoomConfigurationObject.cinemaRoomSeatingPlan + "\" found!"), HttpStatus.NOT_FOUND);
 				}
 			}
 			
-			if(cinemaRoomCommunicationObject.cinemaID != null) {
+			if(cinemaRoomConfigurationObject.cinemaID != null) {
 				try {
-					toAddCinema = cinemaRepository.findById(cinemaRoomCommunicationObject.cinemaID).get();
+					toAddCinema = cinemaRepository.findById(cinemaRoomConfigurationObject.cinemaID).get();
 					toBuild.setCinema(toAddCinema);
 				}
 				catch(NoSuchElementException e) {
-					return new ResponseEntity<Object>(new String("No CinemaRoom with id \"" + cinemaRoomCommunicationObject.cinemaID + "\" found!"), HttpStatus.NOT_FOUND);
+					return new ResponseEntity<Object>(new String("No CinemaRoom with id \"" + cinemaRoomConfigurationObject.cinemaID + "\" found!"), HttpStatus.NOT_FOUND);
 				}
 			}
 			
 			
-			toBuild.setStory(cinemaRoomCommunicationObject.story);
-			toBuild.setWheelchairAccessible(cinemaRoomCommunicationObject.wheelchairAccessible);
+			toBuild.setStory(cinemaRoomConfigurationObject.story);
+			toBuild.setWheelchairAccessible(cinemaRoomConfigurationObject.wheelchairAccessible);
 			return new ResponseEntity<Object>(cinemaRoomRepository.save(toBuild), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {

@@ -1,10 +1,10 @@
-package de.wi2020sebgroup1.cinema.communicationObjects;
+package de.wi2020sebgroup1.cinema.configurationObject;
 
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-public class CinemaRoomCommunicationObject { 
+public class CinemaRoomConfigurationObject { 
 	
 	
 	public int story;
@@ -12,7 +12,7 @@ public class CinemaRoomCommunicationObject {
 	public UUID cinemaID;
 	public UUID cinemaRoomSeatingPlan;
 	
-	public CinemaRoomCommunicationObject(@NotNull int story, @NotNull boolean wheelchairAccessible,
+	public CinemaRoomConfigurationObject(@NotNull int story, @NotNull boolean wheelchairAccessible,
 			UUID cinemaID, UUID cinemaRoomSeatingPlan) {
 		this.story = story;
 		this.wheelchairAccessible = wheelchairAccessible;
