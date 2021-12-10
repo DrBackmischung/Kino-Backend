@@ -29,6 +29,10 @@ public class CinemaRoomSeatingPlan {
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
 
+	public CinemaRoomSeatingPlan() {
+		
+	}
+	
 	public CinemaRoomSeatingPlan(@NotNull int seats) {
 		super();
 		this.seats = seats;
@@ -48,6 +52,10 @@ public class CinemaRoomSeatingPlan {
 
 	public CinemaRoom getCinemaRoom() {
 		return cinemaRoom;
+	}
+	
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	public void setCinemaRoom(CinemaRoom cinemaRoom) {

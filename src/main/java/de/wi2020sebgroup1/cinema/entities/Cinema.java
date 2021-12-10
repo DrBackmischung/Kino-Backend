@@ -51,6 +51,10 @@ public class Cinema {
 	@JoinColumn(name = "city", referencedColumnName = "id")
 	private City city;
 	
+	public Cinema() {
+		
+	}
+	
 	public Cinema(@NotNull String name, @NotNull String street, @NotNull String number,
 			@NotNull int cinemaRooms, @NotNull int stories, City city) {
 		super();

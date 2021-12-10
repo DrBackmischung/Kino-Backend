@@ -55,6 +55,10 @@ public class Show {
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
 	
+	public Show() {
+		
+	}
+	
 	public Show(Date showDate, Time startTime, Time endTime, Movie movie, Cinema cinema, CinemaRoom cinemaRoom) {
 		super();
 		this.showDate = showDate;
