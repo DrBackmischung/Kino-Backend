@@ -1,8 +1,5 @@
 package de.wi2020sebgroup1.cinema.controller;
 
-
-public class CinemaRoomSeatingPlanController {
-
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
