@@ -39,7 +39,7 @@ public class MovieController {
 		}
 	}
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateMovie(@PathVariable UUID id,@RequestBody Movie movie){
 		
 		Optional<Movie> toUpdate = movieRepository.findById(id);
