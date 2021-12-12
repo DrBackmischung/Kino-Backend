@@ -19,7 +19,7 @@ public class CityTest {
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
 		City o = new City(68159, "Mannheim");
-		o.setPLZ(26127);
+		o.setPlz(26127);
         assertEquals(o.getPlz(), 26127);
         o.setCity("Oldenburg");
         assertEquals(o.getCity(), "Oldenburg");
