@@ -47,7 +47,7 @@ public class CinemaRoomSeatingPlanController {
 			}
 		}
 		seatingPlan.setSeats(seatingPlanConfigurationObject.seats);
-		return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.OK);
+		return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
