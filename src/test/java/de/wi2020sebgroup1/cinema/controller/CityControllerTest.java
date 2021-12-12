@@ -2,6 +2,7 @@ package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -83,6 +84,13 @@ public class CityControllerTest {
             .andReturn().getResponse();
         assertEquals(jt.write(getCity()).getJson(), response.getContentAsString());
     }
+    
+    @Test
+    void testGetByIdException() throws Exception {
+        mvc.perform(get("/city/"+new UUID(0, 0))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
 
     @Test
     void testPut() throws Exception{
@@ -90,6 +98,15 @@ public class CityControllerTest {
         mvc.perform(
             put("/city/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCity()).getJson()))
         		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testDelete() throws Exception{
+        
+        mvc.perform(
+            delete("/city/"+uuid+"/"))
+        		.andExpect(status().isOk());
 
     }
 }

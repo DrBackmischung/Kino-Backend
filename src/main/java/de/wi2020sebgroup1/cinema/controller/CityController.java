@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -56,6 +57,17 @@ public class CityController {
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<City>> getCities(){
 		return new ResponseEntity<>(cityRepository.findAll(),HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deleteCity(@PathVariable UUID id){
+		
+		try {
+			cityRepository.deleteById(id);
+			return new ResponseEntity<>(id, HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<Object>(new String("No city with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+		}
 	}
 
 }
