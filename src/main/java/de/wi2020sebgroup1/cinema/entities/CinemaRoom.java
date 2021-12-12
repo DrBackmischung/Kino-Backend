@@ -49,6 +49,12 @@ public class CinemaRoom {
 		
 	}
 	
+	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible) {
+		super();
+		this.story = story;
+		this.wheelchairAccessible = wheelchairAccessible;
+	}
+	
 	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema,
 			CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
 		super();
@@ -78,6 +84,10 @@ public class CinemaRoom {
 		this.cinema = cinema;
 	}
 	
+	public void setId(UUID id) {
+		this.id = id;
+	}
+	
 	public void setStory(int story) {
 		this.story = story;
 	}
@@ -92,10 +102,6 @@ public class CinemaRoom {
 
 	public void setCinemaRoomSeatingPlan(CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
 	}
 
 	@Override

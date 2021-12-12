@@ -109,7 +109,7 @@ public class CinemaRoomSeatingPlanControllerTest {
         
         mvc.perform(
             put("/seatingPlan/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomSeattingPlanConfigurationObject(20, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomSeattingPlanConfigurationObject(20, 20, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }
