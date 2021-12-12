@@ -27,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.wi2020sebgroup1.cinema.configurationObject.CinemaRoomSeattingPlanConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 
@@ -43,6 +44,7 @@ public class CinemaRoomSeatingPlanControllerTest {
     WebApplicationContext wac;
 	
 	JacksonTester<CinemaRoomSeatingPlan> jt;
+	JacksonTester<CinemaRoomSeattingPlanConfigurationObject> jtco;
 	
 	static UUID uuid;
 	
@@ -96,8 +98,29 @@ public class CinemaRoomSeatingPlanControllerTest {
     void testPut() throws Exception{
         
         mvc.perform(
-            put("/seatingPlan/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
+            put("/seatingPlan/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
         		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testPutException() throws Exception{
+        
+        mvc.perform(
+            put("/seatingPlan/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomSeattingPlanConfigurationObject(20, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    void testUpdateException() throws Exception{
+        
+        mvc.perform(
+            put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
+            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
+        		.andExpect(status().isNotFound());
 
     }
 

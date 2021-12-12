@@ -51,7 +51,7 @@ public class CinemaRoomSeatingPlanController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateSeatingPkan(@PathVariable UUID id, @RequestBody CinemaRoomSeattingPlanConfigurationObject seatingPlanConfigurationObject){
+	public ResponseEntity<Object> updateSeatingPlan(@PathVariable UUID id, @RequestBody CinemaRoomSeattingPlanConfigurationObject seatingPlanConfigurationObject){
 		Optional<CinemaRoomSeatingPlan> oldSeatingPlan = seatingPlanRepository.findById(id);
 		
 		try {
@@ -71,7 +71,7 @@ public class CinemaRoomSeatingPlanController {
 			seatingPlan.setSeats(seatingPlanConfigurationObject.seats);
 			return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.OK);
 			
-		}catch(NoSuchElementException e) {
+		} catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>(new String ("No CinemaRoom with id \"" + seatingPlanConfigurationObject.cinemaRoomID + "\" found!"), 
 					HttpStatus.NOT_FOUND );
 		}
