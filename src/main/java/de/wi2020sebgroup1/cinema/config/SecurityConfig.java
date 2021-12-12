@@ -31,14 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        .csrf().disable()
 		        .authorizeRequests()
 		        .antMatchers("/admin/**").hasRole("ADMIN")
-		        .antMatchers("/v1*").anonymous()
 		        .antMatchers("/login*").permitAll()
+		        .antMatchers("/registration*").permitAll()
 		        .and()
 		        .cors()
                 .configurationSource(corsConfigurationSource())
                 .and()
-                .csrf()
-                .disable()
                 .authorizeRequests()
                 .anyRequest()
                 .permitAll()
@@ -50,13 +48,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    } 
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Arrays.asList("https://wi2020seb-cinema.azurewebsites.net/", "https://wi2020seb-cinema.azurewebsites-dev.net/", "https://localhost"));
+        configuration.setAllowedOrigins(Arrays.asList(
+        		"https://wi2020seb-cinema.azurewebsites.net/",
+        		"https://wi2020seb-cinema.azurewebsites-dev.net/",
+        		"https://localhost/",
+        		"https://localhost:3000/",
+        		"http://localhost/",
+        		"http://localhost:3000/"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("*"));
