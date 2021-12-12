@@ -47,6 +47,7 @@ public class CinemaRoomSeatingPlanController {
 			}
 		}
 		seatingPlan.setSeats(seatingPlanConfigurationObject.seats);
+		seatingPlan.setReihen(seatingPlanConfigurationObject.reihen);
 		return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.OK);
 	}
 	
@@ -69,6 +70,7 @@ public class CinemaRoomSeatingPlanController {
 				}
 			}
 			seatingPlan.setSeats(seatingPlanConfigurationObject.seats);
+			seatingPlan.setReihen(seatingPlanConfigurationObject.reihen);
 			return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.OK);
 			
 		}catch(NoSuchElementException e) {

@@ -25,6 +25,10 @@ public class CinemaRoomSeatingPlan {
 	@NotNull
 	private int seats;
 	
+	@Column
+	@NotNull
+	private int reihen;
+	
 	@OneToOne
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
@@ -36,6 +40,10 @@ public class CinemaRoomSeatingPlan {
 	public CinemaRoomSeatingPlan(@NotNull int seats) {
 		super();
 		this.seats = seats;
+	}
+	
+	public int getReihen() {
+		return reihen;
 	}
 
 	public UUID getId() {
@@ -56,6 +64,10 @@ public class CinemaRoomSeatingPlan {
 	
 	public void setId(UUID id) {
 		this.id = id;
+	}
+	
+	public void setReihen(int reihen) {
+		this.reihen = reihen;
 	}
 
 	public void setCinemaRoom(CinemaRoom cinemaRoom) {

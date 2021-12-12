@@ -162,13 +162,13 @@
 			"response": []
 		},
 		{
-			"name": "Add a new Cinema",
+			"name": "Add a new CinemaRoom",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"50d90407-97d8-4c46-b8d0-4863edaf9931\"\r\n}",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"5c58aa22-f655-4da8-a407-aa973b53390d\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -176,13 +176,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/cinemaRoom",
+					"raw": "localhost:8080/cinemaRoom/add",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"cinemaRoom"
+						"cinemaRoom",
+						"add"
 					]
 				}
 			},
@@ -195,7 +196,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"seats\": 300\r\n}",
+					"raw": "{\r\n    \"seats\": 100,\r\n    \"reihen\" : 4,\r\n    \"cinemaRoomID\": \"159e5a7b-45b8-4690-bfb1-bc073c37c629\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -210,6 +211,34 @@
 					"port": "8080",
 					"path": [
 						"seatingPlan",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Show",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2021-12-16\",\r\n    \"start\" : \"20:00:00\",\r\n    \"end\": \"23:00:00\",\r\n    \"movieID\" : \"a430c133-cdcf-4b2d-971f-c31ea74434f5\",\r\n    \"cinemaID\" : \"5c58aa22-f655-4da8-a407-aa973b53390d\",\r\n    \"cinemaRoomID\": \"159e5a7b-45b8-4690-bfb1-bc073c37c629\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/show/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"show",
 						"add"
 					]
 				}
@@ -252,7 +281,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": false,\r\n    \"cinemaID\": \"e479597a-d147-4667-8cfe-970b3a595049\"\r\n}",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": false,\r\n    \"cinemaID\": \"e479597a-d147-4667-8cfe-970b3a595049\",\r\n    \"cinemaRoomSeatingPlan\": \"1c3ffe32-22dd-43f4-bfae-c631dffa7468\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -260,14 +289,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/cinemaRoom/d495b31a-7c5a-46de-8009-770f0fe1e11e",
+					"raw": "localhost:8080/cinemaRoom/792a24fa-8cf7-4c3b-b30a-d1dfce5c21a5",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"cinemaRoom",
-						"d495b31a-7c5a-46de-8009-770f0fe1e11e"
+						"792a24fa-8cf7-4c3b-b30a-d1dfce5c21a5"
 					]
 				}
 			},
