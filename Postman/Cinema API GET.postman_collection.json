@@ -149,6 +149,45 @@
 			"response": []
 		},
 		{
+			"name": "Get All Shows",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/show/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"show",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Seats for Show",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/show/e863775b-9487-43cd-b4ce-889d98542bb3/seats",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"show",
+						"e863775b-9487-43cd-b4ce-889d98542bb3",
+						"seats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get specific City",
 			"request": {
 				"method": "GET",

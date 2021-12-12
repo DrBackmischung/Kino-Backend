@@ -2,6 +2,8 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -13,9 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -40,7 +44,7 @@ public class Show {
 	@NotNull
 	private java.sql.Time endTime;
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "movie_id", referencedColumnName = "id")
 	private Movie movie;
@@ -54,6 +58,10 @@ public class Show {
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
+	
+	@OneToMany(mappedBy="show")
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private List<Seat> seats = new ArrayList<>();
 	
 	public Show() {
 		

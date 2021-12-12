@@ -63,19 +63,19 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Delete a Show",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/seatingPlan/f31e33ad-efcb-47f2-995f-35af05b6828b",
+					"raw": "localhost:8080/show/6c1b4f08-4afb-4e82-a65d-6fac840c1caf",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"seatingPlan",
-						"f31e33ad-efcb-47f2-995f-35af05b6828b"
+						"show",
+						"6c1b4f08-4afb-4e82-a65d-6fac840c1caf"
 					]
 				}
 			},
