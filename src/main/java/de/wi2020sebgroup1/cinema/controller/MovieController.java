@@ -27,7 +27,7 @@ public class MovieController {
 	@Autowired
 	MovieRepository movieRepository;
 	
-	@PutMapping
+	@PutMapping("/add")
 	public ResponseEntity<Object> addMovie(@RequestBody Movie movie){
 		
 		try {
