@@ -2,9 +2,9 @@ package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -85,6 +85,13 @@ public class CinemaControllerTest {
             .andReturn().getResponse();
         assertEquals(jt.write(getCinema()).getJson(), response.getContentAsString());
     }
+    
+    @Test
+    void testGetByIdException() throws Exception {
+        mvc.perform(get("/cinema/"+new UUID(0, 0))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
 
     @Test
     void testPut() throws Exception{
@@ -100,7 +107,7 @@ public class CinemaControllerTest {
         
         mvc.perform(
             delete("/cinema/"+uuid+"/"))
-        		.andExpect(status().isNoContent());
+        		.andExpect(status().isOk());
 
     }
 }
