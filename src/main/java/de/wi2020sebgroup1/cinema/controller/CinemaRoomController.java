@@ -70,7 +70,7 @@ public class CinemaRoomController {
 		toBuild.setWheelchairAccessible(cinemaRoomConfigurationObject.wheelchairAccessible);
 		
 		
-		return new ResponseEntity<Object>(cinemaRoomRepository.save(toBuild), HttpStatus.OK);
+		return new ResponseEntity<Object>(cinemaRoomRepository.save(toBuild), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")

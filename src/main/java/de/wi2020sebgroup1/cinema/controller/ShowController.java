@@ -124,13 +124,13 @@ public class ShowController {
 			}
 		}
 
-		return new ResponseEntity<Object>(showRepository.save(toAdd), HttpStatus.OK);
+		return new ResponseEntity<Object>(showRepository.save(toAdd), HttpStatus.CREATED);
 		
 	}
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<Object> getAll(){
-		return new ResponseEntity(showRepository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<Object>(showRepository.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
@@ -173,9 +173,9 @@ public class ShowController {
 	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteShow(@PathVariable UUID id){
-		Optional<Show> showSearch = showRepository.findById(id);
+//		Optional<Show> showSearch = showRepository.findById(id);
 		try {
-			Show show = showSearch.get();
+//			Show show = showSearch.get();
 			//seatRepository.deleteAllByShow(show);
 			showRepository.deleteById(id);
 			return new ResponseEntity<Object>(new String("Show with id \"" + id + "\" deleted!"), HttpStatus.OK);

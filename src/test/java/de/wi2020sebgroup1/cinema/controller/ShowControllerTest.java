@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,9 +29,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.wi2020sebgroup1.cinema.entities.Cinema;
-import de.wi2020sebgroup1.cinema.entities.City;
-import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
+import de.wi2020sebgroup1.cinema.configurationObject.ShowConfigurationObject;
+import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,12 +40,13 @@ public class ShowControllerTest {
 	MockMvc mvc;
 	
 	@MockBean
-	CinemaRepository repo;
+	ShowRepository repo;
     
     @Autowired
     WebApplicationContext wac;
 	
-	JacksonTester<Cinema> jt;
+	JacksonTester<Show> jt;
+	JacksonTester<ShowConfigurationObject> jtco;
 	
 	static UUID uuid;
 	
@@ -58,37 +61,37 @@ public class ShowControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
     
-    Cinema getCinema() {
-    	Cinema c = new Cinema("Kino", "Kinostrasse", "11D", 5, 2, new City(0, null));
-    	c.setId(uuid);
-    	return c;
+    Show getShow() {
+    	Show s = new Show();
+    	s.setId(uuid);
+    	return s;
     }
     
-    Optional<Cinema> getOptionalCinema() {
-    	Cinema c = getCinema();
-    	return Optional.of(c);
+    Optional<Show> getOptionalShow() {
+    	Show s = getShow();
+    	return Optional.of(s);
     }
     
     @Test
     void testGetAll() throws Exception {
-    	when(repo.findAll()).thenReturn(new ArrayList<Cinema>());
-        mvc.perform(get("/cinema/getAll"))
+    	when(repo.findAll()).thenReturn(new ArrayList<Show>());
+        mvc.perform(get("/show/getAll"))
                 .andExpect(status().isOk());
     }
     
     @Test
     void testGetById() throws Exception {
-        when(repo.findById(uuid)).thenReturn(getOptionalCinema());
-        MockHttpServletResponse response = mvc.perform(get("/cinema/"+uuid)
+        when(repo.findById(uuid)).thenReturn(getOptionalShow());
+        MockHttpServletResponse response = mvc.perform(get("/show/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn().getResponse();
-        assertEquals(jt.write(getCinema()).getJson(), response.getContentAsString());
+        assertEquals(jt.write(getShow()).getJson(), response.getContentAsString());
     }
     
     @Test
     void testGetByIdException() throws Exception {
-        mvc.perform(get("/cinema/"+new UUID(0, 0))
+        mvc.perform(get("/show/"+new UUID(0, 0))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -97,8 +100,18 @@ public class ShowControllerTest {
     void testPut() throws Exception{
         
         mvc.perform(
-            put("/cinema/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinema()).getJson()))
+            put("/show/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getShow()).getJson()))
         		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testPutException() throws Exception{
+        
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
 
     }
 
@@ -106,7 +119,7 @@ public class ShowControllerTest {
     void testDelete() throws Exception{
         
         mvc.perform(
-            delete("/cinema/"+uuid+"/"))
+            delete("/show/"+uuid+"/"))
         		.andExpect(status().isOk());
 
     }
