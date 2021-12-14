@@ -43,27 +43,30 @@ import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 @AutoConfigureMockMvc
 public class ShowControllerTest {
 	
-	MockMvc mvc;
+//	MockMvc mvc;
 	
-	@InjectMocks
+	@Autowired
 	private ShowController showcontroller;
 	
-	@MockBean
+	@Autowired
+	MockMvc mvc;
+	
+	@Autowired
 	ShowRepository repo;
 	
-	@MockBean
+	@Autowired
 	CinemaRepository cinemaRepository;
 	
-	@MockBean
+	@Autowired
 	MovieRepository movieRepository;
 	
-	@MockBean
+	@Autowired
 	CinemaRoomRepository cinemaRoomRepository;
 	
-	@MockBean
+	@Autowired
 	CinemaRoomSeatingPlanRepository seatingPlanRepository;
 	
-	@MockBean
+	@Autowired
 	SeatRepository seatRepository;
     
     @Autowired
