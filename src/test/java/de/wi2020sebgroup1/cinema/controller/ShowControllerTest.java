@@ -31,6 +31,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.configurationObject.ShowConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
+import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
+import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
+import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @SpringBootTest
@@ -41,6 +46,21 @@ public class ShowControllerTest {
 	
 	@MockBean
 	ShowRepository repo;
+	
+	@MockBean
+	CinemaRepository cinemaRepository;
+	
+	@MockBean
+	MovieRepository movieRepository;
+	
+	@MockBean
+	CinemaRoomRepository cinemaRoomRepository;
+	
+	@MockBean
+	CinemaRoomSeatingPlanRepository seatingPlanRepository;
+	
+	@MockBean
+	SeatRepository seatRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -101,6 +121,11 @@ public class ShowControllerTest {
         
         mvc.perform(
             put("/show/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getShow()).getJson()))
+        		.andExpect(status().isCreated());
+        
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
     }
