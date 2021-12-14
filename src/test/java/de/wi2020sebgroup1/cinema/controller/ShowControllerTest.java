@@ -178,8 +178,14 @@ public class ShowControllerTest {
     
     @Test
     void testGetSeatsById() throws Exception {
-    	Optional<List<Seat>> seats = Optional.of(new ArrayList<Seat>());
-        when(seatRepository.findAllByShow(getShow())).thenReturn(seats);
+    	List<Seat> seats = new ArrayList<Seat>();
+    	seats.add(new Seat(1, 1, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	seats.add(new Seat(1, 2, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	seats.add(new Seat(2, 1, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	seats.add(new Seat(2, 2, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	seats.add(new Seat(2, 3, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	
+        when(seatRepository.findAllByShow(getShow())).thenReturn(Optional.of(seats));
         MockHttpServletResponse response = mvc.perform(get("/show/"+uuid+"/seats")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -257,7 +263,6 @@ public class ShowControllerTest {
     @Test
     void testDeleteException() throws Exception{
 
-    	doThrow().when(repo).deleteById(uuid);;
         mvc.perform(
             delete("/show/"+new UUID(420, 69)+"/"))
         		.andExpect(status().isNotFound());
