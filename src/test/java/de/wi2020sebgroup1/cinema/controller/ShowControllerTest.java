@@ -104,6 +104,8 @@ public class ShowControllerTest {
     
     CinemaRoomSeatingPlan getCinemaRoomSeatingPlan() {
     	CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(20);
+    	c.setReihen(5);
+    	c.setSeats(20);
     	c.setId(uuid);
     	return c;
     }
