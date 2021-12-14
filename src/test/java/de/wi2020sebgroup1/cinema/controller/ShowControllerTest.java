@@ -31,6 +31,11 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.configurationObject.ShowConfigurationObject;
+import de.wi2020sebgroup1.cinema.entities.Cinema;
+import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
+import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
+import de.wi2020sebgroup1.cinema.entities.City;
+import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
@@ -71,6 +76,7 @@ public class ShowControllerTest {
 	
 	JacksonTester<Show> jt;
 	JacksonTester<ShowConfigurationObject> jtco;
+	JacksonTester<CinemaRoomSeatingPlan> jt_seatingPlan;
 	
 	static UUID uuid;
 	
@@ -94,6 +100,50 @@ public class ShowControllerTest {
     Optional<Show> getOptionalShow() {
     	Show s = getShow();
     	return Optional.of(s);
+    }
+    
+    CinemaRoomSeatingPlan getCinemaRoomSeatingPlan() {
+    	CinemaRoomSeatingPlan c = new CinemaRoomSeatingPlan(20);
+    	c.setId(uuid);
+    	return c;
+    }
+    
+    Optional<CinemaRoomSeatingPlan> getOptionalCinemaRoomSeatingPlan() {
+    	CinemaRoomSeatingPlan c = getCinemaRoomSeatingPlan();
+    	return Optional.of(c);
+    }
+    
+    Cinema getCinema() {
+    	Cinema c = new Cinema("Kino", "Kinostrasse", "11D", 5, 2, new City(0, null));
+    	c.setId(uuid);
+    	return c;
+    }
+    
+    Optional<Cinema> getOptionalCinema() {
+    	Cinema c = getCinema();
+    	return Optional.of(c);
+    }
+    
+    Movie getMovie() {
+    	Movie m = new Movie("Shrek 3", "deutsch", 2.5, "Kitty Blume", "Ein Film", "localhost/img", 0);
+    	m.setId(uuid);
+    	return m;
+    }
+    
+    Optional<Movie> getOptionalMovie() {
+    	Movie m = getMovie();
+    	return Optional.of(m);
+    }
+    
+    CinemaRoom getCinemaRoom() {
+    	CinemaRoom c = new CinemaRoom(2, true);
+    	c.setId(uuid);
+    	return c;
+    }
+    
+    Optional<CinemaRoom> getOptionalCinemaRoom() {
+    	CinemaRoom c = getCinemaRoom();
+    	return Optional.of(c);
     }
     
     @Test
@@ -122,9 +172,12 @@ public class ShowControllerTest {
     
     @Test
     void testGetSeatsById() throws Exception {
-        mvc.perform(get("/show/"+uuid+"/seats")
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        MockHttpServletResponse response = mvc.perform(get("/show/"+uuid+"/seats")
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
+        assertEquals(jt_seatingPlan.write(getCinemaRoomSeatingPlan()).getJson(), response.getContentAsString());
     }
     
     @Test
@@ -140,6 +193,14 @@ public class ShowControllerTest {
         mvc.perform(
             put("/show/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getShow()).getJson()))
         		.andExpect(status().isCreated());
+
+        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
 
     }
 
