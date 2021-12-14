@@ -119,6 +119,20 @@ public class ShowControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
+    
+    @Test
+    void testGetSeatsById() throws Exception {
+        mvc.perform(get("/show/"+uuid+"/seats")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+    
+    @Test
+    void testGetSeatsByIdException() throws Exception {
+        mvc.perform(get("/show/"+new UUID(0, 0)+"/seats")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
 
     @Test
     void testPut() throws Exception{
