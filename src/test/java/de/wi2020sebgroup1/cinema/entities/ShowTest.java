@@ -13,7 +13,7 @@ public class ShowTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		Movie m = new Movie(null, null, 0, null, null, null);
+		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
@@ -30,7 +30,7 @@ public class ShowTest {
 	@Test
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
-		Movie m = new Movie(null, null, 0, null, null, null);
+		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
@@ -53,7 +53,7 @@ public class ShowTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
-		Movie m = new Movie(null, null, 0, null, null, null);
+		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
@@ -68,7 +68,7 @@ public class ShowTest {
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
-		Movie m = new Movie(null, null, 0, null, null, null);
+		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
