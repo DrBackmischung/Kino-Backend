@@ -104,7 +104,7 @@ public class MovieControllerTest {
     void testUpdateException() throws Exception{
         
         mvc.perform(
-            put("/movie/"+uuid, uuid, getMovie())
+            put("/movie/update/"+uuid, uuid, getMovie())
             	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
         		.andExpect(status().isNotFound());
 
