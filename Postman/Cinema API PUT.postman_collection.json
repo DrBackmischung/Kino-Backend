@@ -35,11 +35,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/cinema/add",
+					"raw": "{{ip}}/cinema/add",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinema",
 						"add"
@@ -78,11 +77,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/user",
+					"raw": "{{ip}}/user",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"user"
 					]
@@ -120,12 +118,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/city/add",
-					"protocol": "http",
+					"raw": "{{ip}}/city/add",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"city",
 						"add"
@@ -141,7 +137,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"titel\" : \"Alita: Battle Angle\",\r\n    \"language\": \"German\",\r\n    \"duration\": 2.45,\r\n    \"director\": \"James Cameron\",\r\n    \"description\": \"A deactivated cyborg's revived, but can't remember anything of her past and goes on a quest to find out who she is.\",\r\n    \"pictureLink\": \"https://m.media-amazon.com/images/M/MV5BMTQzYWYwYjctY2JhZS00NTYzLTllM2UtZWY5ZTk0NmYwYzIyXkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_.jpg\"\r\n}",
+					"raw": "{\r\n    \"titel\" : \"Avatar - Aufbruch nach Pandora\",\r\n    \"language\": \"German\",\r\n    \"duration\": 150,\r\n    \"director\": \"James Cameron\",\r\n    \"description\": \"A deactivated cyborg's revived, but can't remember anything of her past and goes on a quest to find out who she is.\",\r\n    \"pictureLink\": \"https://m.media-amazon.com/images/M/MV5BMTQzYWYwYjctY2JhZS00NTYzLTllM2UtZWY5ZTk0NmYwYzIyXkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_.jpg\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,11 +145,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/movie",
+					"raw": "{{ip}}/movie",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"movie"
 					]
@@ -168,7 +163,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"5c58aa22-f655-4da8-a407-aa973b53390d\"\r\n}",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"100db203-1014-4fbd-aaf0-ca72ab288c69\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -176,11 +171,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/cinemaRoom/add",
+					"raw": "{{ip}}/cinemaRoom/add",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinemaRoom",
 						"add"
@@ -196,7 +190,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"seats\": 100,\r\n    \"reihen\" : 4,\r\n    \"cinemaRoomID\": \"159e5a7b-45b8-4690-bfb1-bc073c37c629\"\r\n}",
+					"raw": "{\r\n    \"seats\": 100,\r\n    \"reihen\" : 4,\r\n    \"cinemaRoomID\": \"f71f3486-b71e-4eef-a796-736f125a03e5\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -204,11 +198,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/seatingPlan/add",
+					"raw": "{{ip}}/seatingPlan/add",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"seatingPlan",
 						"add"
@@ -224,7 +217,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"date\": \"2021-12-16\",\r\n    \"start\" : \"20:00:00\",\r\n    \"end\": \"23:00:00\",\r\n    \"movieID\" : \"a430c133-cdcf-4b2d-971f-c31ea74434f5\",\r\n    \"cinemaID\" : \"5c58aa22-f655-4da8-a407-aa973b53390d\",\r\n    \"cinemaRoomID\": \"159e5a7b-45b8-4690-bfb1-bc073c37c629\"\r\n}",
+					"raw": "{\r\n    \"date\": \"2021-12-16\",\r\n    \"start\" : \"20:00:00\",\r\n    \"end\": \"23:00:00\",\r\n    \"movieID\" : \"2c0e09d8-344c-452d-a95b-958223933693\",\r\n    \"cinemaID\" : \"100db203-1014-4fbd-aaf0-ca72ab288c69\",\r\n    \"cinemaRoomID\": \"f71f3486-b71e-4eef-a796-736f125a03e5\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -232,13 +225,39 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/show/add",
+					"raw": "{{ip}}/show/add",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"show",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Price",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\": 19.50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/price/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"price",
 						"add"
 					]
 				}
@@ -260,11 +279,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/movie/update/1e164544-d41d-45f5-9137-6c18810a2019",
+					"raw": "{{ip}}/movie/update/1e164544-d41d-45f5-9137-6c18810a2019",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"movie",
 						"update",
@@ -281,7 +299,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": false,\r\n    \"cinemaID\": \"e479597a-d147-4667-8cfe-970b3a595049\",\r\n    \"cinemaRoomSeatingPlan\": \"1c3ffe32-22dd-43f4-bfae-c631dffa7468\"\r\n}",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": false,\r\n    \"cinemaID\": \"100db203-1014-4fbd-aaf0-ca72ab288c69\",\r\n    \"cinemaRoomSeatingPlan\": \"7eba7dea-1429-4f7b-ae77-6d844a46ccda\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -289,14 +307,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/cinemaRoom/792a24fa-8cf7-4c3b-b30a-d1dfce5c21a5",
+					"raw": "{{ip}}/cinemaRoom/f71f3486-b71e-4eef-a796-736f125a03e5",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinemaRoom",
-						"792a24fa-8cf7-4c3b-b30a-d1dfce5c21a5"
+						"f71f3486-b71e-4eef-a796-736f125a03e5"
 					]
 				}
 			},
@@ -317,11 +334,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/seatingPlan/0a789032-eba6-4fa7-acde-92ca380780ff",
+					"raw": "{{ip}}/seatingPlan/0a789032-eba6-4fa7-acde-92ca380780ff",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"seatingPlan",
 						"0a789032-eba6-4fa7-acde-92ca380780ff"

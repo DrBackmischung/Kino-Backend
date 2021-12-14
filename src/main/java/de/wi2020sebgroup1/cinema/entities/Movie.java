@@ -43,6 +43,9 @@ public class Movie {
 	@NotNull
 	private String pictureLink;
 	
+	@Column
+	private int FSK;
+	
 	//ADD KINOSAAL
 	
 	public Movie() {
@@ -50,7 +53,7 @@ public class Movie {
 	}
 	
 	public Movie(@NotNull String titel, @NotNull String language, @NotNull double duration, @NotNull String director,
-			@NotNull String description, @NotNull String pictureLink) {
+			@NotNull String description, @NotNull String pictureLink, @NotNull int FSK) {
 		super();
 		this.titel = titel;
 		this.language = language;
@@ -58,6 +61,7 @@ public class Movie {
 		this.director = director;
 		this.description = description;
 		this.pictureLink = pictureLink;
+		this.FSK = FSK;
 	}
 
 	public String getDirector() {
@@ -88,6 +92,10 @@ public class Movie {
 		return pictureLink;
 	}
 	
+	public int getFSK() {
+		return FSK;
+	}
+	
 	public void setDirector(String director) {
 		this.director = director;
 	}
@@ -110,6 +118,10 @@ public class Movie {
 	
 	public void setPictureLink(String pictureLink) {
 		this.pictureLink = pictureLink;
+	}
+	
+	public void setFSK(int fSK) {
+		FSK = fSK;
 	}
 
 	public void setId(UUID id) {

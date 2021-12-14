@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.controller;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @Controller
 @RestController
@@ -26,6 +29,9 @@ public class MovieController {
 	
 	@Autowired
 	MovieRepository movieRepository;
+	
+	@Autowired
+	ShowRepository showRepository;
 	
 	@PutMapping("/add")
 	public ResponseEntity<Object> addMovie(@RequestBody Movie movie){
@@ -39,7 +45,7 @@ public class MovieController {
 		}
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<Object> updateMovie(@PathVariable UUID id,@RequestBody Movie movie){
 		
 		Optional<Movie> toUpdate = movieRepository.findById(id);
@@ -70,6 +76,27 @@ public class MovieController {
 		try {
 			Movie toReturn = movie.get();
 			return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new String("No movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
+	@GetMapping("/{id}/shows")
+	public ResponseEntity<Object> getShowsForMovie(@PathVariable UUID id){
+		
+		Optional<Movie> requested = movieRepository.findById(id);
+		
+		try {
+			Optional<List<Show>> shows = showRepository.findAllByMovie(requested.get());
+			
+			try {
+				return new ResponseEntity<Object>(shows.get(), HttpStatus.OK);
+			}
+			catch (NoSuchElementException e) {
+				return new ResponseEntity<Object>(new String("No Shows for Movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			}
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>(new String("No movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
