@@ -59,8 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		"https://wi2020seb-cinema.azurewebsites-dev.net/",
         		"https://localhost/",
         		"https://localhost:3000/",
+        		"https://localhost:3001/",
+        		"https://localhost:3002/",
         		"http://localhost/",
-        		"http://localhost:3000/"));
+        		"http://localhost:3000/",
+				"http://localhost:3001/",
+				"http://localhost:3002/"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("*"));
