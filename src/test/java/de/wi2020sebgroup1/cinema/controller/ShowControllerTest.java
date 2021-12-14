@@ -2,6 +2,7 @@ package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -10,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +39,7 @@ import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
@@ -172,19 +176,25 @@ public class ShowControllerTest {
             .andExpect(status().isNotFound());
     }
     
-//    @Test
-//    void testGetSeatsById() throws Exception {
-//        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
-//        MockHttpServletResponse response = mvc.perform(get("/show/"+uuid+"/seats")
-//            .accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isOk())
-//            .andReturn().getResponse();
-//        assertEquals(jt_seatingPlan.write(getCinemaRoomSeatingPlan()).getJson(), response.getContentAsString());
-//    }
+    @Test
+    void testGetSeatsById() throws Exception {
+    	Optional<List<Seat>> seats = Optional.of(new ArrayList<Seat>());
+        when(seatRepository.findAllByShow(getShow())).thenReturn(seats);
+        MockHttpServletResponse response = mvc.perform(get("/show/"+uuid+"/seats")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
+        assertEquals(jt_seatingPlan.write(getCinemaRoomSeatingPlan()).getJson(), response.getContentAsString());
+    }
     
     @Test
     void testGetSeatsByIdException() throws Exception {
         mvc.perform(get("/show/"+new UUID(0, 0)+"/seats")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+        
+        when(seatRepository.findAllByShow(getShow())).thenThrow(new NoSuchElementException());
+        mvc.perform(get("/show/"+uuid+"/seats")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
@@ -243,4 +253,15 @@ public class ShowControllerTest {
         		.andExpect(status().isOk());
 
     }
+
+    @Test
+    void testDeleteException() throws Exception{
+
+    	doThrow().when(repo).deleteById(uuid);;
+        mvc.perform(
+            delete("/show/"+new UUID(420, 69)+"/"))
+        		.andExpect(status().isNotFound());
+
+    }
+    
 }
