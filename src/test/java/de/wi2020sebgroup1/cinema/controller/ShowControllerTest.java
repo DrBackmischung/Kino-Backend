@@ -170,15 +170,15 @@ public class ShowControllerTest {
             .andExpect(status().isNotFound());
     }
     
-    @Test
-    void testGetSeatsById() throws Exception {
-        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        MockHttpServletResponse response = mvc.perform(get("/show/"+uuid+"/seats")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn().getResponse();
-        assertEquals(jt_seatingPlan.write(getCinemaRoomSeatingPlan()).getJson(), response.getContentAsString());
-    }
+//    @Test
+//    void testGetSeatsById() throws Exception {
+//        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+//        MockHttpServletResponse response = mvc.perform(get("/show/"+uuid+"/seats")
+//            .accept(MediaType.APPLICATION_JSON))
+//            .andExpect(status().isOk())
+//            .andReturn().getResponse();
+//        assertEquals(jt_seatingPlan.write(getCinemaRoomSeatingPlan()).getJson(), response.getContentAsString());
+//    }
     
     @Test
     void testGetSeatsByIdException() throws Exception {
