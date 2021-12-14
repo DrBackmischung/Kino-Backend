@@ -11,11 +11,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cinema/50d90407-97d8-4c46-b8d0-4863edaf9931",
+					"raw": "{{ip}}/cinema/50d90407-97d8-4c46-b8d0-4863edaf9931",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinema",
 						"50d90407-97d8-4c46-b8d0-4863edaf9931"
@@ -30,11 +29,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/movie/31444aed-4f9c-4701-add7-a6137019bd1a",
+					"raw": "{{ip}}/movie/31444aed-4f9c-4701-add7-a6137019bd1a",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"movie",
 						"31444aed-4f9c-4701-add7-a6137019bd1a"
@@ -49,11 +47,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cinemaRoom/0a789032-eba6-4fa7-acde-92ca380780ff",
+					"raw": "{{ip}}/cinemaRoom/0a789032-eba6-4fa7-acde-92ca380780ff",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinemaRoom",
 						"0a789032-eba6-4fa7-acde-92ca380780ff"
@@ -68,14 +65,31 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/show/6c1b4f08-4afb-4e82-a65d-6fac840c1caf",
+					"raw": "{{ip}}/show/6c1b4f08-4afb-4e82-a65d-6fac840c1caf",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"show",
 						"6c1b4f08-4afb-4e82-a65d-6fac840c1caf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Price",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/price/d870059e-a8da-45f4-8e9c-d4ec07a97443",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"price",
+						"d870059e-a8da-45f4-8e9c-d4ec07a97443"
 					]
 				}
 			},

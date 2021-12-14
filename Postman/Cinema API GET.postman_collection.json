@@ -11,11 +11,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/users",
+					"raw": "{{ip}}/users",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"users"
 					]
@@ -44,11 +43,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cinema/getAll",
+					"raw": "{{ip}}/cinema/getAll",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinema",
 						"getAll"
@@ -78,11 +76,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/city/getAll",
+					"raw": "{{ip}}/city/getAll",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"city",
 						"getAll"
@@ -97,11 +94,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/movie/getAll",
+					"raw": "{{ip}}/movie/getAll",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"movie",
 						"getAll"
@@ -116,11 +112,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cinemaRoom/getAll",
+					"raw": "{{ip}}/cinemaRoom/getAll",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinemaRoom",
 						"getAll"
@@ -135,11 +130,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/seatingPlan/getAll",
+					"raw": "{{ip}}/seatingPlan/getAll",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"seatingPlan",
 						"getAll"
@@ -154,13 +148,30 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/show/getAll",
+					"raw": "{{ip}}/show/getAll",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"show",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/price/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"price",
 						"getAll"
 					]
 				}
@@ -173,15 +184,33 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/show/e863775b-9487-43cd-b4ce-889d98542bb3/seats",
+					"raw": "{{ip}}/show/488b8944-6fca-40df-a62b-699e49b52a26/seats",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"show",
-						"e863775b-9487-43cd-b4ce-889d98542bb3",
+						"488b8944-6fca-40df-a62b-699e49b52a26",
 						"seats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Shows by MovieID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/movie/2c0e09d8-344c-452d-a95b-958223933693/shows",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie",
+						"2c0e09d8-344c-452d-a95b-958223933693",
+						"shows"
 					]
 				}
 			},
@@ -193,11 +222,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/city/e479597a-d147-4667-8cfe-970b3a595049",
+					"raw": "{{ip}}/city/e479597a-d147-4667-8cfe-970b3a595049",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"city",
 						"e479597a-d147-4667-8cfe-970b3a595049"
@@ -227,11 +255,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cinema/e479597a-d147-4667-8cfe-970b3a595049",
+					"raw": "{{ip}}/cinema/e479597a-d147-4667-8cfe-970b3a595049",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"cinema",
 						"e479597a-d147-4667-8cfe-970b3a595049"
@@ -246,11 +273,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/movie/1e164544-d41d-45f5-9137-6c18810a2019",
+					"raw": "{{ip}}/movie/1e164544-d41d-45f5-9137-6c18810a2019",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
 					"path": [
 						"movie",
 						"1e164544-d41d-45f5-9137-6c18810a2019"
