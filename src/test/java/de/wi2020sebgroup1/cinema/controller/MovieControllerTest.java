@@ -57,7 +57,7 @@ public class MovieControllerTest {
     }
     
     Movie getMovie() {
-    	Movie m = new Movie("Shrek 3", "deutsch", 2.5, "Kitty Blume", "Ein Film", "localhost/img");
+    	Movie m = new Movie("Shrek 3", "deutsch", 2.5, "Kitty Blume", "Ein Film", "localhost/img", 0);
     	m.setId(uuid);
     	return m;
     }
