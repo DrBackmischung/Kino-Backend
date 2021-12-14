@@ -16,6 +16,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,6 +44,9 @@ import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 public class ShowControllerTest {
 	
 	MockMvc mvc;
+	
+	@InjectMocks
+	private ShowController showcontroller;
 	
 	@MockBean
 	ShowRepository repo;
@@ -121,11 +125,6 @@ public class ShowControllerTest {
         
         mvc.perform(
             put("/show/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getShow()).getJson()))
-        		.andExpect(status().isCreated());
-        
-        mvc.perform(
-            put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
     }
