@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,6 +38,7 @@ import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
@@ -149,6 +151,14 @@ public class ShowControllerTest {
     	return Optional.of(c);
     }
     
+    Optional<List<Seat>> getOptionalSeatList() {
+    	List<Seat> l = new ArrayList<>();
+    	l.add(new Seat(0, 0, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(1, 1, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(3, 2, true, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	return Optional.of(l);
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<Show>());
@@ -171,6 +181,15 @@ public class ShowControllerTest {
         mvc.perform(get("/show/"+new UUID(0, 0))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void testGetSeatsById() throws Exception {
+        when(repo.findById(uuid)).thenReturn(getOptionalShow());
+        when(seatRepository.findAllByShow(getShow())).thenReturn(getOptionalSeatList());
+        mvc.perform(get("/show/"+uuid+"/seats")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
     }
     
     @Test

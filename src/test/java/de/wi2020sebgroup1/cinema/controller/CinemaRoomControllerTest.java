@@ -193,6 +193,12 @@ public class CinemaRoomControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
 
+        when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        mvc.perform(
+            put("/cinemaRoom/"+uuid+"/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, null, null)).getJson()))
+        		.andExpect(status().isNotFound());
+
     }
 
     @Test
