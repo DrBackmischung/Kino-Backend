@@ -96,9 +96,8 @@ public class ShowController {
 			try {
 				CinemaRoom room = roomSearch.get();
 				toAdd.setCinemaRoom(room);
-				Optional<CinemaRoomSeatingPlan> seatingPlanSearch = seatingPlanRepository.findByCinemaRoom(room);
 				try {
-					CinemaRoomSeatingPlan seatingPlan = seatingPlanSearch.get();
+					CinemaRoomSeatingPlan seatingPlan = room.getCinemaRoomSeatingPlan();
 					int seatsPerRow = seatingPlan.getSeats() / seatingPlan.getReihen();
 					List<Seat> showSeats = new ArrayList<>();
 					

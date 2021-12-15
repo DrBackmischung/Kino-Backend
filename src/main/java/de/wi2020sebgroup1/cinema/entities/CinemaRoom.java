@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 
 @Entity
@@ -43,7 +45,7 @@ public class CinemaRoom {
 	private Cinema cinema;
 	
 
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cinemaRoomSeatingPlan_id", referencedColumnName = "id")
 	private CinemaRoomSeatingPlan cinemaRoomSeatingPlan;
 	

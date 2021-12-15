@@ -33,7 +33,7 @@ public class MovieController {
 	@Autowired
 	ShowRepository showRepository;
 	
-	@PutMapping
+	@PutMapping("/add")
 	public ResponseEntity<Object> addMovie(@RequestBody Movie movie){
 		
 		try {
