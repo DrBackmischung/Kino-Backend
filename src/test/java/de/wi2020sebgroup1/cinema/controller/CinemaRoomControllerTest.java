@@ -137,7 +137,7 @@ public class CinemaRoomControllerTest {
         		.andExpect(status().isCreated());
         
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-        when(cinemaRoomSeatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(cinemaRoomSeatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/cinemaRoom/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, uuid)).getJson()))
@@ -165,7 +165,7 @@ public class CinemaRoomControllerTest {
 
         when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-        when(cinemaRoomSeatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(cinemaRoomSeatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/cinemaRoom/"+uuid+"/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, uuid)).getJson()))
