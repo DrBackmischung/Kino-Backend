@@ -103,7 +103,7 @@ public class CinemaRoomController {
 					toBuild.setCinema(toAddCinema);
 				}
 				catch(NoSuchElementException e) {
-					return new ResponseEntity<Object>(new String("No CinemaRoom with id \"" + cinemaRoomConfigurationObject.cinemaID + "\" found!"), HttpStatus.NOT_FOUND);
+					return new ResponseEntity<Object>(new String("No Cinema with id \"" + cinemaRoomConfigurationObject.cinemaID + "\" found!"), HttpStatus.NOT_FOUND);
 				}
 			}
 			

@@ -94,6 +94,25 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Cancel a Ticket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/ticket/cancel/84fd264f-b8e0-48a8-b8b7-d80cb36749d7",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"cancel",
+						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

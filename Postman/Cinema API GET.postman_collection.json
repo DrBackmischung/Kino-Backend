@@ -11,12 +11,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/users",
+					"raw": "{{ip}}/user/getAll",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
-						"users"
+						"user",
+						"getAll"
 					]
 				}
 			},
@@ -179,18 +180,36 @@
 			"response": []
 		},
 		{
+			"name": "Get All Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/ticket/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Seats for Show",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/show/488b8944-6fca-40df-a62b-699e49b52a26/seats",
+					"raw": "{{ip}}/show/118e31db-145a-403d-834c-a683de7ddce2/seats",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
 						"show",
-						"488b8944-6fca-40df-a62b-699e49b52a26",
+						"118e31db-145a-403d-834c-a683de7ddce2",
 						"seats"
 					]
 				}
@@ -280,6 +299,24 @@
 					"path": [
 						"movie",
 						"1e164544-d41d-45f5-9137-6c18810a2019"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific Ticket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/ticket/84fd264f-b8e0-48a8-b8b7-d80cb36749d7",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
 					]
 				}
 			},
