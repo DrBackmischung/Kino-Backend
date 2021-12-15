@@ -169,7 +169,7 @@ public class CinemaRoomControllerTest {
         mvc.perform(
             put("/cinemaRoom/"+uuid+"/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, uuid)).getJson()))
-        		.andExpect(status().isCreated());
+        		.andExpect(status().isOk());
 
     }
 
