@@ -130,11 +130,6 @@ public class MovieControllerTest {
         mvc.perform(get("/movie/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
-        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        when(showRepository.findAllByMovie(any())).thenThrow(new NoSuchElementException());
-        mvc.perform(get("/movie/"+uuid)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
     }
 
     @Test
