@@ -3,12 +3,14 @@ package de.wi2020sebgroup1.cinema.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -71,6 +73,12 @@ public class CityControllerTest {
     	return Optional.of(c);
     }
     
+    List<City> getCityList() {
+    	List<City> l = new ArrayList<>();
+    	l.add(getCity());
+    	return l;
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<City>());
@@ -101,6 +109,11 @@ public class CityControllerTest {
         mvc.perform(
             put("/city/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCity()).getJson()))
         		.andExpect(status().isCreated());
+
+        when(repo.findByPlz(anyInt())).thenReturn(getCityList());
+        mvc.perform(
+            put("/city/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCity()).getJson()))
+        		.andExpect(status().isOk());
 
     }
 

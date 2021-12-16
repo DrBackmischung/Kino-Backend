@@ -119,18 +119,21 @@ public class MovieControllerTest {
     void testGetShowsById() throws Exception {
         when(repo.findById(uuid)).thenReturn(getOptionalMovie());
         when(showRepository.findAllByMovie(any())).thenReturn(getOptionalShows());
-        MockHttpServletResponse response = mvc.perform(get("/movie/"+uuid)
+        mvc.perform(get("/movie/"+uuid+"/shows")
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn().getResponse();
-        assertEquals(jt.write(getMovie()).getJson(), response.getContentAsString());
+            .andExpect(status().isOk());
     }
     
     @Test
     void testGetShowsByIdException() throws Exception {
-        mvc.perform(get("/movie/"+uuid)
+        mvc.perform(get("/movie/"+uuid+"/shows")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
+
+        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(get("/movie/"+uuid+"/shows")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -243,6 +243,13 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
+
     }
 
     @Test

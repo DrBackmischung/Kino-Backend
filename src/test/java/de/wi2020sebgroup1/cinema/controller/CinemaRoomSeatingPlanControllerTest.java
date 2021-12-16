@@ -121,6 +121,12 @@ public class CinemaRoomSeatingPlanControllerTest {
             put("/seatingPlan/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
         		.andExpect(status().isCreated());
+    	
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        mvc.perform(
+            put("/seatingPlan/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomSeattingPlanConfigurationObject(20, 20, uuid)).getJson()))
+        		.andExpect(status().isCreated());
 
     }
 
@@ -142,6 +148,13 @@ public class CinemaRoomSeatingPlanControllerTest {
         mvc.perform(
             put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
             	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
+        		.andExpect(status().isOk());
+
+        when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        mvc.perform(
+            put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomSeattingPlanConfigurationObject(20, 20, uuid)).getJson()))
         		.andExpect(status().isOk());
 
     }
