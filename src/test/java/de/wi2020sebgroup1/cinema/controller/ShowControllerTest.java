@@ -53,7 +53,7 @@ public class ShowControllerTest {
 	
 	MockMvc mvc;
 	
-	@InjectMocks
+	@Autowired
 	private ShowController showcontroller;
 	
 	@MockBean
