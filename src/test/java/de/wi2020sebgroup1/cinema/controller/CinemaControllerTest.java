@@ -2,12 +2,14 @@ package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,8 +30,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.entities.Cinema;
+import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
+import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,6 +43,9 @@ public class CinemaControllerTest {
 	
 	@MockBean
 	CinemaRepository repo;
+	
+	@MockBean
+	CityRepository cityRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -95,7 +102,18 @@ public class CinemaControllerTest {
 
     @Test
     void testPut() throws Exception{
-        
+
+        mvc.perform(
+            put("/cinema/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinema()).getJson()))
+        		.andExpect(status().isCreated());
+    	List<City> l = new ArrayList<>();
+    	l.add(new City(26127, "Oldenburg"));
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(l);
+        mvc.perform(
+            put("/cinema/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinema()).getJson()))
+        		.andExpect(status().isCreated());
+    	l.add(new City(26133, "Oldenburg"));
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(l);
         mvc.perform(
             put("/cinema/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinema()).getJson()))
         		.andExpect(status().isCreated());
