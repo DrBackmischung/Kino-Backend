@@ -22,6 +22,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -34,6 +35,7 @@ import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @SpringBootTest
+@TestPropertySource(locations="classpath:test.properties")
 @AutoConfigureMockMvc
 public class MovieControllerTest {
 	
