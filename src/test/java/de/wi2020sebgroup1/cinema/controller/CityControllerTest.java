@@ -2,6 +2,7 @@ package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -98,6 +99,16 @@ public class CityControllerTest {
         mvc.perform(
             put("/city/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCity()).getJson()))
         		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testPutException() throws Exception{
+
+        when(repo.save(any())).thenThrow(new IllegalArgumentException());
+        mvc.perform(
+            put("/city/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getCity()).getJson()))
+        		.andExpect(status().isNotAcceptable());
 
     }
 
