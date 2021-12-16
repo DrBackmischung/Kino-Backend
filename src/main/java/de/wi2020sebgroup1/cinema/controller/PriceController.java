@@ -29,7 +29,7 @@ public class PriceController {
 	
 	@PutMapping("/add")
 	public ResponseEntity<Object> addPrice(@RequestBody Price price){
-		return new ResponseEntity<Object>(priceRepository.save(price), HttpStatus.OK);
+		return new ResponseEntity<Object>(priceRepository.save(price), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/getAll")
