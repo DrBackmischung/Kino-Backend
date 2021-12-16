@@ -16,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -37,7 +36,7 @@ import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 
-@WebMvcTest
+@SpringBootTest
 @AutoConfigureMockMvc
 public class CinemaRoomControllerTest {
 	
