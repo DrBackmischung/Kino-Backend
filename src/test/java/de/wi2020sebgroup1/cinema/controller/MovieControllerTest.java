@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,7 +34,7 @@ import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
-@SpringBootTest
+@WebMvcTest
 @AutoConfigureMockMvc
 public class MovieControllerTest {
 	
