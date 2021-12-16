@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.controller;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -7,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,7 +29,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,6 +41,9 @@ public class MovieControllerTest {
 	
 	@MockBean
 	MovieRepository repo;
+	
+	@MockBean
+	ShowRepository showRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -67,6 +74,21 @@ public class MovieControllerTest {
     	return Optional.of(m);
     }
     
+    Show getShow() {
+    	Show s = new Show();
+    	s.setId(uuid);
+    	return s;
+    }
+    
+    Optional<List<Show>> getOptionalShows() {
+    	Show s = getShow();
+    	Show s2 = getShow();
+    	List<Show> l = new ArrayList<>();
+    	l.add(s);
+    	l.add(s2);
+    	return Optional.of(l);
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<Movie>());
@@ -90,6 +112,28 @@ public class MovieControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
+    
+    @Test
+    void testGetShowsById() throws Exception {
+        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+        when(showRepository.findAllByMovie(any())).thenReturn(getOptionalShows());
+        MockHttpServletResponse response = mvc.perform(get("/movie/"+uuid)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
+        assertEquals(jt.write(getMovie()).getJson(), response.getContentAsString());
+    }
+    
+    @Test
+    void testGetShowsByIdException() throws Exception {
+        mvc.perform(get("/movie/"+uuid)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(get("/movie/"+uuid)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 
     @Test
     void testPut() throws Exception{
@@ -97,6 +141,27 @@ public class MovieControllerTest {
         mvc.perform(
             put("/movie/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
         		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testPutException() throws Exception{
+
+        when(repo.save(any())).thenThrow(new IllegalArgumentException());
+        mvc.perform(
+            put("/movie/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
+        		.andExpect(status().isInternalServerError());
+
+    }
+
+    @Test
+    void testUpdate() throws Exception{
+
+        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(
+            put("/movie/update/"+uuid, uuid, getMovie())
+            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
+        		.andExpect(status().isOk());
 
     }
 
