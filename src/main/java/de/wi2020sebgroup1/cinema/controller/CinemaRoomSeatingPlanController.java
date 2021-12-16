@@ -4,6 +4,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +36,15 @@ public class CinemaRoomSeatingPlanController {
 	CinemaRoomRepository cinemaRoomRepository;
 	
 	@PutMapping("/add")
+	@Transactional
 	public ResponseEntity<Object> addSeatingPlan(@RequestBody CinemaRoomSeattingPlanConfigurationObject seatingPlanConfigurationObject){
 		CinemaRoomSeatingPlan seatingPlan = new CinemaRoomSeatingPlan();
+		CinemaRoom cinemaRoom = new CinemaRoom();
 		if(seatingPlanConfigurationObject.cinemaRoomID != null) {
 			try {
-				Optional<CinemaRoom> cinemaRoom =  cinemaRoomRepository.findById(seatingPlanConfigurationObject.cinemaRoomID);
-				seatingPlan.setCinemaRoom(cinemaRoom.get());
+				Optional<CinemaRoom> cinemaRoomSearch =  cinemaRoomRepository.findById(seatingPlanConfigurationObject.cinemaRoomID);
+				cinemaRoom = cinemaRoomSearch.get();
+				seatingPlan.setCinemaRoom(cinemaRoom);
 			}
 			catch(NoSuchElementException e) {
 				return new ResponseEntity<Object>(new String ("No CinemaRoom with id \"" + seatingPlanConfigurationObject.cinemaRoomID + "\" found!"), 
@@ -48,6 +53,7 @@ public class CinemaRoomSeatingPlanController {
 		}
 		seatingPlan.setSeats(seatingPlanConfigurationObject.seats);
 		seatingPlan.setReihen(seatingPlanConfigurationObject.reihen);
+		cinemaRoom.setCinemaRoomSeatingPlan(seatingPlan);
 		return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.CREATED);
 	}
 	
@@ -96,6 +102,7 @@ public class CinemaRoomSeatingPlanController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Transactional
 	public ResponseEntity<Object> deleteById(@PathVariable UUID id){
 		seatingPlanRepository.deleteById(id);
 		return new ResponseEntity<Object>(new String("Seatingplan with id \"" + id +"\" deleted!"), HttpStatus.OK);
