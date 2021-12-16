@@ -28,7 +28,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.configurationObject.CinemaRoomSeattingPlanConfigurationObject;
+import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
+import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 
 @SpringBootTest
@@ -39,6 +41,9 @@ public class CinemaRoomSeatingPlanControllerTest {
 	
 	@MockBean
 	CinemaRoomSeatingPlanRepository repo;
+	
+	@MockBean
+	CinemaRoomRepository cinemaRoomRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -70,6 +75,17 @@ public class CinemaRoomSeatingPlanControllerTest {
     	return Optional.of(c);
     }
     
+    CinemaRoom getCinemaRoom() {
+    	CinemaRoom c = new CinemaRoom(2, true);
+    	c.setId(uuid);
+    	return c;
+    }
+    
+    Optional<CinemaRoom> getOptionalCinemaRoom() {
+    	CinemaRoom c = getCinemaRoom();
+    	return Optional.of(c);
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<CinemaRoomSeatingPlan>());
@@ -96,7 +112,8 @@ public class CinemaRoomSeatingPlanControllerTest {
 
     @Test
     void testPut() throws Exception{
-        
+    	
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         mvc.perform(
             put("/seatingPlan/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
@@ -115,8 +132,26 @@ public class CinemaRoomSeatingPlanControllerTest {
     }
 
     @Test
+    void testUpdate() throws Exception{
+
+        when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        mvc.perform(
+            put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
+            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
+        		.andExpect(status().isNotFound());
+
+    }
+
+    @Test
     void testUpdateException() throws Exception{
         
+        mvc.perform(
+            put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
+            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
+        		.andExpect(status().isNotFound());
+
+        when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
             	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
