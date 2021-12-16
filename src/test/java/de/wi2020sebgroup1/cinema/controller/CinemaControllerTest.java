@@ -40,10 +40,10 @@ public class CinemaControllerTest {
 	
 	MockMvc mvc;
 	
-	@Autowired
+	@MockBean
 	CinemaRepository repo;
 	
-	@Autowired
+	@MockBean
 	CityRepository cityRepository;
     
     @Autowired
