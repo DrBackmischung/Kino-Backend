@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.exceptions.MovieNotCreatableException;
+import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
@@ -41,7 +43,7 @@ public class MovieController {
 			return new ResponseEntity<Object>(createdMovie, HttpStatus.CREATED);
 		}
 		catch(IllegalArgumentException e) {
-			return new ResponseEntity<Object>(new String("Movie creation failed!"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(new MovieNotCreatableException().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -58,7 +60,7 @@ public class MovieController {
 			
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No Movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 	}
@@ -78,7 +80,7 @@ public class MovieController {
 			return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 	}
@@ -99,7 +101,7 @@ public class MovieController {
 			}
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 	}
@@ -111,7 +113,7 @@ public class MovieController {
 			return new ResponseEntity<Object>(new String("Movie with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}
 		catch(IllegalArgumentException e) {
-			return new ResponseEntity<Object>(new String("No movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 

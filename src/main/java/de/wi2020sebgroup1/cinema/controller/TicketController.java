@@ -3,7 +3,6 @@ package de.wi2020sebgroup1.cinema.controller;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.transaction.Transactional;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgroup1.cinema.configurationObject.TicketConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
+import de.wi2020sebgroup1.cinema.exceptions.PriceNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.ShowNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.TicketNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -60,7 +63,7 @@ public class TicketController {
 			toBook = seatRepository.findById(seatID).get();
 			Boolean booked = toBook.isBlocked();
 			if(booked) {
-				return new ResponseEntity<Object>(new String("Seat with id \"" + seatID + "\" is already booked!"),
+				return new ResponseEntity<Object>(new SeatNotFoundException(seatID).getMessage(),
 						HttpStatus.NOT_ACCEPTABLE);
 			}
 			toBook.setBlocked(true);
@@ -81,21 +84,21 @@ public class TicketController {
 		try {
 			toAdd.setShow(showRepository.findById(ticketConfigurationObject.showID).get());
 		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<Object>(new String("No Show with id \"" + ticketConfigurationObject.showID + "\" found!"),
+			return new ResponseEntity<Object>(new ShowNotFoundException(ticketConfigurationObject.showID).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 		
 		try {
 			toAdd.setPrice(priceRepository.findById(ticketConfigurationObject.priceID).get());
 		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<Object>(new String("No Price with id \"" + ticketConfigurationObject.priceID + "\" found!"),
+			return new ResponseEntity<Object>(new PriceNotFoundException(ticketConfigurationObject.priceID).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 		
 		try {
 			toAdd.setUser(userRepository.findById(ticketConfigurationObject.userID).get());
 		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<Object>(new String("No User with id \"" + ticketConfigurationObject.userID + "\" found!"),
+			return new ResponseEntity<Object>(new UserNotFoundException(ticketConfigurationObject.userID).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 		
@@ -113,7 +116,7 @@ public class TicketController {
 			return new ResponseEntity<Object>(ticketRepository.findById(id).get(), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No Ticket with id \"" + id + "\" found!"),
+			return new ResponseEntity<Object>(new TicketNotFoundException(id).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 	}
@@ -129,7 +132,7 @@ public class TicketController {
 				seatRepository.save(seat);
 			}
 			catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String("No Seat for Ticket with id \"" + id + "\" found!"),
+				return new ResponseEntity<Object>(new SeatNotFoundException(id).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
 			ticket.setPaid(false);
@@ -138,7 +141,7 @@ public class TicketController {
 			
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No Ticket with id \"" + id + "\" found!"),
+			return new ResponseEntity<Object>(new TicketNotFoundException(id).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 		
