@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.City;
+import de.wi2020sebgroup1.cinema.exceptions.CityNotCreatableException;
+import de.wi2020sebgroup1.cinema.exceptions.CityNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 
 @Controller
@@ -28,7 +30,7 @@ public class CityController {
 	CityRepository cityRepository;
 	
 	@PutMapping("/add")
-	public ResponseEntity<City> addCity(@RequestBody City toAddCity){
+	public ResponseEntity<Object> addCity(@RequestBody City toAddCity){
 		List<City> toGetCity = cityRepository.findByPlz(toAddCity.getPlz());
 		if(toGetCity.size() == 1) {
 			return new ResponseEntity<>(toGetCity.get(0), HttpStatus.OK);
@@ -37,18 +39,18 @@ public class CityController {
 			cityRepository.save(toAddCity);
 			return new ResponseEntity<>(toAddCity, HttpStatus.CREATED);
 		}catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<Object>(new CityNotCreatableException().getMessage(), HttpStatus.NOT_ACCEPTABLE);
 			
 		}
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<City> getCity(@PathVariable UUID id){
+	public ResponseEntity<Object> getCity(@PathVariable UUID id){
 		Optional<City> foundCity = cityRepository.findById(id);
 		try {
 			return new ResponseEntity<>(foundCity.get(), HttpStatus.FOUND);
 		}catch(NoSuchElementException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new CityNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 	}

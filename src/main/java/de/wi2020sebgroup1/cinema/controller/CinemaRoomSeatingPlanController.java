@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgroup1.cinema.configurationObject.CinemaRoomSeattingPlanConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
+import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomSeatingPlanNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 
@@ -47,7 +49,7 @@ public class CinemaRoomSeatingPlanController {
 				seatingPlan.setCinemaRoom(cinemaRoom);
 			}
 			catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String ("No CinemaRoom with id \"" + seatingPlanConfigurationObject.cinemaRoomID + "\" found!"), 
+				return new ResponseEntity<Object>(new CinemaRoomNotFoundException(seatingPlanConfigurationObject.cinemaRoomID).getMessage(), 
 						HttpStatus.NOT_FOUND );
 			}
 		}
@@ -72,7 +74,7 @@ public class CinemaRoomSeatingPlanController {
 					seatingPlan.setCinemaRoom(cinemaRoom.get());
 				}
 				catch(NoSuchElementException e) {
-					return new ResponseEntity<Object>(new String ("No CinemaRoom with id \"" + seatingPlanConfigurationObject.cinemaRoomID + "\" found!"), 
+					return new ResponseEntity<Object>(new CinemaRoomNotFoundException(seatingPlanConfigurationObject.cinemaRoomID).getMessage(), 
 							HttpStatus.NOT_FOUND );
 				}
 			}
@@ -81,7 +83,7 @@ public class CinemaRoomSeatingPlanController {
 			return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.OK);
 			
 		}catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String ("No CinemaRoom with id \"" + seatingPlanConfigurationObject.cinemaRoomID + "\" found!"), 
+			return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(id).getMessage(), 
 					HttpStatus.NOT_FOUND );
 		}
 	}
@@ -97,7 +99,7 @@ public class CinemaRoomSeatingPlanController {
 		try {
 			return new ResponseEntity<Object>(seatingPlan.get(), HttpStatus.OK);
 		}catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String ("No CinemaRoom with id \"" + id + "\" found!"), 
+			return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(id).getMessage(), 
 					HttpStatus.NOT_FOUND );
 		}
 	}
