@@ -29,22 +29,7 @@ public class UserController {
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<User>> getUsers(){
 		return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
-		
-		Optional<User> user = userRepository.findById(id);
-		
-		try {
-			User toReturn = user.get();
-			return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
-		}
-		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No user with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
-		}
-		
-	}
+	}	
 	
 	@PutMapping("/add")
 	public ResponseEntity<User> addUser(@RequestBody User newUser){

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Price;
+import de.wi2020sebgroup1.cinema.exceptions.PriceNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 
 @Controller
@@ -44,7 +45,7 @@ public class PriceController {
 		try {
 			return new ResponseEntity<Object>(priceSearch.get(), HttpStatus.OK);
 		}catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new String("No Price with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new PriceNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -54,7 +55,7 @@ public class PriceController {
 			priceRepository.deleteById(id);
 			return new ResponseEntity<Object>( new String ("Price with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<Object>(new String("No Price with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new PriceNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 	}

@@ -27,6 +27,12 @@ import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomSeatingPlanNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.SeatsForShowNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.ShowNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
@@ -73,7 +79,7 @@ public class ShowController {
 			}
 			catch(NoSuchElementException e)
 			{
-				return new ResponseEntity<Object>(new String("No Cinema with id \"" + showConfigurationObject.cinemaID + "\" found!"),
+				return new ResponseEntity<Object>(new CinemaNotFoundException(showConfigurationObject.cinemaID).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
 		}
@@ -86,7 +92,7 @@ public class ShowController {
 			}
 			catch(NoSuchElementException e)
 			{
-				return new ResponseEntity<Object>(new String("No Movie with id \"" + showConfigurationObject.movieID + "\" found!"),
+				return new ResponseEntity<Object>(new MovieNotFoundException(showConfigurationObject.movieID).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
 		}
@@ -112,13 +118,13 @@ public class ShowController {
 				}
 				catch(NoSuchElementException e)
 				{
-					return new ResponseEntity<Object>(new String("No Seating Plan for given Room found!"),
+					return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(room.getId()).getMessage(),
 							HttpStatus.NOT_FOUND);
 				}
 			}
 			catch(NoSuchElementException e)
 			{
-				return new ResponseEntity<Object>(new String("No Room with id \"" + showConfigurationObject.cinemaRoomID + "\" found!"),
+				return new ResponseEntity<Object>(new CinemaRoomNotFoundException(showConfigurationObject.cinemaRoomID).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
 		}
@@ -141,7 +147,7 @@ public class ShowController {
 		}
 		catch(NoSuchElementException e)
 		{
-			return new ResponseEntity<Object>(new String("No Show with id \"" + id + "\" found!"),
+			return new ResponseEntity<Object>(new ShowNotFoundException(id).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 
@@ -158,13 +164,13 @@ public class ShowController {
 			}
 			catch(NoSuchElementException e)
 			{
-				return new ResponseEntity<Object>(new String("No Seats for Show with id \"" + id + "\" found!"),
+				return new ResponseEntity<Object>(new SeatsForShowNotFoundException(id).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
 		}
 		catch(NoSuchElementException e)
 		{
-			return new ResponseEntity<Object>(new String("No Show with id \"" + id + "\" found!"),
+			return new ResponseEntity<Object>(new ShowNotFoundException(id).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 	}
@@ -181,7 +187,7 @@ public class ShowController {
 		}
 		catch(NoSuchElementException e)
 		{
-			return new ResponseEntity<Object>(new String("No Show with id \"" + id + "\" found!"),
+			return new ResponseEntity<Object>(new ShowNotFoundException(id).getMessage(),
 					HttpStatus.NOT_FOUND);
 		}
 	}
