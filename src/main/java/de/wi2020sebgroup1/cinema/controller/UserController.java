@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @Controller
@@ -30,6 +31,21 @@ public class UserController {
 	public ResponseEntity<Iterable<User>> getUsers(){
 		return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
 	}	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
+		
+		Optional<User> user = userRepository.findById(id);
+		
+		try {
+			User toReturn = user.get();
+			return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new UserNotFoundException(id), HttpStatus.NOT_FOUND);
+		}
+		
+	}
 	
 	@PutMapping("/add")
 	public ResponseEntity<User> addUser(@RequestBody User newUser){
