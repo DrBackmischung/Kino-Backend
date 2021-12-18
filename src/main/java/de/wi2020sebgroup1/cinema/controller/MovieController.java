@@ -113,7 +113,7 @@ public class MovieController {
 			movieRepository.deleteById(o.get().getId());
 			return new ResponseEntity<Object>(new String("Movie with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}
-		catch(IllegalArgumentException e) {
+		catch(Exception e) {
 			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
