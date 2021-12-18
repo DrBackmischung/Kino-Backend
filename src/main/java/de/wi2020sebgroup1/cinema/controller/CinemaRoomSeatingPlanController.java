@@ -103,6 +103,7 @@ public class CinemaRoomSeatingPlanController {
 		}
 	}
 	
+	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteById(@PathVariable UUID id){
 		Optional<CinemaRoomSeatingPlan> o = seatingPlanRepository.findById(id);
