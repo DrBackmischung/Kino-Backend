@@ -105,10 +105,20 @@ public class PriceControllerTest {
 
     @Test
     void testDelete() throws Exception{
-        
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalPrice());
         mvc.perform(
             delete("/price/"+uuid+"/"))
         		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/price/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
 	

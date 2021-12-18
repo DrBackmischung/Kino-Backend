@@ -178,11 +178,9 @@ public class ShowController {
 	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteShow(@PathVariable UUID id){
-//		Optional<Show> showSearch = showRepository.findById(id);
+		Optional<Show> o = showRepository.findById(id);
 		try {
-//			Show show = showSearch.get();
-			//seatRepository.deleteAllByShow(show);
-			showRepository.deleteById(id);
+			showRepository.deleteById(o.get().getId());
 			return new ResponseEntity<Object>(new String("Show with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e)

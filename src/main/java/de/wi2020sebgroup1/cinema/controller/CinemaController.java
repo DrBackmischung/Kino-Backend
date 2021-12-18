@@ -66,11 +66,11 @@ public class CinemaController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteCinema(@PathVariable UUID id){
-		
+		Optional<Cinema> o = cinemaRepository.findById(id);
 		try {
-			cinemaRepository.deleteById(id);
+			cinemaRepository.deleteById(o.get().getId());
 			return new ResponseEntity<>(id, HttpStatus.OK);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

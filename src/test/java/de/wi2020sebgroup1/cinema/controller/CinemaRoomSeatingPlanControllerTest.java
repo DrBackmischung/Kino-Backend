@@ -177,10 +177,20 @@ public class CinemaRoomSeatingPlanControllerTest {
 
     @Test
     void testDelete() throws Exception{
-        
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             delete("/seatingPlan/"+uuid+"/"))
         		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/seatingPlan/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
 

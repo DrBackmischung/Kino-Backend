@@ -213,10 +213,20 @@ public class CinemaRoomControllerTest {
 
     @Test
     void testDelete() throws Exception{
-        
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         mvc.perform(
             delete("/cinemaRoom/"+uuid+"/"))
         		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/cinemaRoom/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
 }

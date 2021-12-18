@@ -51,8 +51,9 @@ public class PriceController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteById(@PathVariable UUID id){
+		Optional<Price> o = priceRepository.findById(id);
 		try {
-			priceRepository.deleteById(id);
+			priceRepository.deleteById(o.get().getId());
 			return new ResponseEntity<Object>( new String ("Price with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<Object>(new PriceNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);

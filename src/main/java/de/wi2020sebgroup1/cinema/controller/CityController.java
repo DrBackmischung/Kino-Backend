@@ -63,12 +63,12 @@ public class CityController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteCity(@PathVariable UUID id){
-		
+		Optional<City> o = cityRepository.findById(id);
 		try {
-			cityRepository.deleteById(id);
+			cityRepository.deleteById(o.get().getId());
 			return new ResponseEntity<>(id, HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<Object>(new String("No city with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CityNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 

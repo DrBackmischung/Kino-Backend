@@ -178,10 +178,20 @@ public class MovieControllerTest {
 
     @Test
     void testDelete() throws Exception{
-        
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalMovie());
         mvc.perform(
             delete("/movie/"+uuid+"/"))
         		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/movie/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
 }

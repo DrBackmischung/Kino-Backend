@@ -2,6 +2,7 @@ package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -99,6 +100,25 @@ public class UserControllerTest {
         mvc.perform(
             put("/user/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getUser()).getJson()))
         		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testDelete() throws Exception{
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalUser());
+        mvc.perform(
+            delete("/user/"+uuid+"/"))
+        		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/user/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
 

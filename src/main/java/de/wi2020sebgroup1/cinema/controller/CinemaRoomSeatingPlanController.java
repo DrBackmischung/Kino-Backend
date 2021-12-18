@@ -104,11 +104,14 @@ public class CinemaRoomSeatingPlanController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@Transactional
 	public ResponseEntity<Object> deleteById(@PathVariable UUID id){
-		seatingPlanRepository.deleteById(id);
-		return new ResponseEntity<Object>(new String("Seatingplan with id \"" + id +"\" deleted!"), HttpStatus.OK);
-		
+		Optional<CinemaRoomSeatingPlan> o = seatingPlanRepository.findById(id);
+		try {
+			seatingPlanRepository.deleteById(o.get().getId());
+			return new ResponseEntity<Object>(new String("CinemaRoomSeatingPlan with id \"" + id + "\" deleted!"),HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

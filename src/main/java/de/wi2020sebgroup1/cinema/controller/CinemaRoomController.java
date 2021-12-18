@@ -141,8 +141,9 @@ public class CinemaRoomController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteCinemaRoom(@PathVariable UUID id){
+		Optional<CinemaRoom> o = cinemaRoomRepository.findById(id);
 		try {
-			cinemaRoomRepository.deleteById(id);
+			cinemaRoomRepository.deleteById(o.get().getId());
 			return new ResponseEntity<Object>(new String("CinemaRoom with id \"" + id + "\" deleted!"),HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<Object>(new CinemaRoomNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);

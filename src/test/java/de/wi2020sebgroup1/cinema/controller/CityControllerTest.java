@@ -129,10 +129,20 @@ public class CityControllerTest {
 
     @Test
     void testDelete() throws Exception{
-        
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalCity());
         mvc.perform(
             delete("/city/"+uuid+"/"))
         		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/city/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
 }

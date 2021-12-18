@@ -254,10 +254,20 @@ public class ShowControllerTest {
 
     @Test
     void testDelete() throws Exception{
-        
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalShow());
         mvc.perform(
             delete("/show/"+uuid+"/"))
         		.andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testDeleteException() throws Exception{
+        
+        mvc.perform(
+            delete("/show/"+uuid+"/"))
+        		.andExpect(status().isNotFound());
 
     }
     
