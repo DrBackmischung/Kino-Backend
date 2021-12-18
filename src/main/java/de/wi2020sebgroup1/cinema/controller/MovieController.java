@@ -108,11 +108,12 @@ public class MovieController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteMovie(@PathVariable UUID id){
+		Optional<Movie> o = movieRepository.findById(id);
 		try {
-			movieRepository.deleteById(id);
+			movieRepository.deleteById(o.get().getId());
 			return new ResponseEntity<Object>(new String("Movie with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}
-		catch(IllegalArgumentException e) {
+		catch(Exception e) {
 			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

@@ -102,7 +102,7 @@ public class TicketController {
 					HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Object>(ticketRepository.save(toAdd), HttpStatus.OK);
+		return new ResponseEntity<Object>(ticketRepository.save(toAdd), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/getAll")

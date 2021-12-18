@@ -129,7 +129,7 @@ public class ShowController {
 			}
 		}
 
-		return new ResponseEntity<Object>(showRepository.save(toAdd), HttpStatus.OK);
+		return new ResponseEntity<Object>(showRepository.save(toAdd), HttpStatus.CREATED);
 		
 	}
 	
@@ -178,8 +178,9 @@ public class ShowController {
 	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteShow(@PathVariable UUID id){
+		Optional<Show> o = showRepository.findById(id);
 		try {
-			showRepository.deleteById(id);
+			showRepository.deleteById(o.get().getId());
 			return new ResponseEntity<Object>(new String("Show with id \"" + id + "\" deleted!"), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e)

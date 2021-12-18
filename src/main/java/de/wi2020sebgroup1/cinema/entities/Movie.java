@@ -124,6 +124,10 @@ public class Movie {
 		FSK = fSK;
 	}
 
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -182,11 +186,6 @@ public class Movie {
 		} else if (!titel.equals(other.titel))
 			return false;
 		return true;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-		
 	}
 
 }

@@ -51,12 +51,16 @@ public class City {
 		return city;
 	}
 	
-	public void setPLZ(int PLZ) {
-		this.plz = PLZ;
-	}
-	
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public void setPlz(int plz) {
+		this.plz = plz;
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class CinemaController {
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<Cinema>> getCinemas(){
-		return new ResponseEntity<>(cinemaRepository.findAll(),HttpStatus.FOUND);
+		return new ResponseEntity<>(cinemaRepository.findAll(),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
@@ -57,7 +57,7 @@ public class CinemaController {
 		Optional<Cinema> search = cinemaRepository.findById(id);
 		try {
 			Cinema found = search.get();
-			return new ResponseEntity<>(found, HttpStatus.FOUND);
+			return new ResponseEntity<>(found, HttpStatus.OK);
 		}catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -66,11 +66,11 @@ public class CinemaController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteCinema(@PathVariable UUID id){
-		
+		Optional<Cinema> o = cinemaRepository.findById(id);
 		try {
-			cinemaRepository.deleteById(id);
+			cinemaRepository.deleteById(o.get().getId());
 			return new ResponseEntity<>(id, HttpStatus.OK);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return new ResponseEntity<Object>(new CinemaNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

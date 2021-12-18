@@ -55,13 +55,12 @@ public class CinemaRoomSeatingPlanController {
 		}
 		seatingPlan.setSeats(seatingPlanConfigurationObject.seats);
 		seatingPlan.setReihen(seatingPlanConfigurationObject.reihen);
-		
 		cinemaRoom.setCinemaRoomSeatingPlan(seatingPlan);
-		return new ResponseEntity<Object>(cinemaRoomRepository.save(cinemaRoom), HttpStatus.OK);
+		return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateSeatingPkan(@PathVariable UUID id, @RequestBody CinemaRoomSeattingPlanConfigurationObject seatingPlanConfigurationObject){
+	public ResponseEntity<Object> updateSeatingPlan(@PathVariable UUID id, @RequestBody CinemaRoomSeattingPlanConfigurationObject seatingPlanConfigurationObject){
 		Optional<CinemaRoomSeatingPlan> oldSeatingPlan = seatingPlanRepository.findById(id);
 		
 		try {
@@ -82,7 +81,7 @@ public class CinemaRoomSeatingPlanController {
 			seatingPlan.setReihen(seatingPlanConfigurationObject.reihen);
 			return new ResponseEntity<Object>(seatingPlanRepository.save(seatingPlan), HttpStatus.OK);
 			
-		}catch(NoSuchElementException e) {
+		} catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(id).getMessage(), 
 					HttpStatus.NOT_FOUND );
 		}
@@ -104,12 +103,16 @@ public class CinemaRoomSeatingPlanController {
 		}
 	}
 	
-	@DeleteMapping("/{id}")
 	@Transactional
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteById(@PathVariable UUID id){
-		seatingPlanRepository.deleteById(id);
-		return new ResponseEntity<Object>(new String("Seatingplan with id \"" + id +"\" deleted!"), HttpStatus.OK);
-		
+		Optional<CinemaRoomSeatingPlan> o = seatingPlanRepository.findById(id);
+		try {
+			seatingPlanRepository.deleteById(o.get().getId());
+			return new ResponseEntity<Object>(new String("CinemaRoomSeatingPlan with id \"" + id + "\" deleted!"),HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

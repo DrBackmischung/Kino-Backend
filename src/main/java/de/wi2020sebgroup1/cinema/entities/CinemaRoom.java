@@ -18,10 +18,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
-
 @Entity
 @Table(name="cinemaRoom")
 public class CinemaRoom {
