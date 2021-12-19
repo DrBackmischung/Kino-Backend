@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "3f4ce2ab-e770-40a1-a8e6-e9c42a627825",
+		"name": "Cinema API DELETE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Delete a cinema",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/cinema/50d90407-97d8-4c46-b8d0-4863edaf9931",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinema",
+						"50d90407-97d8-4c46-b8d0-4863edaf9931"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Movie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/movie/31444aed-4f9c-4701-add7-a6137019bd1a",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie",
+						"31444aed-4f9c-4701-add7-a6137019bd1a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a CinemaRoom",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/cinemaRoom/0a789032-eba6-4fa7-acde-92ca380780ff",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinemaRoom",
+						"0a789032-eba6-4fa7-acde-92ca380780ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Show",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/show/6c1b4f08-4afb-4e82-a65d-6fac840c1caf",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"show",
+						"6c1b4f08-4afb-4e82-a65d-6fac840c1caf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Price",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/price/d870059e-a8da-45f4-8e9c-d4ec07a97443",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"price",
+						"d870059e-a8da-45f4-8e9c-d4ec07a97443"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel a Ticket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/ticket/cancel/84fd264f-b8e0-48a8-b8b7-d80cb36749d7",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"cancel",
+						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "user",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

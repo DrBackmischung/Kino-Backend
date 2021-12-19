@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "d893dc8d-425f-4918-bb93-73fa469d3db9",
+		"name": "Cinema API PUT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a new Cinema",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Cineplex\",\r\n    \"street\": \"Biegenstraße\",\r\n    \"number\": \"1a\",\r\n    \"cinemaRooms\": 9,\r\n    \"stories\": 3,\r\n    \"city\": {\r\n        \"plz\": 35037,\r\n        \"city\": \"Marburg\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/cinema/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinema",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new User",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Mueller\",\r\n    \"firstName\": \"Tomke\",\r\n    \"email\": \"jost-tomke-mueller@t-online.de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/user/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new City",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plz\": 35315,\r\n    \"city\": \"Homberg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/city/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"city",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Movie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titel\" : \"Bibi & Miyu\",\r\n    \"language\": \"Japanisch\",\r\n    \"duration\": 120,\r\n    \"director\": \"Hirara Natsume\",\r\n    \"description\": \"Bibi hat die Nase voll! Es taucht eine neue Mitschülerin auf: Miyu aus Japan!\",\r\n    \"pictureLink\": \"https://assets.thalia.media/img/artikel/0d986a36f7381752f2245381a5d844e178066865-00-00.jpeg\",\r\n    \"fsk\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/movie",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new CinemaRoom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"100db203-1014-4fbd-aaf0-ca72ab288c69\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/cinemaRoom/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinemaRoom",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new SeatingPlan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"seats\": 100,\r\n    \"reihen\" : 4,\r\n    \"cinemaRoomID\": \"eee6d622-0d8c-4809-8e7f-01935ca3b313\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/seatingPlan/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatingPlan",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Show",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2021-12-19\",\r\n    \"start\" : \"20:00:00\",\r\n    \"end\": \"23:00:00\",\r\n    \"movieID\" : \"2c0e09d8-344c-452d-a95b-958223933693\",\r\n    \"cinemaID\" : \"100db203-1014-4fbd-aaf0-ca72ab288c69\",\r\n    \"cinemaRoomID\": \"eee6d622-0d8c-4809-8e7f-01935ca3b313\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/show/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"show",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Price",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\": 19.50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/price/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"price",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Movie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titel\" : \"Avatar - Aufbruch nach Pandora\",\r\n    \"language\": \"German\",\r\n    \"duration\": 2.35,\r\n    \"director\": \"James Cameron\",\r\n    \"description\": \"Testbeschreibung für Avatar.\",\r\n    \"pictureLink\": \"https://static.wikia.nocookie.net/jamescameronsavatar/images/d/d3/Avatar_Aufbruch_nach_Pandora-Poster.jpg/revision/latest?cb=20100302184147&path-prefix=de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/movie/update/1e164544-d41d-45f5-9137-6c18810a2019",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie",
+						"update",
+						"1e164544-d41d-45f5-9137-6c18810a2019"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a CinemaRoom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": false,\r\n    \"cinemaID\": \"100db203-1014-4fbd-aaf0-ca72ab288c69\",\r\n    \"cinemaRoomSeatingPlan\": \"e14edee6-a365-44a7-b60a-883e6296b0eb\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/cinemaRoom/c4a53f2d-c304-4f70-a0a5-fe64f5af9015",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinemaRoom",
+						"c4a53f2d-c304-4f70-a0a5-fe64f5af9015"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a SeatingPlan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"seats\": 300,\r\n    \"cinemaRoomID\": \"0a789032-eba6-4fa7-acde-92ca380780ff\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/seatingPlan/0a789032-eba6-4fa7-acde-92ca380780ff",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatingPlan",
+						"0a789032-eba6-4fa7-acde-92ca380780ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Ticket",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userID\" : \"e3e13a2a-f792-4d50-88fc-6bc05514868c\",\r\n    \"seatID\": \"028430d6-32db-4a09-8151-b5c0cbf50592\",\r\n    \"priceID\": \"b37f1de2-44cd-45ec-bbb9-0db1175f0343\",\r\n    \"showID\": \"118e31db-145a-403d-834c-a683de7ddce2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/ticket/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

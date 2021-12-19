@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "5ffa7dbb-a392-4612-b63c-97b388cf83e0",
+		"name": "Cinema API GET",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/user/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Cinemas",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/cinema/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinema",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Cities",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/city/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"city",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Movies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/movie/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All CinemaRooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/cinemaRoom/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinemaRoom",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Seatingplans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/seatingPlan/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatingPlan",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Shows",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/show/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"show",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/price/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"price",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/ticket/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Seats for Show",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/show/118e31db-145a-403d-834c-a683de7ddce2/seats",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"show",
+						"118e31db-145a-403d-834c-a683de7ddce2",
+						"seats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Shows by MovieID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/movie/2c0e09d8-344c-452d-a95b-958223933693/shows",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie",
+						"2c0e09d8-344c-452d-a95b-958223933693",
+						"shows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific City",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/city/e479597a-d147-4667-8cfe-970b3a595049",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"city",
+						"e479597a-d147-4667-8cfe-970b3a595049"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific Cinema",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/cinema/e479597a-d147-4667-8cfe-970b3a595049",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"cinema",
+						"e479597a-d147-4667-8cfe-970b3a595049"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific Movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/movie/1e164544-d41d-45f5-9137-6c18810a2019",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"movie",
+						"1e164544-d41d-45f5-9137-6c18810a2019"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific Ticket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/ticket/84fd264f-b8e0-48a8-b8b7-d80cb36749d7",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
