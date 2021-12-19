@@ -26,7 +26,7 @@ import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.ShowNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.TicketNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
-import de.wi2020sebgroup1.cinema.helper.SemaphoreSave;
+import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -56,7 +56,7 @@ public class TicketController {
 	ShowRepository showRepository;
 	
 	@Autowired
-	SemaphoreSave semaphoreSave;
+	SemaphoreVault semaphoreVault;
 	
 	@PutMapping("/add")
 	@Transactional
@@ -65,7 +65,7 @@ public class TicketController {
 		UUID showID = ticketConfigurationObject.showID;
 		Seat toBook = new Seat();
 		try {
-			SemaphoreSave.getSemaphore(showID).acquire();;
+			SemaphoreVault.getSemaphore(showID).acquire();;
 			toBook = seatRepository.findById(seatID).get();
 			Boolean booked = toBook.isBlocked();
 			if(booked) {
@@ -81,7 +81,7 @@ public class TicketController {
 		}
 		finally
 		{
-			SemaphoreSave.getSemaphore(showID).release();
+			SemaphoreVault.getSemaphore(showID).release();
 		}
 		
 		Ticket toAdd = new Ticket();

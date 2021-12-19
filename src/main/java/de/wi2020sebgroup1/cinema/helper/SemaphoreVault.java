@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SemaphoreSave {
+public class SemaphoreVault {
 	
 	public static TreeMap<UUID, Semaphore> semaphores = new TreeMap<>();
 	
