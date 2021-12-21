@@ -74,32 +74,6 @@ public class NewsController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@GetMapping("/q/{year}/{month}/{day}")
-	public ResponseEntity<Object> getAllForDate(@PathVariable int year, @PathVariable int month, @PathVariable int day){
-		Iterable<News> listSearch = newsRepository.findAll();
-		List<News> news = new ArrayList<News>();
-		for(News n : listSearch) {
-			if(n.getDate().getYear() == year && n.getDate().getMonth() == month && n.getDate().getDay() == day) {
-				news.add(n);
-			}
-		}
-		return new ResponseEntity<Object>(newsRepository.saveAll(news), HttpStatus.OK);
-	}
-	
-	@SuppressWarnings("deprecation")
-	@GetMapping("/q/{year}/{month}")
-	public ResponseEntity<Object> getAllForMonth(@PathVariable int year, @PathVariable int month){
-		Iterable<News> listSearch = newsRepository.findAll();
-		List<News> news = new ArrayList<News>();
-		for(News n : listSearch) {
-			if(n.getDate().getYear() == year && n.getDate().getMonth() == month) {
-				news.add(n);
-			}
-		}
-		return new ResponseEntity<Object>(newsRepository.saveAll(news), HttpStatus.OK);
-	}
-	
-	@SuppressWarnings("deprecation")
 	@GetMapping("/q/{year}")
 	public ResponseEntity<Object> getAllForYear(@PathVariable int year){
 		Iterable<News> listSearch = newsRepository.findAll();

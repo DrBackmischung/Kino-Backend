@@ -103,30 +103,6 @@ public class NewsControllerTest {
     	return news;
     }
     
-    @SuppressWarnings("deprecation")
-	Iterable<News> getDateNewsList() {
-    	List<News> news = new ArrayList<>();
-    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
-    	return news;
-    }
-    
-    @SuppressWarnings("deprecation")
-	Iterable<News> getMonthNewsList() {
-    	List<News> news = new ArrayList<>();
-    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
-    	news.add(new News(new Date(2021, 12, 22), new Time(3), "Noch balder Weihnachten", "Der kleine Mathis freut sich immer noch auf Weihnachten!", "Link", null));
-    	return news;
-    }
-    
-    @SuppressWarnings("deprecation")
-	Iterable<News> getYearNewsList() {
-    	List<News> news = new ArrayList<>();
-    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
-    	news.add(new News(new Date(2021, 12, 22), new Time(3), "Noch balder Weihnachten", "Der kleine Mathis freut sich immer noch auf Weihnachten!", "Link", null));
-    	news.add(new News(new Date(2021, 10, 24), new Time(3), "Spooky Time", "Der kleine Mathis freut sich auf Schokolade!", "Link", null));
-    	return news;
-    }
-    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<News>());
@@ -152,30 +128,11 @@ public class NewsControllerTest {
     }
     
     @Test
-    void testGetByDate() throws Exception {
-        when(repo.findAll()).thenReturn(getNewsList());
-        MockHttpServletResponse response = mvc.perform(get("/news/q/2021/12/21")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn().getResponse();
-    }
-    
-    @Test
-    void testGetByMonth() throws Exception {
-        when(repo.findAll()).thenReturn(getNewsList());
-        MockHttpServletResponse response = mvc.perform(get("/news/q/2021/12")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn().getResponse();
-    }
-    
-    @Test
     void testGetByYear() throws Exception {
         when(repo.findAll()).thenReturn(getNewsList());
-        MockHttpServletResponse response = mvc.perform(get("/news/q/2021")
+        mvc.perform(get("/news/q/2021")
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn().getResponse();
+            .andExpect(status().isOk());
     }
 
     @Test
@@ -186,6 +143,16 @@ public class NewsControllerTest {
         		.andExpect(status().isCreated());
         
         when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+        mvc.perform(
+            put("/news/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new NewsConfigurationObject(new Date(2), new Time(3), "Head", "Body", "Link", uuid)).getJson()))
+        		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testPutException() throws Exception{
+        
         mvc.perform(
             put("/news/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new NewsConfigurationObject(new Date(2), new Time(3), "Head", "Body", "Link", uuid)).getJson()))
