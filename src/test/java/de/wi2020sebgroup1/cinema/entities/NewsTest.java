@@ -34,7 +34,7 @@ public class NewsTest {
         assertEquals(o.getHeader(), "!!!News!");
         o.setContent("!!!Mathis stinkt");
         assertEquals(o.getContent(), "!!!Mathis stinkt");
-        o.setContent("128.0.0.1");
+        o.setPictureLink("128.0.0.1");
         assertEquals(o.getPictureLink(), "128.0.0.1");
         o.setUser(null);
         assertEquals(o.getUser(), null);

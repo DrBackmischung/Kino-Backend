@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,6 +55,7 @@ public class NewsControllerTest {
 	
 	JacksonTester<News> jt;
 	JacksonTester<NewsConfigurationObject> jtco;
+	JacksonTester<Iterable<News>> jti;
 	
 	static UUID uuid;
 	
@@ -90,6 +92,41 @@ public class NewsControllerTest {
     	return Optional.of(s);
     }
     
+    @SuppressWarnings("deprecation")
+	Iterable<News> getNewsList() {
+    	List<News> news = new ArrayList<>();
+    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
+    	news.add(new News(new Date(2021, 12, 22), new Time(3), "Noch balder Weihnachten", "Der kleine Mathis freut sich immer noch auf Weihnachten!", "Link", null));
+    	news.add(new News(new Date(2021, 10, 24), new Time(3), "Spooky Time", "Der kleine Mathis freut sich auf Schokolade!", "Link", null));
+    	news.add(new News(new Date(2020, 12, 24), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
+    	news.add(new News(new Date(2020, 12, 1), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
+    	return news;
+    }
+    
+    @SuppressWarnings("deprecation")
+	Iterable<News> getDateNewsList() {
+    	List<News> news = new ArrayList<>();
+    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
+    	return news;
+    }
+    
+    @SuppressWarnings("deprecation")
+	Iterable<News> getMonthNewsList() {
+    	List<News> news = new ArrayList<>();
+    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
+    	news.add(new News(new Date(2021, 12, 22), new Time(3), "Noch balder Weihnachten", "Der kleine Mathis freut sich immer noch auf Weihnachten!", "Link", null));
+    	return news;
+    }
+    
+    @SuppressWarnings("deprecation")
+	Iterable<News> getYearNewsList() {
+    	List<News> news = new ArrayList<>();
+    	news.add(new News(new Date(2021, 12, 21), new Time(3), "Bald Weihnachten", "Der kleine Mathis freut sich auf Weihnachten!", "Link", null));
+    	news.add(new News(new Date(2021, 12, 22), new Time(3), "Noch balder Weihnachten", "Der kleine Mathis freut sich immer noch auf Weihnachten!", "Link", null));
+    	news.add(new News(new Date(2021, 10, 24), new Time(3), "Spooky Time", "Der kleine Mathis freut sich auf Schokolade!", "Link", null));
+    	return news;
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<News>());
@@ -112,6 +149,36 @@ public class NewsControllerTest {
         mvc.perform(get("/news/"+new UUID(0, 0))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void testGetByDate() throws Exception {
+        when(repo.findAll()).thenReturn(getNewsList());
+        MockHttpServletResponse response = mvc.perform(get("/news/q/2021/12/21")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
+        assertEquals(jti.write(getDateNewsList()).getJson(), response.getContentAsString());
+    }
+    
+    @Test
+    void testGetByMonth() throws Exception {
+        when(repo.findAll()).thenReturn(getNewsList());
+        MockHttpServletResponse response = mvc.perform(get("/news/q/2021/12")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
+        assertEquals(jti.write(getMonthNewsList()).getJson(), response.getContentAsString());
+    }
+    
+    @Test
+    void testGetByYear() throws Exception {
+        when(repo.findAll()).thenReturn(getNewsList());
+        MockHttpServletResponse response = mvc.perform(get("/news/q/2021")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
+        assertEquals(jti.write(getYearNewsList()).getJson(), response.getContentAsString());
     }
 
     @Test

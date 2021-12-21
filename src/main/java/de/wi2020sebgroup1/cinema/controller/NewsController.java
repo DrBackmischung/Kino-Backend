@@ -74,7 +74,7 @@ public class NewsController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@GetMapping("/{year}/{month}/{day}")
+	@GetMapping("/q/{year}/{month}/{day}")
 	public ResponseEntity<Object> getAllForDate(@PathVariable int year, @PathVariable int month, @PathVariable int day){
 		Iterable<News> listSearch = newsRepository.findAll();
 		List<News> news = new ArrayList<News>();
@@ -87,7 +87,7 @@ public class NewsController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@GetMapping("/{year}/{month}")
+	@GetMapping("/q/{year}/{month}")
 	public ResponseEntity<Object> getAllForMonth(@PathVariable int year, @PathVariable int month){
 		Iterable<News> listSearch = newsRepository.findAll();
 		List<News> news = new ArrayList<News>();
@@ -100,7 +100,7 @@ public class NewsController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@GetMapping("/{year}")
+	@GetMapping("/q/{year}")
 	public ResponseEntity<Object> getAllForYear(@PathVariable int year){
 		Iterable<News> listSearch = newsRepository.findAll();
 		List<News> news = new ArrayList<News>();
