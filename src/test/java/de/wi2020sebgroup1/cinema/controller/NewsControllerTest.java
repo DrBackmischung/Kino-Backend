@@ -156,7 +156,7 @@ public class NewsControllerTest {
         mvc.perform(
             put("/news/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new NewsConfigurationObject(new Date(2), new Time(3), "Head", "Body", "Link", uuid)).getJson()))
-        		.andExpect(status().isCreated());
+        		.andExpect(status().isNotFound());
 
     }
 
