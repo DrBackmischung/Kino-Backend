@@ -21,10 +21,12 @@ import de.wi2020sebgroup1.cinema.configurationObject.TicketConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.exceptions.PriceNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.SeatAlreadyBookedException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.ShowNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.TicketNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
+import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -53,17 +55,21 @@ public class TicketController {
 	@Autowired
 	ShowRepository showRepository;
 	
+	@Autowired
+	SemaphoreVault semaphoreVault;
+	
 	@PutMapping("/add")
 	@Transactional
 	public ResponseEntity<Object> addTicket(@RequestBody TicketConfigurationObject ticketConfigurationObject){
 		UUID seatID = ticketConfigurationObject.seatID;
+		UUID showID = ticketConfigurationObject.showID;
 		Seat toBook = new Seat();
 		try {
-			checker.acquire();
+			SemaphoreVault.getSemaphore(showID).acquire();;
 			toBook = seatRepository.findById(seatID).get();
 			Boolean booked = toBook.isBlocked();
 			if(booked) {
-				return new ResponseEntity<Object>(new SeatNotFoundException(seatID).getMessage(),
+				return new ResponseEntity<Object>(new SeatAlreadyBookedException(seatID).getMessage(),
 						HttpStatus.NOT_ACCEPTABLE);
 			}
 			toBook.setBlocked(true);
@@ -75,7 +81,7 @@ public class TicketController {
 		}
 		finally
 		{
-			checker.release();
+			SemaphoreVault.getSemaphore(showID).release();
 		}
 		
 		Ticket toAdd = new Ticket();
