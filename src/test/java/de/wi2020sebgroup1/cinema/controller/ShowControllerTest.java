@@ -235,12 +235,12 @@ public class ShowControllerTest {
         
         mvc.perform(
             put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, uuid, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
             put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
@@ -248,11 +248,12 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
-//        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
-//        mvc.perform(
-//            put("/show/add/")
-//            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
-//        		.andExpect(status().isNotFound());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        when(seatRepository.saveAll(getOptionalSeatList().get())).thenThrow(new NoSuchElementException());
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
 
         when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         
