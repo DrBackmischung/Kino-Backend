@@ -201,6 +201,11 @@ public class ShowControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
         
+        when(repo.findById(uuid)).thenReturn(getOptionalShow());
+        mvc.perform(get("/show/"+new UUID(0, 0)+"/seats")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        
         when(seatRepository.findAllByShow(getShow())).thenThrow(new NoSuchElementException());
         mvc.perform(get("/show/"+uuid+"/seats")
             .accept(MediaType.APPLICATION_JSON))
@@ -238,6 +243,12 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
         
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
+
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         mvc.perform(
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
