@@ -2,6 +2,8 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,10 +30,17 @@ public class CinemaRoomSeatingPlanTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID u = new UUID(2,2);
 		CinemaRoomSeatingPlan o = new CinemaRoomSeatingPlan(50);
+		o.setId(u);
 		CinemaRoomSeatingPlan o2 = new CinemaRoomSeatingPlan(50);
+		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+		CinemaRoomSeatingPlan o3 = new CinemaRoomSeatingPlan(50);
+		CinemaRoomSeatingPlan o4 = new CinemaRoomSeatingPlan(50);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
