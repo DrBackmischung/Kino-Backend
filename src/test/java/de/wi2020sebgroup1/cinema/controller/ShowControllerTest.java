@@ -202,6 +202,9 @@ public class ShowControllerTest {
             .andExpect(status().isNotFound());
         
         when(repo.findById(uuid)).thenReturn(getOptionalShow());
+        mvc.perform(get("/show/"+uuid+"/seats")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
         mvc.perform(get("/show/"+new UUID(0, 0)+"/seats")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
