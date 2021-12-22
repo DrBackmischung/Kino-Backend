@@ -88,7 +88,7 @@ public class CinemaTest {
 		assertEquals(o0.equals(o03), false);
 		Cinema o4 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
 		o4.setId(null);
-		Cinema o04 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		Cinema o04 = new Cinema(null, null, null, 5, 2, null);
 		o04.setId(u);
 		assertEquals(o.equals(o4), false);
 		assertEquals(o0.equals(o04), false);
