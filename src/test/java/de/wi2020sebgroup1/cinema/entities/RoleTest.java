@@ -2,6 +2,8 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,10 +30,17 @@ public class RoleTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID u = new UUID(2,2);
 		Role o = new Role("Admin", "admin");
+		o.setID(u);
 		Role o2 = new Role("Admin", "admin");
+		o2.setID(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+		Role o3 = new Role(null, null);
+		Role o4 = new Role(null, null);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
