@@ -225,6 +225,7 @@ public class ShowControllerTest {
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
         when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/show/add/")

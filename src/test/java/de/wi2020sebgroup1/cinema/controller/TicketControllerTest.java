@@ -1,7 +1,6 @@
 package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -178,6 +177,10 @@ public class TicketControllerTest {
 
     @Test
     void testPutException() throws Exception{
+        
+        mvc.perform(
+            put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
     	
         when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(true));
         when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
@@ -187,17 +190,6 @@ public class TicketControllerTest {
         mvc.perform(
             put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isNotAcceptable());
-
-    }
-
-    @Test
-    void testSemaphoreException() throws Exception{
-    	
-        when(seatRepository.findById(uuid)).thenThrow(new InterruptedException());
-        
-        mvc.perform(
-            put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
-        		.andExpect(result -> assertTrue(result.getResolvedException() instanceof InterruptedException));
 
     }
 
