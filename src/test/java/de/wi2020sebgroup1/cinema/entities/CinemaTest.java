@@ -45,8 +45,11 @@ public class CinemaTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		City c = new City(0, null);
+		UUID u = new UUID(2,2);
 		Cinema o = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		o.setId(u);
 		Cinema o2 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		o2.setId(u);
 		Cinema o3 = new Cinema(null, null, null, 5, 2, null);
 		o3.setId(null);
 		Cinema o4 = new Cinema(null, null, null, 5, 2, null);
