@@ -76,6 +76,9 @@ public class MovieTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
+		Movie onull = new Movie("Shrek 3", "Japanisch", 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", 12);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }

@@ -56,6 +56,9 @@ public class CityTest {
 		assertEquals(o.equals(o3), false);
 		assertEquals(o.equals(o4), false);
 		assertEquals(o.equals(s), false);
+		City onull = new City(68159, "Mannheim");
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }

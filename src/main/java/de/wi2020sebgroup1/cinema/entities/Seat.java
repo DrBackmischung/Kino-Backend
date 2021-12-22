@@ -164,28 +164,19 @@ public class Seat {
 		Seat other = (Seat) obj;
 		if (blocked != other.blocked)
 			return false;
-		if (cinemaRoomSeatingPlan == null) {
-			if (other.cinemaRoomSeatingPlan != null)
-				return false;
-		} else if (!cinemaRoomSeatingPlan.equals(other.cinemaRoomSeatingPlan))
+		if (cinemaRoomSeatingPlan != other.cinemaRoomSeatingPlan)
 			return false;
 		if (coupleSeat != other.coupleSeat)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (place != other.place)
 			return false;
-		if (Double.doubleToLongBits(surcharge) != Double.doubleToLongBits(other.surcharge))
+		if (surcharge != other.surcharge)
 			return false;
 		if (reihe != other.reihe)
 			return false;
-		if (show == null) {
-			if (other.show != null)
-				return false;
-		} else if (!show.equals(other.show))
+		if (show != other.show)
 			return false;
 		return true;
 	}

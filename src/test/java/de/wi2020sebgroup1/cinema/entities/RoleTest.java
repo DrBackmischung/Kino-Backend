@@ -56,6 +56,9 @@ public class RoleTest {
 		assertEquals(o.equals(o3), false);
 		assertEquals(o.equals(o4), false);
 		assertEquals(o.equals(s), false);
+		Role onull = new Role("Admin", "admin");
+		onull.setID(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }

@@ -74,6 +74,9 @@ public class CinemaRoomTest {
 		assertEquals(o.equals(o5), false);
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(s), false);
+		CinemaRoom onull = new CinemaRoom(1, true, c, c2);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 
 }

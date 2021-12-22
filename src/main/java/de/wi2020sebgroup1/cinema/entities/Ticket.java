@@ -133,32 +133,17 @@ public class Ticket {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (paid != other.paid)
 			return false;
-		if (price == null) {
-			if (other.price != null)
-				return false;
-		} else if (!price.equals(other.price))
+		if (price != other.price)
 			return false;
-		if (seat == null) {
-			if (other.seat != null)
-				return false;
-		} else if (!seat.equals(other.seat))
+		if (seat != other.seat)
 			return false;
-		if (show == null) {
-			if (other.show != null)
-				return false;
-		} else if (!show.equals(other.show))
+		if (show != other.show)
 			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
+		if (user != other.user)
 			return false;
 		return true;
 	}

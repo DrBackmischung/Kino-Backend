@@ -51,6 +51,9 @@ public class PriceTest {
 		assertEquals(o.equals(o2), false);
 		assertEquals(o.equals(o3), false);
 		assertEquals(o.equals(s), false);
+		Price onull = new Price(5.5);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }
