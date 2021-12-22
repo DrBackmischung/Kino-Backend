@@ -2,6 +2,8 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -55,11 +57,18 @@ public class UserTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID u = new UUID(2,2);
 		Role r = new Role(null, null);
 		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		o.setId(u);
 		User o2 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+		User o3 = new User(null, null, null, null, null, null);
+		User o4 = new User(null, null, null, null, null, null);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
