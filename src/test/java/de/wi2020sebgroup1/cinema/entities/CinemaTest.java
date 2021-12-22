@@ -66,8 +66,9 @@ public class CinemaTest {
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
 		City c = new City(0, null);
+		UUID u = new UUID(2,2);
 		Cinema o = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
-		o.setId(new UUID(2,2));
+		o.setId(u);
 		assertEquals(o.equals(o), true);
 		Cinema o0 = new Cinema(null, null, null, 5, 2, null);
 		assertEquals(o0.equals(o0), true);
@@ -76,29 +77,39 @@ public class CinemaTest {
 		String s = "Test";
 		assertEquals(o.equals(s), false);
 		Cinema o2 = new Cinema("Kino Mannheim", "Q6", "14", 4, 2, c);
+		o2.setId(u);
 		assertEquals(o.equals(o2), false);
 		Cinema o3 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, null);
+		o3.setId(u);
 		Cinema o03 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		o03.setId(u);
 		assertEquals(o.equals(o3), false);
 		assertEquals(o0.equals(o03), false);
 		Cinema o4 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
 		Cinema o04 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
 		o4.setId(null);
-		o04.setId(new UUID(4,4));
+		o04.setId(u);
 		assertEquals(o.equals(o4), false);
 		assertEquals(o0.equals(o04), false);
 		Cinema o5 = new Cinema(null, "Q6", "14", 5, 2, c);
+		o5.setId(u);
 		Cinema o05 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		o05.setId(u);
 		assertEquals(o.equals(o5), false);
 		assertEquals(o0.equals(o05), false);
 		Cinema o6 = new Cinema("Kino Mannheim", "Q6", null, 5, 2, c);
+		o6.setId(u);
 		Cinema o06 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		o06.setId(u);
 		assertEquals(o.equals(o6), false);
 		assertEquals(o0.equals(o06), false);
 		Cinema o7 = new Cinema("Kino Mannheim", "Q6", "14", 5, 1, c);
+		o7.setId(u);
 		assertEquals(o.equals(o7), false);
 		Cinema o8 = new Cinema("Kino Mannheim", null, "14", 5, 2, c);
+		o8.setId(u);
 		Cinema o08 = new Cinema("Kino Mannheim", "Q6", "14", 5, 2, c);
+		o08.setId(u);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o0.equals(o08), false);
     }
