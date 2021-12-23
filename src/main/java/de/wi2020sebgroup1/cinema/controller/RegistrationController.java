@@ -3,6 +3,9 @@ package de.wi2020sebgroup1.cinema.controller;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
@@ -56,6 +60,26 @@ public class RegistrationController {
 		toAdd.setNumber(uro.number);
 		
 		return new ResponseEntity<Object>(userRepository.save(toAdd), HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/login")
+	public ResponseEntity<Object> login(HttpServletResponse response, @RequestBody UserLoginObject ulo){
+		
+		Optional<User> userSearch = userRepository.findByUsername(ulo.username);
+		try {
+			User u = userSearch.get();
+			if(u.getPassword() != ulo.passwordHash)
+				return new ResponseEntity<Object>("Wrong password!", HttpStatus.UNAUTHORIZED);
+			Cookie c = new Cookie("userID", u.getId().toString());
+			response.addCookie(c);
+			Cookie c2 = new Cookie("key", ""+u.getId().hashCode()+1);
+			response.addCookie(c2);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("No user for username found!", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Object>(null, HttpStatus.OK);
+		
 	}
 	
 }
