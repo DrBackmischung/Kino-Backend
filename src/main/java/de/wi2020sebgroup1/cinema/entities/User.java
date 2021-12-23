@@ -75,10 +75,9 @@ public class User {
 		
 	}
 	
-	public User(UUID id, String userName, String name, String firstName, String email, String password, Role role,
+	public User(String userName, String name, String firstName, String email, String password, Role role,
 			String street, String number, City city, String payPalMail, CreditCard creditCard) {
 		super();
-		this.id = id;
 		this.userName = userName;
 		this.name = name;
 		this.firstName = firstName;
@@ -92,10 +91,9 @@ public class User {
 		this.creditCard = creditCard;
 	}
 	
-	public User(UUID id, String userName, String name, String firstName, String email, String password,
+	public User(String userName, String name, String firstName, String email, String password,
 			String street, String number, City city, String payPalMail, CreditCard creditCard) {
 		super();
-		this.id = id;
 		this.userName = userName;
 		this.name = name;
 		this.firstName = firstName;

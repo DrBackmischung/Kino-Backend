@@ -60,7 +60,7 @@ public class UserControllerTest {
     }
     
     User getUser() {
-    	User u = new User("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "abcde12345");
+    	User u = new User("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "abcde12345", null, null, null, null, null, null);
     	u.setId(uuid);
     	return u;
     }
