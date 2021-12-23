@@ -154,9 +154,9 @@ public class ShowControllerTest {
     	return Optional.of(c);
     }
     
-    Optional<CinemaRoom> getOptionalCinemaRoomWithLayout() {
+    Optional<CinemaRoom> getOptionalCinemaRoomWithoutLayout() {
     	CinemaRoom c = getCinemaRoom();
-    	c.setCinemaRoomSeatingPlan(getCinemaRoomSeatingPlan());
+    	c.setCinemaRoomSeatingPlan(null);
     	return Optional.of(c);
     }
     
@@ -239,7 +239,7 @@ public class ShowControllerTest {
         		.andExpect(status().isCreated());
 
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithLayout());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
         when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
         when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
