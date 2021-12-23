@@ -63,6 +63,8 @@ public class CinemaRoomSeatingPlanTest {
 		assertEquals(o.equals(o5), false);
 		assertEquals(o.equals(s), false);
 		CinemaRoomSeatingPlan onull = new CinemaRoomSeatingPlan(50);
+		o.setCinemaRoom(null);
+		onull.setCinemaRoom(null);
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }
