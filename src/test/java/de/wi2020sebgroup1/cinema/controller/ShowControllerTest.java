@@ -238,16 +238,6 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
-        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
-        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        mvc.perform(
-            put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
-        		.andExpect(status().isCreated());
-
     }
 
     @Test
@@ -266,6 +256,16 @@ public class ShowControllerTest {
         mvc.perform(
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
+
+        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
+        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }
