@@ -89,6 +89,9 @@ public class SeatTest {
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(o9), false);
 		assertEquals(o.equals(st), false);
+		Seat onull = new Seat(1, 3, true, true, 20, c, s);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }

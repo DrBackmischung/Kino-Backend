@@ -88,6 +88,9 @@ public class TicketTest {
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(st), false);
+		Ticket onull = new Ticket(true, u, s, p, s2);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }
