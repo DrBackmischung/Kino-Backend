@@ -1,6 +1,5 @@
 package de.wi2020sebgroup1.cinema.helper;
 
-import org.springframework.http.HttpStatus.Series;
 import org.springframework.lang.Nullable;
 
 /**
