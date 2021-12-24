@@ -28,7 +28,7 @@ public class User {
 	
 	@Column
 	@NonNull
-	private String userName;
+	private String username;
 	
 	@Column
 	@NonNull
@@ -78,7 +78,7 @@ public class User {
 	public User(String userName, String name, String firstName, String email, String password, Role role,
 			String street, String number, City city, String payPalMail, CreditCard creditCard) {
 		super();
-		this.userName = userName;
+		this.username = userName;
 		this.name = name;
 		this.firstName = firstName;
 		this.email = email;
@@ -94,7 +94,7 @@ public class User {
 	public User(String userName, String name, String firstName, String email, String password,
 			String street, String number, City city, String payPalMail, CreditCard creditCard) {
 		super();
-		this.userName = userName;
+		this.username = userName;
 		this.name = name;
 		this.firstName = firstName;
 		this.email = email;
@@ -108,11 +108,11 @@ public class User {
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 
 	public String getPassword() {
@@ -218,7 +218,7 @@ public class User {
 		result = prime * result + ((payPalMail == null) ? 0 : payPalMail.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((street == null) ? 0 : street.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -286,10 +286,10 @@ public class User {
 				return false;
 		} else if (!street.equals(other.street))
 			return false;
-		if (userName == null) {
-			if (other.userName != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!userName.equals(other.userName))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}

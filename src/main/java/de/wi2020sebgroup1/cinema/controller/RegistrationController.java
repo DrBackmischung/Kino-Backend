@@ -19,6 +19,7 @@ import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.exceptions.CityNotFoundException;
+import de.wi2020sebgroup1.cinema.helper.UserVerificator;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
@@ -70,9 +71,16 @@ public class RegistrationController {
 			User u = userSearch.get();
 			if(u.getPassword() != ulo.passwordHash)
 				return new ResponseEntity<Object>("Wrong password!", HttpStatus.UNAUTHORIZED);
+			
+			/*
+			 * Im Cookie wird einmal die User ID gespeichert und ein Key.
+			 * Der Key ist nur der HashCode +1, damit man nicht einfach so die userID verändern
+			 * kann,, um sich als Admin auszugeben.
+			 */
+			
 			Cookie c = new Cookie("userID", u.getId().toString());
 			response.addCookie(c);
-			Cookie c2 = new Cookie("key", ""+u.getId().hashCode()+1);
+			Cookie c2 = new Cookie("key", ""+u.getId().hashCode()+UserVerificator.KEY_OFFSET);
 			response.addCookie(c2);
 		} catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("No user for username found!", HttpStatus.NOT_FOUND);
