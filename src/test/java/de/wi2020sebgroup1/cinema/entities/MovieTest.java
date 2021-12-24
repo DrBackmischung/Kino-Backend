@@ -11,7 +11,7 @@ public class MovieTest {
 	@DisplayName("Test the constructor")
     public void testConstructor() {
 		Movie o = new Movie("Shrek 3", "Japanisch", 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", 12);
-        assertEquals(o.getTitel(), "Shrek 3");
+        assertEquals(o.getTitle(), "Shrek 3");
         assertEquals(o.getLanguage(), "Japanisch");
         assertEquals(o.getDuration(), 1.4);
         assertEquals(o.getDirector(), "Janis Ruppel");
@@ -23,8 +23,8 @@ public class MovieTest {
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
 		Movie o = new Movie("Shrek 3", "Japanisch", 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", 12);
-		o.setTitel("Arcane");
-        assertEquals(o.getTitel(), "Arcane");
+		o.setTitle("Arcane");
+        assertEquals(o.getTitle(), "Arcane");
         o.setLanguage("Deutsch");
         assertEquals(o.getLanguage(), "Deutsch");
         o.setDuration(2);
