@@ -24,15 +24,15 @@ public enum Response {
 	 */
 	OK(200, ResponseSeries.SUCCESSFUL, "OK"),
 	/**
-	 * {@code 200 Continue}.
+	 * {@code 200 Ok (Deleted)}.
 	 */
 	DELETED(200, ResponseSeries.SUCCESSFUL, "Deleted"),
 	/**
-	 * {@code 200 Changed}.
+	 * {@code 200 Ok (Changed)}.
 	 */
 	CHANGED(200, ResponseSeries.SUCCESSFUL, "Changed"),
 	/**
-	 * {@code 201 Continue}.
+	 * {@code 201 Created}.
 	 */
 	CREATED(201, ResponseSeries.SUCCESSFUL, "Created"),
 	/**
