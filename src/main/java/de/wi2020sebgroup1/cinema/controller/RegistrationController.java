@@ -22,6 +22,7 @@ import de.wi2020sebgroup1.cinema.exceptions.CityNotFoundException;
 import de.wi2020sebgroup1.cinema.helper.UserVerificator;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+import de.wi2020sebgroup1.cinema.services.EmailService;
 
 @Controller
 @RestController
@@ -59,6 +60,8 @@ public class RegistrationController {
 		toAdd.setPassword(uro.passwordHash);
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
+		
+		EmailService.send(uro.email, "Registration completed!", "Welcome "+uro.username+" to the Cinema.");
 		
 		return new ResponseEntity<Object>(userRepository.save(toAdd), HttpStatus.CREATED);
 	}
