@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,9 @@ public class RegistrationController {
 	
 	@Autowired
 	CityRepository cityRepository;
+	
+	@Autowired
+    private JavaMailSender emailSender;
 	
 	@PutMapping("/registration")
 	public ResponseEntity<Object> register(@RequestBody UserRegistrationObject uro){
@@ -61,7 +65,7 @@ public class RegistrationController {
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
 		
-		EmailService.send(uro.email, "Registration completed!", "Welcome "+uro.username+" to the Cinema.");
+		emailSender.send(EmailService.composeMail(uro.email, "Registration completed!", "Welcome "+uro.username+" to the Cinema."));
 		
 		return new ResponseEntity<Object>(userRepository.save(toAdd), HttpStatus.CREATED);
 	}

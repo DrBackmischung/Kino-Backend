@@ -6,7 +6,7 @@ public class EmailService {
 	
 	public final static String EMAIL = "wwi2020seb@gmail.com";
 	
-	public static void send(String to, String subject, String body) {
+	public static SimpleMailMessage composeMail(String to, String subject, String body) {
 
         final SimpleMailMessage email = new SimpleMailMessage();
         email.setSubject(subject);
@@ -14,9 +14,11 @@ public class EmailService {
         email.setTo(to);
         email.setFrom(EMAIL);
         
+        return email;
+        
 	}
 	
-	public static void send(String to, String subject, String body, String attachedFilePath) {
+	public static SimpleMailMessage composeMail(String to, String subject, String body, String attachedFilePath) {
 
 		// handle attached filed
 		
@@ -25,6 +27,8 @@ public class EmailService {
         email.setText(body);
         email.setTo(to);
         email.setFrom(EMAIL);
+        
+        return email;
         
 	}
 	
