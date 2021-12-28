@@ -1,9 +1,11 @@
 package de.wi2020sebgroup1.cinema.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import org.apache.catalina.valves.SemaphoreValve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.enums.BookingState;
+import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -107,9 +111,20 @@ public class BookingController {
 	@PutMapping("/{id}/changeStatus")
 	public ResponseEntity<Object> changeToPaid(@RequestBody BookingConfigurationObject bookingObject, @PathVariable UUID id){
 		
+		ArrayList<UUID> seatsToChange = new ArrayList<>();
 		try {
 			Booking booking = bookingRepositroy.findById(id).get();
 			if(booking.getState() != bookingObject.state) {
+				if(bookingObject.state == BookingState.Canceled) {
+					List<Ticket> bookings =  booking.getTickets();
+					for(Ticket ticket:bookings) {
+						Seat seat = ticket.getSeat();
+						seatsToChange.add(seat.getId());
+						
+					}
+					
+					seatService.freeSeats(seatsToChange, bookingObject.showID);
+				}
 				booking.setState(bookingObject.state);
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
 			}
