@@ -20,6 +20,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
 
 @Entity
 @Table(name="seat")
@@ -40,7 +41,7 @@ public class Seat {
 	
 	@Column
 	@NotNull
-	private boolean coupleSeat;
+	private SeatType type;
 	
 	@Column
 	@NotNull
@@ -65,12 +66,12 @@ public class Seat {
 		
 	}
 	
-	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull SeatState state,
+	public Seat(@NotNull int reihe, @NotNull int place, @NotNull SeatType type, @NotNull SeatState state,
 			@NotNull int surcharge, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
 		super();
 		this.reihe = reihe;
 		this.place = place;
-		this.coupleSeat = coupleSeat;
+		this.type = type;
 		this.state = state;
 		this.surcharge = surcharge;
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
@@ -101,8 +102,8 @@ public class Seat {
 		return state;
 	}
 	
-	public boolean isCoupleSeat() {
-		return coupleSeat;
+	public SeatType getType() {
+		return type;
 	}
 	
 	public double getSurcharge() {
@@ -125,8 +126,8 @@ public class Seat {
 		this.place = column;
 	}
 	
-	public void setCoupleSeat(boolean coupleSeat) {
-		this.coupleSeat = coupleSeat;
+	public void setType(SeatType type) {
+		this.type = type;
 	}
 	
 	public void setReihe(int row) {
@@ -147,7 +148,7 @@ public class Seat {
 		int result = 1;
 		result = prime * result + state.hashCode();
 		result = prime * result + ((cinemaRoomSeatingPlan == null) ? 0 : cinemaRoomSeatingPlan.hashCode());
-		result = prime * result + (coupleSeat ? 1231 : 1237);
+		result = prime * result + type.hashCode();
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + place;
 		long temp;
@@ -174,7 +175,7 @@ public class Seat {
 				return false;
 		} else if (!cinemaRoomSeatingPlan.equals(other.cinemaRoomSeatingPlan))
 			return false;
-		if (coupleSeat != other.coupleSeat)
+		if (type != other.type)
 			return false;
 		if (id == null) {
 			if (other.id != null)

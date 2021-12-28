@@ -21,6 +21,7 @@ import de.wi2020sebgroup1.cinema.configurationObject.TicketConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.TicketState;
 import de.wi2020sebgroup1.cinema.exceptions.PriceNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatAlreadyBookedException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
@@ -142,7 +143,7 @@ public class TicketController {
 				return new ResponseEntity<Object>(new SeatNotFoundException(id).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
-			ticket.setPaid(false);
+			ticket.setState(TicketState.Cancled);
 			ticket.setSeat(null);
 			return new ResponseEntity<Object>(ticketRepository.save(ticket), HttpStatus.OK);
 			
