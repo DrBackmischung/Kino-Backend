@@ -7,6 +7,8 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+
+import de.wi2020sebgroup1.cinema.enums.BookingState;
 
 @Entity
 @Table(name="booking")
@@ -39,6 +43,11 @@ public class Booking {
 	@Lob
 	private byte[] qrCode;
 	
+	@Column
+	@NotNull
+	@Enumerated(EnumType.ORDINAL)
+	private BookingState state;
+	
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
@@ -48,12 +57,17 @@ public class Booking {
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private ArrayList<Ticket> tickets;
 	
-	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show) {
+	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, @NotNull BookingState state) {
 		this.bookingDate = bookingDate;
 		this.tickets = tickets;
+		this.state = state;
 		this.show = show;
 	}
 
+	public BookingState getState() {
+		return state;
+	}
+	
 	public Date getBookingDate() {
 		return bookingDate;
 	}
@@ -88,6 +102,10 @@ public class Booking {
 	
 	public void setQrCode(byte[] qrCode) {
 		this.qrCode = qrCode;
+	}
+	
+	public void setState(BookingState state) {
+		this.state = state;
 	}
 	
 	public void setTickets(ArrayList<Ticket> tickets) {
