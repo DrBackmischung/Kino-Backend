@@ -2,6 +2,7 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -53,9 +54,9 @@ public class Booking {
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
-	@OneToMany
+	@OneToMany(mappedBy="booking")
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private ArrayList<Ticket> tickets;
+	private List<Ticket> tickets = new ArrayList<>();
 	
 	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, @NotNull BookingState state) {
 		this.bookingDate = bookingDate;
@@ -84,7 +85,7 @@ public class Booking {
 		return qrCode;
 	}
 	
-	public ArrayList<Ticket> getTickets() {
+	public List<Ticket> getTickets() {
 		return tickets;
 	}
 	
