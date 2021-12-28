@@ -64,9 +64,9 @@ public enum Response {
 	 */
 	NOT_FOUND(404, ResponseSeries.CLIENT_ERROR, "Not Found"),
 	/**
-	 * {@code 406 Not Acceptable}.
+	 * {@code 409 Conflict}.
 	 */
-	NOT_ACCEPTABLE(406, ResponseSeries.CLIENT_ERROR, "Not Acceptable"),
+	CONFLICT(409, ResponseSeries.CLIENT_ERROR, "Conflict"),
 	/**
 	 * {@code 418 Everything else}.
 	 */
