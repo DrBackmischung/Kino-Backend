@@ -33,6 +33,7 @@ import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -106,7 +107,7 @@ public class TicketControllerTest {
     Seat getSeat(boolean blocked) {
     	Seat s = new Seat();
     	s.setId(uuid);
-    	s.setBlocked(blocked);
+    	s.setState(SeatState.Reserved);
     	return s;
     }
     

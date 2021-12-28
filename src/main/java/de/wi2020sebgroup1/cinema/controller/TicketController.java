@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgroup1.cinema.configurationObject.TicketConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.exceptions.PriceNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatAlreadyBookedException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
@@ -67,12 +68,12 @@ public class TicketController {
 		try {
 			SemaphoreVault.getSemaphore(showID).acquire();;
 			toBook = seatRepository.findById(seatID).get();
-			Boolean booked = toBook.isBlocked();
-			if(booked) {
+			SeatState booked = toBook.getState();
+			if(booked == SeatState.Paid || booked == SeatState.Reserved) {
 				return new ResponseEntity<Object>(new SeatAlreadyBookedException(seatID).getMessage(),
 						HttpStatus.NOT_ACCEPTABLE);
 			}
-			toBook.setBlocked(true);
+			toBook.setState(SeatState.Reserved);
 			seatRepository.save(toBook);
 			
 		} 
@@ -134,7 +135,7 @@ public class TicketController {
 			Ticket ticket = ticketRepository.findById(id).get();
 			try {
 				Seat seat = seatRepository.findById(ticket.getSeat().getId()).get();
-				seat.setBlocked(false);
+				seat.setState(SeatState.Free);
 				seatRepository.save(seat);
 			}
 			catch(NoSuchElementException e) {

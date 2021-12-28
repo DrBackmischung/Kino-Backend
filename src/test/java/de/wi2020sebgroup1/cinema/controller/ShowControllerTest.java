@@ -41,6 +41,7 @@ import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
@@ -156,9 +157,9 @@ public class ShowControllerTest {
     
     Optional<List<Seat>> getOptionalSeatList() {
     	List<Seat> l = new ArrayList<>();
-    	l.add(new Seat(0, 0, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
-    	l.add(new Seat(1, 1, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
-    	l.add(new Seat(3, 2, true, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(0, 0, false, SeatState.Reserved, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(1, 1, false, SeatState.Reserved, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(3, 2, true, SeatState.Reserved, 0, getCinemaRoomSeatingPlan(), getShow()));
     	return Optional.of(l);
     }
     

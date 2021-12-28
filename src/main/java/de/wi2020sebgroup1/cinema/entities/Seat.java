@@ -5,6 +5,8 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+
+import de.wi2020sebgroup1.cinema.enums.SeatState;
 
 @Entity
 @Table(name="seat")
@@ -40,7 +44,8 @@ public class Seat {
 	
 	@Column
 	@NotNull
-	private boolean blocked;
+	@Enumerated(EnumType.ORDINAL)
+	private SeatState state;
 	
 	@Column
 	@NotNull
@@ -60,13 +65,13 @@ public class Seat {
 		
 	}
 	
-	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull boolean blocked,
+	public Seat(@NotNull int reihe, @NotNull int place, @NotNull boolean coupleSeat, @NotNull SeatState state,
 			@NotNull int surcharge, CinemaRoomSeatingPlan cinemaRoomSeatingPlan, Show show) {
 		super();
 		this.reihe = reihe;
 		this.place = place;
 		this.coupleSeat = coupleSeat;
-		this.blocked = blocked;
+		this.state = state;
 		this.surcharge = surcharge;
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
 		this.show = show;
@@ -92,8 +97,8 @@ public class Seat {
 		return show;
 	}
 	
-	public boolean isBlocked() {
-		return blocked;
+	public SeatState getState() {
+		return state;
 	}
 	
 	public boolean isCoupleSeat() {
@@ -108,8 +113,8 @@ public class Seat {
 		this.surcharge = surcharge;
 	}
 	
-	public void setBlocked(boolean blocked) {
-		this.blocked = blocked;
+	public void setState(SeatState state) {
+		this.state = state;
 	}
 	
 	public void setCinemaRoomSeatingPlan(CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
@@ -140,7 +145,7 @@ public class Seat {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (blocked ? 1231 : 1237);
+		result = prime * result + state.hashCode();
 		result = prime * result + ((cinemaRoomSeatingPlan == null) ? 0 : cinemaRoomSeatingPlan.hashCode());
 		result = prime * result + (coupleSeat ? 1231 : 1237);
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -162,7 +167,7 @@ public class Seat {
 		if (getClass() != obj.getClass())
 			return false;
 		Seat other = (Seat) obj;
-		if (blocked != other.blocked)
+		if (state != other.state)
 			return false;
 		if (cinemaRoomSeatingPlan == null) {
 			if (other.cinemaRoomSeatingPlan != null)

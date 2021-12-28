@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+
 public class TicketTest {
 	
 	@Test
@@ -13,7 +15,7 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
+		Seat s2 = new Seat(0, 0, false, SeatState.Reserved, 0, null, s);
 		Ticket o = new Ticket(true, u, s, p, s2);
         assertEquals(o.isPaid(), true);
         assertEquals(o.getUser(), u);
@@ -28,7 +30,7 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
+		Seat s2 = new Seat(0, 0, false, SeatState.Reserved, 0, null, s);
 		Ticket o = new Ticket(true, u, s, p, s2);
 		o.setPaid(false);
         assertEquals(o.isPaid(), false);
@@ -48,7 +50,7 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
+		Seat s2 = new Seat(0, 0, false, SeatState.Reserved, 0, null, s);
 		Ticket o = new Ticket(true, u, s, p, s2);
 		Ticket o2 = new Ticket(true, u, s, p, s2);
 		assertEquals(o.hashCode(), o2.hashCode());
@@ -63,7 +65,7 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
+		Seat s2 = new Seat(0, 0, false, SeatState.Reserved, 0, null, s);
 		Ticket o = new Ticket(true, u, s, p, s2);
 		Ticket o2 = new Ticket(false, u, s, p, s2);
 		Ticket o3 = new Ticket(true, null, s, p, s2);
