@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.helper;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 
 /**
@@ -86,11 +87,11 @@ public enum Response {
 	/**
 	 * {@code 901 Logical Error}.
 	 */
-	LOGICAL_ERROR(901, ResponseSeries.CUSTOM_ERROR, "Logical Error"),
+	LOGICAL_ERROR(500, ResponseSeries.CUSTOM_ERROR, "Logical Error"),
 	/**
 	 * {@code 902 Synchronization Error}.
 	 */
-	SYNCHRONIZATION_ERROR(902, ResponseSeries.CUSTOM_ERROR, "Synchronization Error");
+	SYNCHRONIZATION_ERROR(500, ResponseSeries.CUSTOM_ERROR, "Synchronization Error");
 	
 	private static final Response[] VALUES;
 
@@ -152,6 +153,14 @@ public enum Response {
 
 	public boolean isError() {
 		return (is4xxClientError() || is5xxServerError() || is9xxCustomError());
+	}
+	
+	public HttpStatus status() {
+		HttpStatus h = HttpStatus.valueOf(value);
+		if (h != null)
+			return HttpStatus.valueOf(value);
+		else
+			return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 
 	@Override
