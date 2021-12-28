@@ -82,7 +82,15 @@ public enum Response {
 	/**
 	 * {@code 503 Service Unavailable}.
 	 */
-	SERVICE_UNAVAILABLE(503, ResponseSeries.SERVER_ERROR, "Service Unavailable");
+	SERVICE_UNAVAILABLE(503, ResponseSeries.SERVER_ERROR, "Service Unavailable"),
+	/**
+	 * {@code 901 Logical Error}.
+	 */
+	LOGICAL_ERROR(901, ResponseSeries.CUSTOM_ERROR, "Logical Error"),
+	/**
+	 * {@code 902 Synchronization Error}.
+	 */
+	SYNCHRONIZATION_ERROR(902, ResponseSeries.CUSTOM_ERROR, "Synchronization Error");
 	
 	private static final Response[] VALUES;
 
@@ -137,9 +145,13 @@ public enum Response {
 	public boolean is5xxServerError() {
 		return (series() == ResponseSeries.SERVER_ERROR);
 	}
+	
+	public boolean is9xxCustomError() {
+		return (series() == ResponseSeries.CUSTOM_ERROR);
+	}
 
 	public boolean isError() {
-		return (is4xxClientError() || is5xxServerError());
+		return (is4xxClientError() || is5xxServerError() || is9xxCustomError());
 	}
 
 	@Override

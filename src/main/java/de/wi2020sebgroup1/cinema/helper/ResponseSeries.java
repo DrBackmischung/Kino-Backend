@@ -8,7 +8,8 @@ public enum ResponseSeries {
 	SUCCESSFUL(2),
 	REDIRECTION(3),
 	CLIENT_ERROR(4),
-	SERVER_ERROR(5);
+	SERVER_ERROR(5),
+	CUSTOM_ERROR(9);
 
 	private final int value;
 
