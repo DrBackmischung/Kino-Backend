@@ -42,6 +42,24 @@ public class ResponseTest {
 	}
 	
 	@Test
+	void testWrongCodeAffiliation() {
+		assertEquals(false, Response.OK.is1xxInformational());
+		assertEquals(false, Response.NOT_FOUND.is2xxSuccessful());
+		assertEquals(false, Response.OK.is3xxRedirection());
+		assertEquals(false, Response.INTERNAL_SERVER_ERROR.is4xxClientError());
+		assertEquals(false, Response.CONTINUE.is5xxServerError());
+		assertEquals(false, Response.CONTINUE.is9xxCustomError());
+		assertEquals(false, Response.CONTINUE.isError());
+		assertEquals(false, Response.OK.isError());
+		assertEquals(false, Response.PERMANENT_REDIRECTED.isError());
+	}
+	
+	@Test
+	void testToString() {
+		assertEquals("200 OK", Response.OK.toString());
+	}
+	
+	@Test
 	void testValueOf() {
 		assertEquals(Response.NOT_FOUND, Response.valueOf(404));
 		assertThrows(IllegalArgumentException.class, new Executable() {
