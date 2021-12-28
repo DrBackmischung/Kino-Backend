@@ -70,5 +70,30 @@ public class SeatService {
 		}
 		
 	}
+	
+	public boolean freeSeats(ArrayList<UUID> seats, UUID showId) {
+		
+		ArrayList<Seat> changedSeats = new ArrayList<>();
+		
+		try {
+			semaphoreVault.getSemaphore(showId).acquire();
+			
+			for(UUID seat:seats) {
+				Seat toFree = seatRepository.findById(seat).get();
+				toFree.setBlocked(false);
+				changedSeats.add(toFree);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}finally {
+			semaphoreVault.getSemaphore(showId).release();
+		}
+		
+		seatRepository.saveAll(changedSeats);
+		return true;
+		
+	}
 
 }
