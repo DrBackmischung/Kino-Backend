@@ -62,6 +62,14 @@ public class Ticket {
 		this.price = price;
 		this.seat = seat;
 	}
+	
+	public Ticket(@NotNull boolean paid, User user, Show show, Seat seat) {
+		super();
+		this.paid = paid;
+		this.user = user;
+		this.show = show;
+		this.seat = seat;
+	}
 
 	public Price getPrice() {
 		return price;
