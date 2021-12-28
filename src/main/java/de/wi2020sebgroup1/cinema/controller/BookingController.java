@@ -26,6 +26,7 @@ import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+import de.wi2020sebgroup1.cinema.service.QRCodeGenerator;
 import de.wi2020sebgroup1.cinema.service.SeatService;
 
 @Controller
@@ -51,6 +52,9 @@ public class BookingController {
 	@Autowired
 	SeatService seatService;
 	
+	@Autowired
+	QRCodeGenerator qrCodeGenerator;
+	
 	@PutMapping("/add")
 	public ResponseEntity<Object> addBooking(@RequestBody BookingConfigurationObject bookingObject){
 		
@@ -72,6 +76,7 @@ public class BookingController {
 			}
 			
 			Booking booking = new Booking(bookingObject.bookingDate, tickets, show, bookingObject.state);
+			booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 			
 			ticketRepository.saveAll(tickets);
 			return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
