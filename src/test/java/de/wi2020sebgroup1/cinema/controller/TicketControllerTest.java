@@ -107,7 +107,10 @@ public class TicketControllerTest {
     Seat getSeat(boolean blocked) {
     	Seat s = new Seat();
     	s.setId(uuid);
-    	s.setState(SeatState.Free);
+    	if(blocked)
+    		s.setState(SeatState.Reserved);
+    	else
+    		s.setState(SeatState.Free);
     	return s;
     }
     
