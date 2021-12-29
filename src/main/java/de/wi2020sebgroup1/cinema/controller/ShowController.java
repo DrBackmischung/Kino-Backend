@@ -28,6 +28,7 @@ import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomSeatingPlanNotFoundException;
@@ -110,7 +111,7 @@ public class ShowController {
 					
 					for(int i = 1; i <= seatingPlan.getReihen(); i++) {
 						for(int j = 1; j <= seatsPerRow; j++) {
-							Seat newSeat = new Seat(i, j, false, SeatState.Free, 0, seatingPlan, toAdd);
+							Seat newSeat = new Seat(i, j, SeatType.Parquet, SeatState.Free, 0, seatingPlan, toAdd);
 							showSeats.add(newSeat);
 						}
 					}
