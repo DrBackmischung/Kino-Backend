@@ -24,6 +24,7 @@ import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.BookingState;
+import de.wi2020sebgroup1.cinema.enums.TicketState;
 import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
@@ -75,7 +76,7 @@ public class BookingController {
 			
 			for(UUID seat : seatIDs) {
 				Seat seatObject = seatRepository.findById(seat).get();
-				Ticket ticket = new Ticket(false,user,show,seatObject);
+				Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
 				tickets.add(ticket);
 			}
 			
