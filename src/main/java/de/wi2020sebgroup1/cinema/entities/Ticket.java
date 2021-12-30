@@ -5,6 +5,8 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.TicketState;
+
 @Entity
 @Table(name="ticket")
 public class Ticket {
@@ -29,7 +34,8 @@ public class Ticket {
 	
 	@Column
 	@NotNull
-	private boolean paid;
+	@Enumerated(EnumType.ORDINAL)
+	private TicketState state;
 	
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -50,16 +56,30 @@ public class Ticket {
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
 	
+	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "booking_id", referencedColumnName = "id")
+	private Booking booking;
+	
+	
 	public Ticket() {
 		
 	}
 	
-	public Ticket(@NotNull boolean paid, User user, Show show, Price price, Seat seat) {
+	public Ticket(@NotNull TicketState state, User user, Show show, Price price, Seat seat) {
+		super();
+		this.state = state;
+		this.user = user;
+		this.show = show;
+		this.price = price;
+		this.seat = seat;
+	}
+	
+	public Ticket(@NotNull boolean paid, User user, Show show, Seat seat) {
 		super();
 		this.paid = paid;
 		this.user = user;
 		this.show = show;
-		this.price = price;
 		this.seat = seat;
 	}
 
@@ -83,12 +103,12 @@ public class Ticket {
 		return user;
 	}
 	
-	public boolean isPaid() {
-		return paid;
+	public TicketState getState() {
+		return state;
 	}
 	
-	public void setPaid(boolean paid) {
-		this.paid = paid;
+	public void setState(TicketState state) {
+		this.state = state;
 	}
 	
 	public void setPrice(Price price) {
@@ -116,7 +136,7 @@ public class Ticket {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + (paid ? 1231 : 1237);
+		result = prime * result + state.hashCode();
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((seat == null) ? 0 : seat.hashCode());
 		result = prime * result + ((show == null) ? 0 : show.hashCode());
@@ -133,32 +153,17 @@ public class Ticket {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
-		if (paid != other.paid)
+		if (state != other.state)
 			return false;
-		if (price == null) {
-			if (other.price != null)
-				return false;
-		} else if (!price.equals(other.price))
+		if (price != other.price)
 			return false;
-		if (seat == null) {
-			if (other.seat != null)
-				return false;
-		} else if (!seat.equals(other.seat))
+		if (seat != other.seat)
 			return false;
-		if (show == null) {
-			if (other.show != null)
-				return false;
-		} else if (!show.equals(other.show))
+		if (show != other.show)
 			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
+		if (user != other.user)
 			return false;
 		return true;
 	}
