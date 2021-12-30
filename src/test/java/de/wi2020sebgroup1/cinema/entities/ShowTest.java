@@ -15,7 +15,7 @@ public class ShowTest {
     public void testConstructor() {
 		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
+		CinemaRoom c2 = new CinemaRoom(0, false, c);
 		Date d = new Date(0);
 		Time t = new Time(0), t2 = new Time(0);
 		Show o = new Show(d, t, t2, m, c, c2);
@@ -32,7 +32,7 @@ public class ShowTest {
     public void testGetterSetter() {
 		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
+		CinemaRoom c2 = new CinemaRoom(0, false, c);
 		Date d = new Date(0);
 		Time t = new Time(0), t2 = new Time(0);
 		Show o = new Show(d, t, t2, m, c, c2);
@@ -55,7 +55,7 @@ public class ShowTest {
     public void testCompare() {
 		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
+		CinemaRoom c2 = new CinemaRoom(0, false, c);
 		Date d = new Date(0);
 		Time t = new Time(0), t2 = new Time(0);
 		Show o = new Show(d, t, t2, m, c, c2);
@@ -70,7 +70,7 @@ public class ShowTest {
     public void testCompareFail() {
 		Movie m = new Movie(null, null, 0, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
+		CinemaRoom c2 = new CinemaRoom(0, false, c);
 		Date d = new Date(0);
 		Time t = new Time(0), t2 = new Time(0);
 		Show o = new Show(d, t, t2, m, c, c2);

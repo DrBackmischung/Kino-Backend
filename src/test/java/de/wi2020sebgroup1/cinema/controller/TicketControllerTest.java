@@ -34,6 +34,7 @@ import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -120,7 +121,7 @@ public class TicketControllerTest {
     }
     
     Price getPrice() {
-    	Price s = new Price(20);
+    	Price s = new Price(20, SeatType.PARQUET);
     	s.setId(uuid);
     	return s;
     }

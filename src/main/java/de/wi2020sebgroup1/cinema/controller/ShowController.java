@@ -26,6 +26,7 @@ import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.entities.SeatsBluePrint;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
@@ -39,6 +40,7 @@ import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.SeatBluePrintRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
@@ -55,6 +57,9 @@ public class ShowController {
 	
 	@Autowired
 	MovieRepository movieRepository;
+	
+	@Autowired
+	SeatBluePrintRepository seatBluePrintRepository;
 	
 	@Autowired
 	CinemaRoomRepository cinemaRoomRepository;
@@ -105,18 +110,21 @@ public class ShowController {
 				CinemaRoom room = roomSearch.get();
 				toAdd.setCinemaRoom(room);
 				try {
-					CinemaRoomSeatingPlan seatingPlan = room.getCinemaRoomSeatingPlan();
-					int seatsPerRow = seatingPlan.getSeats() / seatingPlan.getReihen();
-					List<Seat> showSeats = new ArrayList<>();
 					
-					for(int i = 1; i <= seatingPlan.getReihen(); i++) {
-						for(int j = 1; j <= seatsPerRow; j++) {
-							Seat newSeat = new Seat(i, j, SeatType.PARQUET, SeatState.FREE, 0, seatingPlan, toAdd);
+					List<SeatsBluePrint> seats = seatBluePrintRepository.findAllByCinemaRoom(room);
+					List<Seat> showSeats = new ArrayList<>();
+
+					if(seats.size() > 0) {
+						
+						for(SeatsBluePrint bluePrint:seats) {
+							Seat newSeat = new Seat(bluePrint.getLine(), bluePrint.getPlace(),
+									bluePrint.getType(), SeatState.FREE, 0, bluePrint.getSeatingPlan(), toAdd);
 							showSeats.add(newSeat);
 						}
+						
+						seatRepository.saveAll(showSeats);
+						
 					}
-					
-					seatRepository.saveAll(showSeats);
 				}
 				catch(NoSuchElementException e)
 				{

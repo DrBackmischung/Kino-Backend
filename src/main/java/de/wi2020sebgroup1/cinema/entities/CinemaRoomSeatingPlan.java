@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.entities;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,6 +35,9 @@ public class CinemaRoomSeatingPlan {
 	
 	@OneToOne(mappedBy = "cinemaRoomSeatingPlan")
 	private CinemaRoom cinemaRoom;
+	
+	@OneToMany(mappedBy = "seatingPlan")
+	private List<SeatsBluePrint> seatBluePrints;
 
 	public CinemaRoomSeatingPlan() {
 		
@@ -43,12 +48,20 @@ public class CinemaRoomSeatingPlan {
 		this.seats = seats;
 	}
 	
+	public void setCinemaRoom(CinemaRoom cinemaRoom) {
+		this.cinemaRoom = cinemaRoom;
+	}
+	
 	public int getReihen() {
 		return reihen;
 	}
 
 	public UUID getId() {
 		return id;
+	}
+	
+	public CinemaRoom getCinemaRoom() {
+		return cinemaRoom;
 	}
 
 	public int getSeats() {
@@ -59,9 +72,6 @@ public class CinemaRoomSeatingPlan {
 		this.seats = seats;
 	}
 
-	public CinemaRoom getCinemaRoom() {
-		return cinemaRoom;
-	}
 	
 	public void setId(UUID id) {
 		this.id = id;
@@ -69,10 +79,6 @@ public class CinemaRoomSeatingPlan {
 	
 	public void setReihen(int reihen) {
 		this.reihen = reihen;
-	}
-
-	public void setCinemaRoom(CinemaRoom cinemaRoom) {
-		this.cinemaRoom = cinemaRoom;
 	}
 
 	@Override
@@ -95,11 +101,6 @@ public class CinemaRoomSeatingPlan {
 		if (getClass() != obj.getClass())
 			return false;
 		CinemaRoomSeatingPlan other = (CinemaRoomSeatingPlan) obj;
-		if (cinemaRoom == null) {
-			if (other.cinemaRoom != null)
-				return false;
-		} else if (!cinemaRoom.equals(other.cinemaRoom))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;

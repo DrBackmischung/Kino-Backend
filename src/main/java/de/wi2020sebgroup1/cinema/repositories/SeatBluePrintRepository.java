@@ -5,10 +5,11 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
+import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.SeatsBluePrint;
 
 public interface SeatBluePrintRepository extends CrudRepository<SeatsBluePrint, UUID> {
 	
-	public List<SeatsBluePrint> findAllByCinemaRoom();
+	List<SeatsBluePrint> findAllByCinemaRoom(CinemaRoom cinemaRoom);
 
 }

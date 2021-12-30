@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.NonNull;
+
+import de.wi2020sebgroup1.cinema.enums.SeatType;
 
 @Entity
 @Table(name="price")
@@ -24,21 +27,34 @@ public class Price {
 	@NonNull
 	private double price;
 	
-	public Price(double price) {
+	@Column
+	@NotNull
+	private SeatType type;
+	
+	public Price(double price, SeatType type) {
 		super();
 		this.price = price;
+		this.type = type;
 	}
 	
 	public Price() {
 		
 	}
-
+	
+	public SeatType getType() {
+		return type;
+	}
+	
 	public UUID getId() {
 		return id;
 	}
 	
 	public double getPrice() {
 		return price;
+	}
+	
+	public void setType(SeatType type) {
+		this.type = type;
 	}
 	
 	public void setId(UUID id) {
