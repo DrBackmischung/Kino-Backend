@@ -21,7 +21,11 @@ public class Movie {
 	
 	@Column
 	@NotNull
-	private String titel;
+	private String title;
+	
+	@Column
+	@NotNull
+	private String originalTitle;
 	
 	@Column
 	@NotNull
@@ -33,39 +37,81 @@ public class Movie {
 	
 	@Column
 	@NotNull
+	private String genre;
+	
+	@Column
+	@NotNull
 	private String director;
 	
 	@Column
 	@NotNull
+	private String actors;
+	
+	@Column(columnDefinition = "TEXT")
+	@NotNull
 	private String description;
+	
+	@Column(columnDefinition = "TEXT")
+	@NotNull
+	private String originalDescription;
 	
 	@Column
 	@NotNull
 	private String pictureLink;
 	
 	@Column
+	@NotNull
+	private String trailerLink;
+	
+	@Column
+	@NotNull
 	private int FSK;
 	
-	//ADD KINOSAAL
 	
 	public Movie() {
 		
 	}
 	
-	public Movie(@NotNull String titel, @NotNull String language, @NotNull double duration, @NotNull String director,
-			@NotNull String description, @NotNull String pictureLink, @NotNull int FSK) {
+	public Movie(@NotNull String titel, @NotNull String originalTitle , @NotNull String language, @NotNull double duration, @NotNull String director,
+			@NotNull String actors,@NotNull String description, @NotNull String originalDescription, @NotNull String pictureLink, 
+			@NotNull String trailerLink, @NotNull String genre, @NotNull int FSK) {
 		super();
-		this.titel = titel;
+		this.title = titel;
+		this.originalTitle = originalTitle;
+		this.genre = genre;
 		this.language = language;
 		this.duration = duration;
 		this.director = director;
+		this.actors = actors;
 		this.description = description;
+		this.originalDescription = originalDescription;
 		this.pictureLink = pictureLink;
+		this.trailerLink = trailerLink;
 		this.FSK = FSK;
 	}
 
 	public String getDirector() {
 		return director;
+	}
+	
+	public String getActors() {
+		return actors;
+	}
+	
+	public String getGenre() {
+		return genre;
+	}
+	
+	public String getOriginalDescription() {
+		return originalDescription;
+	}
+	
+	public String getOriginalTitle() {
+		return originalTitle;
+	}
+	
+	public String getTrailerLink() {
+		return trailerLink;
 	}
 	
 	public double getDuration() {
@@ -80,8 +126,8 @@ public class Movie {
 		return language;
 	}
 	
-	public String getTitel() {
-		return titel;
+	public String getTitle() {
+		return title;
 	}
 	
 	public String getDescription() {
@@ -100,6 +146,26 @@ public class Movie {
 		this.director = director;
 	}
 	
+	public void setActors(String actors) {
+		this.actors = actors;
+	}
+	
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	
+	public void setOriginalDescription(String originalDescription) {
+		this.originalDescription = originalDescription;
+	}
+	
+	public void setOriginalTitle(String originalTitle) {
+		this.originalTitle = originalTitle;
+	}
+	
+	public void setTrailerLink(String trailerLink) {
+		this.trailerLink = trailerLink;
+	}
+	
 	public void setDuration(double duration) {
 		this.duration = duration;
 	}
@@ -112,8 +178,8 @@ public class Movie {
 		this.description = description;
 	}
 	
-	public void setTitel(String titel) {
-		this.titel = titel;
+	public void setTitle(String titel) {
+		this.title = titel;
 	}
 	
 	public void setPictureLink(String pictureLink) {
@@ -140,7 +206,7 @@ public class Movie {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + ((pictureLink == null) ? 0 : pictureLink.hashCode());
-		result = prime * result + ((titel == null) ? 0 : titel.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 
@@ -165,7 +231,10 @@ public class Movie {
 			return false;
 		if (pictureLink != other.pictureLink)
 			return false;
-		if (titel != other.titel)
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
 			return false;
 		return true;
 	}
