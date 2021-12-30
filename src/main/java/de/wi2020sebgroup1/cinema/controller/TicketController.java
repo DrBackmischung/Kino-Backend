@@ -70,11 +70,11 @@ public class TicketController {
 			SemaphoreVault.getSemaphore(showID).acquire();;
 			toBook = seatRepository.findById(seatID).get();
 			SeatState booked = toBook.getState();
-			if(booked == SeatState.Paid || booked == SeatState.Reserved) {
+			if(booked == SeatState.PAID || booked == SeatState.RESERVED) {
 				return new ResponseEntity<Object>(new SeatAlreadyBookedException(seatID).getMessage(),
 						HttpStatus.NOT_ACCEPTABLE);
 			}
-			toBook.setState(SeatState.Reserved);
+			toBook.setState(SeatState.RESERVED);
 			seatRepository.save(toBook);
 			
 		} 
@@ -136,14 +136,14 @@ public class TicketController {
 			Ticket ticket = ticketRepository.findById(id).get();
 			try {
 				Seat seat = seatRepository.findById(ticket.getSeat().getId()).get();
-				seat.setState(SeatState.Free);
+				seat.setState(SeatState.FREE);
 				seatRepository.save(seat);
 			}
 			catch(NoSuchElementException e) {
 				return new ResponseEntity<Object>(new SeatNotFoundException(id).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
-			ticket.setState(TicketState.Cancled);
+			ticket.setState(TicketState.CANCELLED);
 			ticket.setSeat(null);
 			return new ResponseEntity<Object>(ticketRepository.save(ticket), HttpStatus.OK);
 			

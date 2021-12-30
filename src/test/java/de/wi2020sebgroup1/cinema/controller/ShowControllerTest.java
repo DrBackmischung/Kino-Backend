@@ -158,9 +158,9 @@ public class ShowControllerTest {
     
     Optional<List<Seat>> getOptionalSeatList() {
     	List<Seat> l = new ArrayList<>();
-    	l.add(new Seat(0, 0, SeatType.Parquet, SeatState.Reserved, 0, getCinemaRoomSeatingPlan(), getShow()));
-    	l.add(new Seat(1, 1, SeatType.Parquet, SeatState.Reserved, 0, getCinemaRoomSeatingPlan(), getShow()));
-    	l.add(new Seat(3, 2, SeatType.Premium, SeatState.Reserved, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(1, 1, SeatType.PARQUET, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(3, 2, SeatType.PREMIUM, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
     	return Optional.of(l);
     }
     

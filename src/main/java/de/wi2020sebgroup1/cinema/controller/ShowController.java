@@ -111,7 +111,7 @@ public class ShowController {
 					
 					for(int i = 1; i <= seatingPlan.getReihen(); i++) {
 						for(int j = 1; j <= seatsPerRow; j++) {
-							Seat newSeat = new Seat(i, j, SeatType.Parquet, SeatState.Free, 0, seatingPlan, toAdd);
+							Seat newSeat = new Seat(i, j, SeatType.PARQUET, SeatState.FREE, 0, seatingPlan, toAdd);
 							showSeats.add(newSeat);
 						}
 					}
