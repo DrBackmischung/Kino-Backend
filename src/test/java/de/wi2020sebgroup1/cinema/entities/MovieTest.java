@@ -12,7 +12,7 @@ public class MovieTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		Movie o = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
+		Movie o = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
         assertEquals(o.getTitle(), "Shrek 3");
         assertEquals(o.getLanguage(), "Japanisch");
         assertEquals(o.getDuration(), 1.4);
@@ -24,7 +24,7 @@ public class MovieTest {
 	@Test
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
-		Movie o = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
+		Movie o = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
 		o.setTitle("Arcane");
         assertEquals(o.getTitle(), "Arcane");
         o.setLanguage("Deutsch");
@@ -43,9 +43,9 @@ public class MovieTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		UUID u = new UUID(2,2);
-		Movie o = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
+		Movie o = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
 		o.setId(u);
-		Movie o2 = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
+		Movie o2 = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
 		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
@@ -59,13 +59,13 @@ public class MovieTest {
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
-		Movie o = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
-		Movie o2 = new Movie("Shrek 2", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
-		Movie o3 = new Movie("Shrek 3", "Chinesisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
-		Movie o4= new Movie("Shrek 3", "Japanisch", null, 1.3, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
-		Movie o5 = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Kruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
-		Movie o6 = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Busse!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
-		Movie o7 = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.kein/link", null, null, null, null, 12);
+		Movie o = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
+		Movie o2 = new Movie("Shrek 2", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
+		Movie o3 = new Movie("Shrek 3", null, "Chinesisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
+		Movie o4 = new Movie("Shrek 3", null, "Japanisch", 1.3, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
+		Movie o5 = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Kruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
+		Movie o6 = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Busse!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);
+		Movie o7 = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.kein/link",  null, null, 12);
 		Movie o8 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
@@ -76,7 +76,7 @@ public class MovieTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
-		Movie onull = new Movie("Shrek 3", "Japanisch", null, 1.4, "Janis Ruppel", "Ich mag Züge!!11elf!", "https://ich.bin.ein/link", null, null, null, null, 12);
+		Movie onull = new Movie("Shrek 3", null, "Japanisch", 1.4, "Janis Ruppel", null, "Ich mag Züge!!11elf!", null, "https://ich.bin.ein/link",  null, null, 12);;
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }
