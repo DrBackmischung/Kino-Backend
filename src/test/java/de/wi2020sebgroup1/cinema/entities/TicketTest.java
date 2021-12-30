@@ -63,8 +63,8 @@ public class TicketTest {
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
-		Ticket o3 = new Ticket(false, null, null, null, null);
-		Ticket o4 = new Ticket(false, null, null, null, null);
+		Ticket o3 = new Ticket(TicketState.CANCELLED, null, null, null, null);
+		Ticket o4 = new Ticket(TicketState.CANCELLED, null, null, null, null);
 		assertEquals(o3.hashCode(), o4.hashCode());
 		assertEquals(o3.equals(o4), true);
     }
@@ -92,7 +92,7 @@ public class TicketTest {
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(st), false);
-		Ticket onull = new Ticket(true, u, s, p, s2);
+		Ticket onull = new Ticket(TicketState.CANCELLED, u, s, p, s2);
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }
