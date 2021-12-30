@@ -181,6 +181,10 @@ public class TicketControllerTest {
 
     @Test
     void testPutException() throws Exception{
+        
+        mvc.perform(
+            put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
     	
         when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(true));
         when(showRepository.findById(uuid)).thenReturn(getOptionalShow());

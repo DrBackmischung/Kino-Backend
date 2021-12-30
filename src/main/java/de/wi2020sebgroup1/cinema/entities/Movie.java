@@ -153,37 +153,19 @@ public class Movie {
 		if (getClass() != obj.getClass())
 			return false;
 		Movie other = (Movie) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
+		if (description != other.description)
 			return false;
-		if (director == null) {
-			if (other.director != null)
-				return false;
-		} else if (!director.equals(other.director))
+		if (director != other.director)
 			return false;
-		if (Double.doubleToLongBits(duration) != Double.doubleToLongBits(other.duration))
+		if (duration != other.duration)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
-		if (language == null) {
-			if (other.language != null)
-				return false;
-		} else if (!language.equals(other.language))
+		if (language != other.language)
 			return false;
-		if (pictureLink == null) {
-			if (other.pictureLink != null)
-				return false;
-		} else if (!pictureLink.equals(other.pictureLink))
+		if (pictureLink != other.pictureLink)
 			return false;
-		if (titel == null) {
-			if (other.titel != null)
-				return false;
-		} else if (!titel.equals(other.titel))
+		if (titel != other.titel)
 			return false;
 		return true;
 	}

@@ -31,7 +31,6 @@ import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomNotFoundException;
-import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomSeatingPlanNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatsForShowNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.ShowNotFoundException;
@@ -104,8 +103,8 @@ public class ShowController {
 			try {
 				CinemaRoom room = roomSearch.get();
 				toAdd.setCinemaRoom(room);
-				try {
-					CinemaRoomSeatingPlan seatingPlan = room.getCinemaRoomSeatingPlan();
+				CinemaRoomSeatingPlan seatingPlan = room.getCinemaRoomSeatingPlan();
+				if(seatingPlan != null) {
 					int seatsPerRow = seatingPlan.getSeats() / seatingPlan.getReihen();
 					List<Seat> showSeats = new ArrayList<>();
 					
@@ -115,14 +114,13 @@ public class ShowController {
 							showSeats.add(newSeat);
 						}
 					}
-					
 					seatRepository.saveAll(showSeats);
-				}
-				catch(NoSuchElementException e)
-				{
-					return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(room.getId()).getMessage(),
+					
+				} else {
+					return new ResponseEntity<Object>("Room "+showConfigurationObject.cinemaRoomID+" has no layout!",
 							HttpStatus.NOT_FOUND);
 				}
+				
 			}
 			catch(NoSuchElementException e)
 			{

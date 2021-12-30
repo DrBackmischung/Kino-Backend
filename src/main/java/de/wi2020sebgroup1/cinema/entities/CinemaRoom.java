@@ -125,20 +125,11 @@ public class CinemaRoom {
 		if (getClass() != obj.getClass())
 			return false;
 		CinemaRoom other = (CinemaRoom) obj;
-		if (cinema == null) {
-			if (other.cinema != null)
-				return false;
-		} else if (!cinema.equals(other.cinema))
+		if (cinema != other.cinema)
 			return false;
-		if (cinemaRoomSeatingPlan == null) {
-			if (other.cinemaRoomSeatingPlan != null)
-				return false;
-		} else if (!cinemaRoomSeatingPlan.equals(other.cinemaRoomSeatingPlan))
+		if (cinemaRoomSeatingPlan != other.cinemaRoomSeatingPlan)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (story != other.story)
 			return false;

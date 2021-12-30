@@ -79,8 +79,6 @@ public class CinemaRoomSeatingPlan {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		// Due to One To One leading to an insane amount of bugs
-		//result = prime * result + ((cinemaRoom == null) ? 0 : cinemaRoom.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + seats;
 		return result;
@@ -95,21 +93,13 @@ public class CinemaRoomSeatingPlan {
 		if (getClass() != obj.getClass())
 			return false;
 		CinemaRoomSeatingPlan other = (CinemaRoomSeatingPlan) obj;
-		if (cinemaRoom == null) {
-			if (other.cinemaRoom != null)
-				return false;
-		} else if (!cinemaRoom.equals(other.cinemaRoom))
+		if (cinemaRoom != other.cinemaRoom)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (seats != other.seats)
 			return false;
 		return true;
 	}
-	
-	
 
 }
