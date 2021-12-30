@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
@@ -41,10 +42,10 @@ public class SeatService {
 			for(UUID seat:seats) {
 				
 				Seat toBook = seatRepository.findById(seat).get();
-				if(!toBook.isBlocked()) {
-					toBook.setBlocked(true);
+				if(toBook.getState() == SeatState.FREE) {
+					toBook.setState(SeatState.RESERVED);
 					seatRepository.save(toBook);
-					booked.add(toBook);
+					booked.add(toBook);		
 				}else {
 					allFreeAndReserved = false;
 					break;
@@ -63,7 +64,7 @@ public class SeatService {
 			return true;
 		}else {
 			for(Seat seat:booked) {
-				seat.setBlocked(false);
+				seat.setState(SeatState.FREE);
 				seatRepository.save(seat);
 			}
 			return false;
@@ -80,7 +81,7 @@ public class SeatService {
 			
 			for(UUID seat:seats) {
 				Seat toFree = seatRepository.findById(seat).get();
-				toFree.setBlocked(false);
+				toFree.setState(SeatState.FREE);
 				changedSeats.add(toFree);
 			}
 		} catch (InterruptedException e) {
