@@ -156,40 +156,19 @@ public class Show {
 		if (getClass() != obj.getClass())
 			return false;
 		Show other = (Show) obj;
-		if (cinema == null) {
-			if (other.cinema != null)
-				return false;
-		} else if (!cinema.equals(other.cinema))
+		if (cinema != other.cinema)
 			return false;
-		if (cinemaRoom == null) {
-			if (other.cinemaRoom != null)
-				return false;
-		} else if (!cinemaRoom.equals(other.cinemaRoom))
+		if (cinemaRoom != other.cinemaRoom)
 			return false;
-		if (endTime == null) {
-			if (other.endTime != null)
-				return false;
-		} else if (!endTime.equals(other.endTime))
+		if (endTime != other.endTime)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
-		if (movie == null) {
-			if (other.movie != null)
-				return false;
-		} else if (!movie.equals(other.movie))
+		if (movie != other.movie)
 			return false;
-		if (showDate == null) {
-			if (other.showDate != null)
-				return false;
-		} else if (!showDate.equals(other.showDate))
+		if (showDate != other.showDate)
 			return false;
-		if (startTime == null) {
-			if (other.startTime != null)
-				return false;
-		} else if (!startTime.equals(other.startTime))
+		if (startTime != other.startTime)
 			return false;
 		return true;
 	}

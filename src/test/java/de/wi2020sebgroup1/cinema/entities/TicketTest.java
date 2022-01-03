@@ -2,6 +2,8 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,15 +51,22 @@ public class TicketTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID id = new UUID(2,2);
 		User u = new User(null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
 		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		o.setId(id);
 		Ticket o2 = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		o2.setId(id);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
+		Ticket o3 = new Ticket(TicketState.CANCELLED, null, null, null, null);
+		Ticket o4 = new Ticket(TicketState.CANCELLED, null, null, null, null);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -83,6 +92,9 @@ public class TicketTest {
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(st), false);
+		Ticket onull = new Ticket(TicketState.CANCELLED, u, s, p, s2);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }

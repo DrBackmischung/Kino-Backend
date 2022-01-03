@@ -85,12 +85,9 @@ public class Price {
 		if (getClass() != obj.getClass())
 			return false;
 		Price other = (Price) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
-		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
+		if (price != other.price)
 			return false;
 		return true;
 	}

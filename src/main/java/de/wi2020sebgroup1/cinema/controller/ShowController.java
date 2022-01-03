@@ -32,7 +32,6 @@ import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomNotFoundException;
-import de.wi2020sebgroup1.cinema.exceptions.CinemaRoomSeatingPlanNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatsForShowNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.ShowNotFoundException;
@@ -109,7 +108,6 @@ public class ShowController {
 			try {
 				CinemaRoom room = roomSearch.get();
 				toAdd.setCinemaRoom(room);
-				try {
 					
 					List<SeatsBluePrint> seats = seatBluePrintRepository.findAllByCinemaRoom(room);
 					List<Seat> showSeats = new ArrayList<>();
@@ -125,12 +123,9 @@ public class ShowController {
 						seatRepository.saveAll(showSeats);
 						
 					}
-				}
-				catch(NoSuchElementException e)
-				{
-					return new ResponseEntity<Object>(new CinemaRoomSeatingPlanNotFoundException(room.getId()).getMessage(),
-							HttpStatus.NOT_FOUND);
-				}
+
+					seatRepository.saveAll(showSeats);
+				
 			}
 			catch(NoSuchElementException e)
 			{

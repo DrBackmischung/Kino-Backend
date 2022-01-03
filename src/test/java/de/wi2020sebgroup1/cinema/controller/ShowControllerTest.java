@@ -134,7 +134,7 @@ public class ShowControllerTest {
     }
     
     Movie getMovie() {
-    	Movie m = new Movie("Shrek 3", "deutsch", 2.5, "Kitty Blume", "Ein Film", "localhost/img", 0);
+    	Movie m = new Movie("Shrek 3", "deutsch", null, 2.5, "Kitty Blume", "Ein Film", "localhost/img", null, null, null, null, 0);
     	m.setId(uuid);
     	return m;
     }
@@ -153,6 +153,12 @@ public class ShowControllerTest {
     
     Optional<CinemaRoom> getOptionalCinemaRoom() {
     	CinemaRoom c = getCinemaRoom();
+    	return Optional.of(c);
+    }
+    
+    Optional<CinemaRoom> getOptionalCinemaRoomWithoutLayout() {
+    	CinemaRoom c = getCinemaRoom();
+    	c.setCinemaRoomSeatingPlan(null);
     	return Optional.of(c);
     }
     
@@ -203,6 +209,14 @@ public class ShowControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
         
+        when(repo.findById(uuid)).thenReturn(getOptionalShow());
+        mvc.perform(get("/show/"+uuid+"/seats")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        mvc.perform(get("/show/"+new UUID(0, 0)+"/seats")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        
         when(seatRepository.findAllByShow(getShow())).thenThrow(new NoSuchElementException());
         mvc.perform(get("/show/"+uuid+"/seats")
             .accept(MediaType.APPLICATION_JSON))
@@ -219,6 +233,7 @@ public class ShowControllerTest {
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
         when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/show/add/")
@@ -232,12 +247,12 @@ public class ShowControllerTest {
         
         mvc.perform(
             put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, uuid, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
             put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
@@ -245,8 +260,11 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
-        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
-        
+        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
+        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))

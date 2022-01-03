@@ -78,7 +78,11 @@ public class TicketController {
 			seatRepository.save(toBook);
 			
 		} 
-		catch (InterruptedException e) {
+		catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>(new SeatNotFoundException(seatID).getMessage(),
+					HttpStatus.NOT_FOUND);
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally
