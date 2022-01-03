@@ -41,7 +41,7 @@ public class RegistrationController {
 	@PutMapping("/registration")
 	public ResponseEntity<Object> register(@RequestBody UserRegistrationObject uro){
 		
-		if(uro.passwordHash != uro.passwordConfirmHash) {
+		if(!(uro.passwordHash.equals(uro.passwordConfirmHash))) {
 			return new ResponseEntity<Object>("Incorrect password!", HttpStatus.NOT_ACCEPTABLE);
 		}
 		
@@ -65,7 +65,7 @@ public class RegistrationController {
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
 		
-		emailSender.send(EmailService.composeMail(uro.email, "Registration completed!", "Welcome "+uro.username+" to the Cinema."));
+		//emailSender.send(EmailService.composeMail(uro.email, "Registration completed!", "Welcome "+uro.username+" to the Cinema."));
 		
 		return new ResponseEntity<Object>(userRepository.save(toAdd), HttpStatus.CREATED);
 	}
@@ -76,8 +76,10 @@ public class RegistrationController {
 		Optional<User> userSearch = userRepository.findByUsername(ulo.username);
 		try {
 			User u = userSearch.get();
-			if(u.getPassword() != ulo.passwordHash)
+			if(!(u.getPassword().equals(ulo.passwordHash))) {
 				return new ResponseEntity<Object>("Wrong password!", HttpStatus.UNAUTHORIZED);
+			}
+				
 			
 			/*
 			 * Im Cookie wird einmal die User ID gespeichert und ein Key.
