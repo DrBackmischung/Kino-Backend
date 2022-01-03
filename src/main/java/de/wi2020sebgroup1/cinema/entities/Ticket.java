@@ -56,6 +56,12 @@ public class Ticket {
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
 	
+	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "booking_id", referencedColumnName = "id")
+	private Booking booking;
+	
+	
 	public Ticket() {
 		
 	}
@@ -65,10 +71,10 @@ public class Ticket {
 		this.state = state;
 		this.user = user;
 		this.show = show;
-		this.price = price;
+		this.price = price;	
 		this.seat = seat;
 	}
-
+		
 	public Price getPrice() {
 		return price;
 	}
