@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema.service;
+package de.wi2020sebgroup1.cinema.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

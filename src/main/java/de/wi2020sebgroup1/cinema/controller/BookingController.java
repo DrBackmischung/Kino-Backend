@@ -29,8 +29,8 @@ import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
-import de.wi2020sebgroup1.cinema.service.QRCodeGenerator;
-import de.wi2020sebgroup1.cinema.service.SeatService;
+import de.wi2020sebgroup1.cinema.services.QRCodeGenerator;
+import de.wi2020sebgroup1.cinema.services.SeatService;
 
 @Controller
 @RestController
