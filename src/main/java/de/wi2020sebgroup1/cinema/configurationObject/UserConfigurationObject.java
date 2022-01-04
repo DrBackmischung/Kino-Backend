@@ -13,13 +13,14 @@ public class UserConfigurationObject {
 	
 	public String street;
 	public String number;
-	public UUID cityID;
+	public int plz;
+	public String city;
 	
 	public String payPalMail;
 	public UUID creditCardID;
 	
 	public UserConfigurationObject(String username, String firstName, String name, String email, String password,
-			UUID roleID, String street, String number, UUID cityID, String payPalMail, UUID creditCardID) {
+			UUID roleID, String street, String number, int plz, String city, String payPalMail, UUID creditCardID) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -29,7 +30,8 @@ public class UserConfigurationObject {
 		this.roleID = roleID;
 		this.street = street;
 		this.number = number;
-		this.cityID = cityID;
+		this.plz = plz;
+		this.city = city;
 		this.payPalMail = payPalMail;
 		this.creditCardID = creditCardID;
 	}

@@ -1,9 +1,5 @@
 package de.wi2020sebgroup1.cinema.configurationObject;
 
-import java.util.UUID;
-
-import javax.validation.constraints.NotNull;
-
 public class UserRegistrationObject {
 	
 	public String username;
@@ -15,9 +11,11 @@ public class UserRegistrationObject {
 	
 	public String street;
 	public String number;
-	public UUID cityID;
-	public UserRegistrationObject(@NotNull String username, @NotNull String firstName, @NotNull String name, @NotNull String email, @NotNull String passwordHash,
-			@NotNull String passwordConfirmHash, @NotNull String street, @NotNull String number, @NotNull UUID cityID) {
+	public int plz;
+	public String city;
+	
+	public UserRegistrationObject(String username, String firstName, String name, String email, String passwordHash,
+			String passwordConfirmHash, String street, String number, int plz, String city) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -27,9 +25,8 @@ public class UserRegistrationObject {
 		this.passwordConfirmHash = passwordConfirmHash;
 		this.street = street;
 		this.number = number;
-		this.cityID = cityID;
+		this.plz = plz;
+		this.city = city;
 	}
-	
-	
 	
 }

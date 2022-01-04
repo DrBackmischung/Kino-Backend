@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.controller;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -19,7 +20,6 @@ import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
-import de.wi2020sebgroup1.cinema.exceptions.CityNotFoundException;
 import de.wi2020sebgroup1.cinema.helper.UserVerificator;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
@@ -47,13 +47,13 @@ public class AccountController {
 		
 		User toAdd = new User();
 		
-		if(uro.cityID != null) {
-			Optional<City> citySearch = cityRepository.findById(uro.cityID);
-			try {
-				City c = citySearch.get();
+		if(uro.plz != 0) {
+			List<City> citySearch = cityRepository.findByPlz(uro.plz);
+			if(citySearch.size() == 0) {
+				toAdd.setCity(cityRepository.save(new City(uro.plz, uro.city)));
+			} else {
+				City c = citySearch.get(0);
 				toAdd.setCity(c);
-			} catch(NoSuchElementException e) {
-				return new ResponseEntity<Object>(new CityNotFoundException(uro.cityID).getMessage(), HttpStatus.NOT_FOUND);
 			}
 		}
 		
