@@ -2,8 +2,14 @@ package de.wi2020sebgroup1.cinema.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
+import de.wi2020sebgroup1.cinema.enums.TicketState;
 
 public class TicketTest {
 	
@@ -13,9 +19,9 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
-		Ticket o = new Ticket(true, u, s, p, s2);
-        assertEquals(o.isPaid(), true);
+		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+        assertEquals(o.getState(), TicketState.RESERVED);
         assertEquals(o.getUser(), u);
         assertEquals(o.getShow(), s);
         assertEquals(o.getPrice(), p);
@@ -28,10 +34,10 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
-		Ticket o = new Ticket(true, u, s, p, s2);
-		o.setPaid(false);
-        assertEquals(o.isPaid(), false);
+		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		o.setState(TicketState.PAID);
+        assertEquals(o.getState(), TicketState.PAID);
         o.setUser(null);
         assertEquals(o.getUser(), null);
         o.setShow(null);
@@ -45,15 +51,22 @@ public class TicketTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID id = new UUID(2,2);
 		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
-		Ticket o = new Ticket(true, u, s, p, s2);
-		Ticket o2 = new Ticket(true, u, s, p, s2);
+		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		o.setId(id);
+		Ticket o2 = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		o2.setId(id);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
+		Ticket o3 = new Ticket(TicketState.CANCELLED, null, null, null, null);
+		Ticket o4 = new Ticket(TicketState.CANCELLED, null, null, null, null);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -63,13 +76,13 @@ public class TicketTest {
 		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0);
-		Seat s2 = new Seat(0, 0, false, false, 0, null, s);
-		Ticket o = new Ticket(true, u, s, p, s2);
-		Ticket o2 = new Ticket(false, u, s, p, s2);
-		Ticket o3 = new Ticket(true, null, s, p, s2);
-		Ticket o4 = new Ticket(true, u, null, p, s2);
-		Ticket o5 = new Ticket(true, u, s, null, s2);
-		Ticket o6 = new Ticket(true, u, s, p, null);
+		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		Ticket o2 = new Ticket(TicketState.CANCELLED, u, s, p, s2);
+		Ticket o3 = new Ticket(TicketState.RESERVED, null, s, p, s2);
+		Ticket o4 = new Ticket(TicketState.RESERVED, u, null, p, s2);
+		Ticket o5 = new Ticket(TicketState.RESERVED, u, s, null, s2);
+		Ticket o6 = new Ticket(TicketState.RESERVED, u, s, p, null);
 		Ticket o7 = null;
 		String st = "Test";
 		assertEquals(o.equals(o2), false);
@@ -79,6 +92,9 @@ public class TicketTest {
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(st), false);
+		Ticket onull = new Ticket(TicketState.CANCELLED, u, s, p, s2);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }
