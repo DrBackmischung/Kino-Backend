@@ -75,10 +75,10 @@ public class User {
 		
 	}
 	
-	public User(String userName, String name, String firstName, String email, String password, Role role,
+	public User(String username, String name, String firstName, String email, String password, Role role,
 			String street, String number, City city, String payPalMail, CreditCard creditCard) {
 		super();
-		this.username = userName;
+		this.username = username;
 		this.name = name;
 		this.firstName = firstName;
 		this.email = email;
@@ -91,10 +91,10 @@ public class User {
 		this.creditCard = creditCard;
 	}
 	
-	public User(String userName, String name, String firstName, String email, String password,
+	public User(String username, String name, String firstName, String email, String password,
 			String street, String number, City city, String payPalMail, CreditCard creditCard) {
 		super();
-		this.username = userName;
+		this.username = username;
 		this.name = name;
 		this.firstName = firstName;
 		this.email = email;

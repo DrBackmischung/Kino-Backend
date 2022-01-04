@@ -27,7 +27,7 @@ import de.wi2020sebgroup1.cinema.services.EmailService;
 
 @Controller
 @RestController
-public class RegistrationController {
+public class AccountController {
 
 	@Autowired
 	UserRepository userRepository;
@@ -41,7 +41,7 @@ public class RegistrationController {
 	@PutMapping("/registration")
 	public ResponseEntity<Object> register(@RequestBody UserRegistrationObject uro){
 		
-		if(uro.passwordHash != uro.passwordConfirmHash) {
+		if(!uro.passwordHash.equals(uro.passwordConfirmHash)) {
 			return new ResponseEntity<Object>("Incorrect password!", HttpStatus.NOT_ACCEPTABLE);
 		}
 		
@@ -76,7 +76,7 @@ public class RegistrationController {
 		Optional<User> userSearch = userRepository.findByUsername(ulo.username);
 		try {
 			User u = userSearch.get();
-			if(u.getPassword() != ulo.passwordHash)
+			if(!u.getPassword().equals(ulo.passwordHash))
 				return new ResponseEntity<Object>("Wrong password!", HttpStatus.UNAUTHORIZED);
 			
 			/*
