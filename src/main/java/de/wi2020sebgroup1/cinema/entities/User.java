@@ -243,7 +243,17 @@ public class User {
 			return false;
 		if (role != other.role)
 			return false;
-		if (userName != other.userName)
+		if (username != other.username)
+			return false;
+		if (city != other.city)
+			return false;
+		if (street != other.street)
+			return false;
+		if (number != other.number)
+			return false;
+		if (payPalMail != other.payPalMail)
+			return false;
+		if (creditCard != other.creditCard)
 			return false;
 		return true;
 	}
