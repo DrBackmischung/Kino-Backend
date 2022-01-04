@@ -38,7 +38,7 @@ public class SeatService {
 		ArrayList<Seat> booked = new ArrayList<>();
 		
 		try {
-			semaphoreVault.getSemaphore(showId).acquire();
+			SemaphoreVault.getSemaphore(showId).acquire();
 			for(UUID seat:seats) {
 				
 				Seat toBook = seatRepository.findById(seat).get();
@@ -56,7 +56,7 @@ public class SeatService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			semaphoreVault.getSemaphore(showId).release();
+			SemaphoreVault.getSemaphore(showId).release();
 		}
 		
 		
@@ -77,7 +77,7 @@ public class SeatService {
 		ArrayList<Seat> changedSeats = new ArrayList<>();
 		
 		try {
-			semaphoreVault.getSemaphore(showId).acquire();
+			SemaphoreVault.getSemaphore(showId).acquire();
 			
 			for(UUID seat:seats) {
 				Seat toFree = seatRepository.findById(seat).get();
@@ -89,7 +89,7 @@ public class SeatService {
 			e.printStackTrace();
 			return false;
 		}finally {
-			semaphoreVault.getSemaphore(showId).release();
+			SemaphoreVault.getSemaphore(showId).release();
 		}
 		
 		seatRepository.saveAll(changedSeats);

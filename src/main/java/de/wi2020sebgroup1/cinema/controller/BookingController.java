@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-import org.apache.catalina.valves.SemaphoreValve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,6 @@ import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.BookingState;
 import de.wi2020sebgroup1.cinema.enums.TicketState;
-import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -60,6 +58,7 @@ public class BookingController {
 	@Autowired
 	QRCodeGenerator qrCodeGenerator;
 	
+	@SuppressWarnings("static-access")
 	@PutMapping("/add")
 	public ResponseEntity<Object> addBooking(@RequestBody BookingConfigurationObject bookingObject){
 		

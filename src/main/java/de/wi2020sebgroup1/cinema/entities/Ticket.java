@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.TicketState;
 
 @Entity
