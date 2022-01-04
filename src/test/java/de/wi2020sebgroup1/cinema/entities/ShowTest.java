@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class ShowTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		Movie m = new Movie(null, null, 0, null, null, null, 0);
+		Movie m = new Movie(null, null, null, 0, null, null, null, null, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
@@ -30,7 +31,7 @@ public class ShowTest {
 	@Test
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
-		Movie m = new Movie(null, null, 0, null, null, null, 0);
+		Movie m = new Movie(null, null, null, 0, null, null, null, null, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
@@ -53,22 +54,29 @@ public class ShowTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
-		Movie m = new Movie(null, null, 0, null, null, null, 0);
+		UUID u = new UUID(2,2);
+		Movie m = new Movie(null, null, null, 0, null, null, null, null, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
 		Time t = new Time(0), t2 = new Time(0);
 		Show o = new Show(d, t, t2, m, c, c2);
+		o.setId(u);
 		Show o2 = new Show(d, t, t2, m, c, c2);
+		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+		Show o3 = new Show(null, null, null, null, null, null);
+		Show o4 = new Show(null, null, null, null, null, null);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
-		Movie m = new Movie(null, null, 0, null, null, null, 0);
+		Movie m = new Movie(null, null, null, 0, null, null, null, null, null, null, null, 0);
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
 		CinemaRoom c2 = new CinemaRoom(0, false, c, null);
 		Date d = new Date(0);
@@ -90,6 +98,9 @@ public class ShowTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
+		Show onull = new Show(d, t, t2, m, c, c2);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }

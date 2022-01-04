@@ -1,14 +1,15 @@
 package de.wi2020sebgroup1.cinema.controller;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,28 +30,35 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.wi2020sebgroup1.cinema.configurationObject.ReviewConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Movie;
-import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.entities.Review;
+import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
-import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
+import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
+import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
 @AutoConfigureMockMvc
-public class MovieControllerTest {
+public class ReviewControllerTest {
 	
 	MockMvc mvc;
 	
 	@MockBean
-	MovieRepository repo;
+	ReviewRepository repo;
 	
 	@MockBean
-	ShowRepository showRepository;
+	UserRepository userRepository;
+	
+	@MockBean
+	MovieRepository movieRepository;
     
     @Autowired
     WebApplicationContext wac;
 	
-	JacksonTester<Movie> jt;
+	JacksonTester<Review> jt;
+	JacksonTester<ReviewConfigurationObject> jtco;
 	
 	static UUID uuid;
 	
@@ -65,6 +73,28 @@ public class MovieControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
     
+    Review getReview() {
+    	Review r = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+    	r.setId(uuid);
+    	return r;
+    }
+    
+    Optional<Review> getOptionalReview() {
+    	Review r = getReview();
+    	return Optional.of(r);
+    }
+    
+    User getUser() {
+    	User s = new User();
+    	s.setId(uuid);
+    	return s;
+    }
+    
+    Optional<User> getOptionalUser() {
+    	User s = getUser();
+    	return Optional.of(s);
+    }
+    
     Movie getMovie() {
     	Movie m = new Movie("Shrek 3", "deutsch", null, 2.5, "Kitty Blume", "Ein Film", "localhost/img", null, null, null, null, 0);
     	m.setId(uuid);
@@ -76,102 +106,57 @@ public class MovieControllerTest {
     	return Optional.of(m);
     }
     
-    Show getShow() {
-    	Show s = new Show();
-    	s.setId(uuid);
-    	return s;
-    }
-    
-    Optional<List<Show>> getOptionalShows() {
-    	Show s = getShow();
-    	Show s2 = getShow();
-    	List<Show> l = new ArrayList<>();
-    	l.add(s);
-    	l.add(s2);
-    	return Optional.of(l);
-    }
-    
     @Test
     void testGetAll() throws Exception {
-    	when(repo.findAll()).thenReturn(new ArrayList<Movie>());
-        mvc.perform(get("/movie/getAll"))
+    	when(repo.findAll()).thenReturn(new ArrayList<Review>());
+        mvc.perform(get("/review/getAll"))
                 .andExpect(status().isOk());
     }
     
     @Test
     void testGetById() throws Exception {
-        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        MockHttpServletResponse response = mvc.perform(get("/movie/"+uuid)
+        when(repo.findById(uuid)).thenReturn(getOptionalReview());
+        MockHttpServletResponse response = mvc.perform(get("/review/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn().getResponse();
-        assertEquals(jt.write(getMovie()).getJson(), response.getContentAsString());
+        assertEquals(jt.write(getReview()).getJson(), response.getContentAsString());
     }
     
     @Test
     void testGetByIdException() throws Exception {
-        mvc.perform(get("/movie/"+new UUID(0, 0))
+        mvc.perform(get("/review/"+new UUID(0, 0))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
-    }
-    
-    @Test
-    void testGetShowsById() throws Exception {
-        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        when(showRepository.findAllByMovie(any())).thenReturn(getOptionalShows());
-        mvc.perform(get("/movie/"+uuid+"/shows")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-    }
-    
-    @Test
-    void testGetShowsByIdException() throws Exception {
-        mvc.perform(get("/movie/"+uuid+"/shows")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
-
-        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        mvc.perform(get("/movie/"+uuid+"/shows")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
     }
 
     @Test
     void testPut() throws Exception{
-        
+
         mvc.perform(
-            put("/movie/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
+            put("/review/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getReview()).getJson()))
+        		.andExpect(status().isCreated());
+
+        when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(
+            put("/review/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
     }
 
     @Test
     void testPutException() throws Exception{
-
-        when(repo.save(any())).thenThrow(new IllegalArgumentException());
-        mvc.perform(
-            put("/movie/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
-        		.andExpect(status().isInternalServerError());
-
-    }
-
-    @Test
-    void testUpdate() throws Exception{
-
-        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        mvc.perform(
-            put("/movie/update/"+uuid, uuid, getMovie())
-            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
-        		.andExpect(status().isOk());
-
-    }
-
-    @Test
-    void testUpdateException() throws Exception{
         
         mvc.perform(
-            put("/movie/update/"+uuid, uuid, getMovie())
-            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getMovie()).getJson()))
+            put("/review/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", uuid, null)).getJson()))
+        		.andExpect(status().isNotFound());
+        
+        mvc.perform(
+            put("/review/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }
@@ -179,20 +164,19 @@ public class MovieControllerTest {
     @Test
     void testDelete() throws Exception{
 
-    	when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+    	when(repo.findById(uuid)).thenReturn(getOptionalReview());
         mvc.perform(
-            delete("/movie/"+uuid+"/"))
+            delete("/review/"+uuid+"/"))
         		.andExpect(status().isOk());
 
     }
 
     @Test
     void testDeleteException() throws Exception{
-        
+
         mvc.perform(
-            delete("/movie/"+uuid+"/"))
+            delete("/review/"+uuid+"/"))
         		.andExpect(status().isNotFound());
 
     }
 }
-
