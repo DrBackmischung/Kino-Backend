@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
+import org.apache.catalina.valves.SemaphoreValve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +63,7 @@ public class BookingController {
 	
 	@SuppressWarnings("static-access")
 	@PutMapping("/add")
+	@Transactional
 	public ResponseEntity<Object> addBooking(@RequestBody BookingConfigurationObject bookingObject){
 		
 		ArrayList<Ticket> tickets = new ArrayList<>();
@@ -69,21 +73,30 @@ public class BookingController {
 		Show show = showRepository.findById(bookingObject.showID).get();
 		
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
-			User user = userRepositroy.findById(bookingObject.userID).get();
-			
-			
-			
-			for(UUID seat : seatIDs) {
-				Seat seatObject = seatRepository.findById(seat).get();
-				Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
-				tickets.add(ticket);
+			try {
+				User user = userRepositroy.findById(bookingObject.userID).get();
+				
+				
+				
+				for(UUID seat : seatIDs) {
+					Seat seatObject = seatRepository.findById(seat).get();
+					Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
+					tickets.add(ticket);
+				}
+				
+				Booking booking = new Booking(bookingObject.bookingDate, tickets, show, bookingObject.state);
+				//bookingRepositroy.save(booking);
+				//booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
+				
+				ticketRepository.saveAll(tickets);
+				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
+			}
+			catch(Exception e) {
+				seatService.freeSeats(seatIDs, bookingObject.showID);
+				ticketRepository.deleteAll(tickets);
+				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONFLICT);
 			}
 			
-			Booking booking = new Booking(bookingObject.bookingDate, tickets, show, bookingObject.state);
-			booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
-			
-			ticketRepository.saveAll(tickets);
-			return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
 			
 		}else {
 			//TODO CHANGE TO CUSTOM RESPONSE
