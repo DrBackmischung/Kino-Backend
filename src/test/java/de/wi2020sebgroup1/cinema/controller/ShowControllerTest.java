@@ -145,7 +145,7 @@ public class ShowControllerTest {
     }
     
     CinemaRoom getCinemaRoom() {
-    	CinemaRoom c = new CinemaRoom(2, true);
+    	CinemaRoom c = new CinemaRoom(2, true, "testRoom");
     	c.setCinemaRoomSeatingPlan(getCinemaRoomSeatingPlan());
     	c.setId(uuid);
     	return c;
