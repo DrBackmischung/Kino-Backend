@@ -82,6 +82,10 @@ public class Ticket {
 		return id;
 	}
 	
+	public Booking getBooking() {
+		return booking;
+	}
+	
 	public Seat getSeat() {
 		return seat;
 	}
@@ -116,6 +120,10 @@ public class Ticket {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public void setBooking(Booking booking) {
+		this.booking = booking;
 	}
 
 	public void setId(UUID id) {
