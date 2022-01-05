@@ -79,13 +79,6 @@ public class AccountController {
 			if(!(u.getPassword().equals(ulo.passwordHash))) {
 				return new ResponseEntity<Object>("Wrong password!", HttpStatus.UNAUTHORIZED);
 			}
-				
-			
-			/*
-			 * Im Cookie wird einmal die User ID gespeichert und ein Key.
-			 * Der Key ist nur der HashCode +1, damit man nicht einfach so die userID verändern
-			 * kann,, um sich als Admin auszugeben.
-			 */
 			
 			Cookie c = new Cookie("userID", u.getId().toString());
 			response.addCookie(c);
