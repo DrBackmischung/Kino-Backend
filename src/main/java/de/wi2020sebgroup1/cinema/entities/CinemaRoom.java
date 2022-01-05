@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.entities;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -40,7 +42,12 @@ public class CinemaRoom {
 	@JoinColumn(name = "cinema", referencedColumnName = "id")
 	private Cinema cinema;
 	
-
+	@OneToOne
+	private CinemaRoomSeatingPlan seatingPlan;
+	
+	@OneToMany(mappedBy = "cinemaRoom")
+	private List<SeatsBluePrint> seatsBlueprint;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cinemaRoomSeatingPlan_id", referencedColumnName = "id")
 	private CinemaRoomSeatingPlan cinemaRoomSeatingPlan;
@@ -55,17 +62,19 @@ public class CinemaRoom {
 		this.wheelchairAccessible = wheelchairAccessible;
 	}
 	
-	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema,
-			CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
+	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema) {
 		super();
 		this.story = story;
 		this.wheelchairAccessible = wheelchairAccessible;
 		this.cinema = cinema;
-		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
 	}
 
 	public Cinema getCinema() {
 		return cinema;
+	}
+	
+	public void setSeatingPlan(CinemaRoomSeatingPlan seatingPlan) {
+		this.seatingPlan = seatingPlan;
 	}
 	
 	public UUID getId() {
@@ -80,6 +89,10 @@ public class CinemaRoom {
 		return wheelchairAccessible;
 	}
 	
+	public CinemaRoomSeatingPlan getCinemaRoomSeatingPlan() {
+		return cinemaRoomSeatingPlan;
+	}
+	
 	public void setCinema(Cinema cinema) {
 		this.cinema = cinema;
 	}
@@ -92,16 +105,16 @@ public class CinemaRoom {
 		this.story = story;
 	}
 	
-	public void setWheelchairAccessible(boolean wheelchairAccessible) {
-		this.wheelchairAccessible = wheelchairAccessible;
-	}
-
-	public CinemaRoomSeatingPlan getCinemaRoomSeatingPlan() {
-		return cinemaRoomSeatingPlan;
-	}
-
 	public void setCinemaRoomSeatingPlan(CinemaRoomSeatingPlan cinemaRoomSeatingPlan) {
 		this.cinemaRoomSeatingPlan = cinemaRoomSeatingPlan;
+	}
+	
+	public CinemaRoomSeatingPlan getSeatingPlan() {
+		return seatingPlan;
+	}
+	
+	public void setWheelchairAccessible(boolean wheelchairAccessible) {
+		this.wheelchairAccessible = wheelchairAccessible;
 	}
 
 	@Override
@@ -109,7 +122,6 @@ public class CinemaRoom {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cinema == null) ? 0 : cinema.hashCode());
-		result = prime * result + ((cinemaRoomSeatingPlan == null) ? 0 : cinemaRoomSeatingPlan.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + story;
 		result = prime * result + (wheelchairAccessible ? 1231 : 1237);

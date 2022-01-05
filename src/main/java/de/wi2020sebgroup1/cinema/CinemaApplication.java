@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema;
+	package de.wi2020sebgroup1.cinema;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

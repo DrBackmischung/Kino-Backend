@@ -180,6 +180,24 @@
 			"response": []
 		},
 		{
+			"name": "Get all Seat Blueprints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/seatsBlueprint/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatsBlueprint",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Tickets",
 			"request": {
 				"method": "GET",
@@ -203,13 +221,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/show/118e31db-145a-403d-834c-a683de7ddce2/seats",
+					"raw": "{{ip}}/show/463a0db7-5cf0-4e80-8d6a-156f457740a1/seats",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
 						"show",
-						"118e31db-145a-403d-834c-a683de7ddce2",
+						"463a0db7-5cf0-4e80-8d6a-156f457740a1",
 						"seats"
 					]
 				}
