@@ -32,8 +32,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.configurationObject.UserConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
+import de.wi2020sebgroup1.cinema.entities.CreditCard;
+import de.wi2020sebgroup1.cinema.entities.Role;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
+import de.wi2020sebgroup1.cinema.repositories.CreditCardRepository;
+import de.wi2020sebgroup1.cinema.repositories.RoleRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @SpringBootTest
@@ -48,6 +52,12 @@ public class UserControllerTest {
 	
 	@MockBean
 	CityRepository cityRepository;
+	
+	@MockBean
+	private RoleRepository roleRepository;
+	
+	@MockBean
+	private CreditCardRepository creditCardRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -77,6 +87,28 @@ public class UserControllerTest {
     Optional<User> getOptionalUser() {
     	User u = getUser();
     	return Optional.of(u);
+    }
+    
+    Role getRole() {
+    	Role r = new Role();
+    	r.setID(uuid);
+    	return r;
+    }
+    
+    Optional<Role> getOptionalRole() {
+    	Role r = getRole();
+    	return Optional.of(r);
+    }
+    
+    CreditCard getCreditCard() {
+    	CreditCard c = new CreditCard();
+    	c.setId(uuid);
+    	return c;
+    }
+    
+    Optional<CreditCard> getOptionalCreditCard() {
+    	CreditCard c = getCreditCard();
+    	return Optional.of(c);
     }
     
     List<City> getCityList() {
@@ -128,6 +160,8 @@ public class UserControllerTest {
 
     	when(repo.findById(uuid)).thenReturn(getOptionalUser());
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(creditCardRepository.findById(uuid)).thenReturn(getOptionalCreditCard());
+    	when(roleRepository.findById(uuid)).thenReturn(getOptionalRole());
         mvc.perform(
             put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 68159, "Mannheim", null, uuid)).getJson()))
         		.andExpect(status().isOk());
