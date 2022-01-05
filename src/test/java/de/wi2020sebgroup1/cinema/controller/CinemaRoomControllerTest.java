@@ -73,7 +73,7 @@ public class CinemaRoomControllerTest {
     }
     
     CinemaRoom getCinemaRoom() {
-    	CinemaRoom c = new CinemaRoom(2, true);
+    	CinemaRoom c = new CinemaRoom(2, true, "testRoom");
     	c.setId(uuid);
     	return c;
     }
@@ -142,7 +142,7 @@ public class CinemaRoomControllerTest {
         when(cinemaRoomSeatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/cinemaRoom/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
     }
@@ -152,12 +152,12 @@ public class CinemaRoomControllerTest {
         
         mvc.perform(
             put("/cinemaRoom/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, null, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
             put("/cinemaRoom/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, null)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
 
     }
@@ -170,11 +170,11 @@ public class CinemaRoomControllerTest {
         when(cinemaRoomSeatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/cinemaRoom/"+uuid+"/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", uuid, uuid)).getJson()))
         		.andExpect(status().isOk());
         mvc.perform(
             put("/cinemaRoom/"+uuid+"/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, null, null)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true,"testRoom", null, null)).getJson()))
         		.andExpect(status().isOk());
 
     }
@@ -184,29 +184,29 @@ public class CinemaRoomControllerTest {
     	
         mvc.perform(
                 put("/cinemaRoom/"+uuid+"/")
-                	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, uuid)).getJson()))
+                	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", uuid, uuid)).getJson()))
             		.andExpect(status().isNotFound());
     	
         mvc.perform(
                 put("/cinemaRoom/"+uuid+"/")
-                	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, null, uuid)).getJson()))
+                	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", null, uuid)).getJson()))
             		.andExpect(status().isNotFound());
     	
         mvc.perform(
                 put("/cinemaRoom/"+uuid+"/")
-                	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, null)).getJson()))
+                	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", uuid, null)).getJson()))
             		.andExpect(status().isNotFound());
 
         when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         mvc.perform(
             put("/cinemaRoom/"+uuid+"/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, null, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
         when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         mvc.perform(
             put("/cinemaRoom/"+uuid+"/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, uuid, null)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomConfigurationObject(2, true, "testRoom", uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
 
     }

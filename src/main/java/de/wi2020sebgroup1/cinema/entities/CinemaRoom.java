@@ -37,6 +37,10 @@ public class CinemaRoom {
 	@NotNull
 	private boolean wheelchairAccessible;
 	
+	@Column
+	@NotNull
+	private String roomName;
+	
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "cinema", referencedColumnName = "id")
@@ -56,21 +60,27 @@ public class CinemaRoom {
 		
 	}
 	
-	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible) {
+	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, @NotNull String roomName) {
 		super();
 		this.story = story;
 		this.wheelchairAccessible = wheelchairAccessible;
+		this.roomName = roomName;
 	}
 	
-	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema) {
+	public CinemaRoom(@NotNull int story, @NotNull boolean wheelchairAccessible, Cinema cinema, @NotNull String roomName) {
 		super();
 		this.story = story;
 		this.wheelchairAccessible = wheelchairAccessible;
 		this.cinema = cinema;
+		this.roomName = roomName;
 	}
 
 	public Cinema getCinema() {
 		return cinema;
+	}
+	
+	public String getRoomName() {
+		return roomName;
 	}
 	
 	public void setSeatingPlan(CinemaRoomSeatingPlan seatingPlan) {
@@ -115,6 +125,10 @@ public class CinemaRoom {
 	
 	public void setWheelchairAccessible(boolean wheelchairAccessible) {
 		this.wheelchairAccessible = wheelchairAccessible;
+	}
+	
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
 	}
 
 	@Override
