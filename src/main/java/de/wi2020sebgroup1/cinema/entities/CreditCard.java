@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
 @Entity
-@Table(name="PayPalAccount")
+@Table(name="creditcard")
 public class CreditCard {
 	
 	@Id

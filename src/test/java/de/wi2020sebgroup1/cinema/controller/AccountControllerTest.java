@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.controller;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -89,23 +90,23 @@ public class AccountControllerTest {
     
     @Test
     void testRegister() throws Exception {
-    	when(cityRepository.findByPlz(any())).thenReturn(getCityList());
-        mvc.perform(put("/register/")
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+        mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
-    	when(cityRepository.findByPlz(any())).thenReturn(getCityList());
-        mvc.perform(put("/register/")
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+        mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68199, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
-    	when(cityRepository.findByPlz(any())).thenReturn(getCityList());
-        mvc.perform(put("/register/")
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+        mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 0, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
     }
     
     @Test
     void testRegisterException() throws Exception {
-        mvc.perform(put("/register/")
+        mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "4321", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isUnauthorized());
     }
