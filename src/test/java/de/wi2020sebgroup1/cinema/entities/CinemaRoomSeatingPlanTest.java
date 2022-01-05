@@ -50,14 +50,14 @@ public class CinemaRoomSeatingPlanTest {
 		CinemaRoomSeatingPlan o = new CinemaRoomSeatingPlan(50);
 		CinemaRoomSeatingPlan o2 = new CinemaRoomSeatingPlan(20);
 		CinemaRoomSeatingPlan o3 = new CinemaRoomSeatingPlan(20);
-		o3.setCinemaRoom(new CinemaRoom(0, false, null, null));
+		o3.setCinemaRoom(new CinemaRoom(0, false, null));
 		CinemaRoomSeatingPlan o4 = null;
 		CinemaRoomSeatingPlan o5 = new CinemaRoomSeatingPlan(50);
 		o5.setId(new UUID(4,4));
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
 		assertEquals(o.equals(o3), false);
-		o.setCinemaRoom(new CinemaRoom(0, true, null, null));
+		o.setCinemaRoom(new CinemaRoom(0, true, null));
 		assertEquals(o.equals(o3), false);
 		assertEquals(o.equals(o4), false);
 		assertEquals(o.equals(o5), false);

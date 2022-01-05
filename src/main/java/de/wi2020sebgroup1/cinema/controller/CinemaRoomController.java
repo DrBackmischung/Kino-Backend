@@ -68,7 +68,7 @@ public class CinemaRoomController {
 			}
 		}
 		
-		
+		toBuild.setRoomName(cinemaRoomConfigurationObject.roomName);
 		toBuild.setStory(cinemaRoomConfigurationObject.story);
 		toBuild.setWheelchairAccessible(cinemaRoomConfigurationObject.wheelchairAccessible);
 		
@@ -109,7 +109,7 @@ public class CinemaRoomController {
 				}
 			}
 			
-			
+			toBuild.setRoomName(cinemaRoomConfigurationObject.roomName);
 			toBuild.setStory(cinemaRoomConfigurationObject.story);
 			toBuild.setWheelchairAccessible(cinemaRoomConfigurationObject.wheelchairAccessible);
 			return new ResponseEntity<Object>(cinemaRoomRepository.save(toBuild), HttpStatus.OK);

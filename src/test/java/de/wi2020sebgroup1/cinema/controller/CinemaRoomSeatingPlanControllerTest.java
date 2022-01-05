@@ -78,7 +78,7 @@ public class CinemaRoomSeatingPlanControllerTest {
     }
     
     CinemaRoom getCinemaRoom() {
-    	CinemaRoom c = new CinemaRoom(2, true);
+    	CinemaRoom c = new CinemaRoom(2, true, "testRoom");
     	c.setId(uuid);
     	return c;
     }

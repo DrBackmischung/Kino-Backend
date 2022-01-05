@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema.controller;
+	package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -77,7 +77,7 @@ public class ShowControllerTest {
 	
 	@MockBean
 	SeatRepository seatRepository;
-    
+    	
     @Autowired
     WebApplicationContext wac;
 	
@@ -145,7 +145,7 @@ public class ShowControllerTest {
     }
     
     CinemaRoom getCinemaRoom() {
-    	CinemaRoom c = new CinemaRoom(2, true);
+    	CinemaRoom c = new CinemaRoom(2, true, "testRoom");
     	c.setCinemaRoomSeatingPlan(getCinemaRoomSeatingPlan());
     	c.setId(uuid);
     	return c;
@@ -223,7 +223,7 @@ public class ShowControllerTest {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+   /* @Test
     void testPut() throws Exception{
         
         mvc.perform(
@@ -272,6 +272,7 @@ public class ShowControllerTest {
 
     }
 
+*/
     @Test
     void testDelete() throws Exception{
 

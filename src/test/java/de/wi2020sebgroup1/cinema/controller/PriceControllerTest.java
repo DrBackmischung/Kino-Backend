@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.entities.Price;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 
 @SpringBootTest
@@ -60,7 +61,7 @@ public class PriceControllerTest {
     }
     
     Price getPrice() {
-    	Price p = new Price(20);
+    	Price p = new Price(20, SeatType.PARQUET);
     	p.setId(uuid);
     	return p;
     }
