@@ -89,12 +89,15 @@ public class AccountControllerTest {
     
     @Test
     void testRegister() throws Exception {
+    	when(cityRepository.findByPlz(any())).thenReturn(getCityList());
         mvc.perform(put("/register/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
+    	when(cityRepository.findByPlz(any())).thenReturn(getCityList());
         mvc.perform(put("/register/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68199, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
+    	when(cityRepository.findByPlz(any())).thenReturn(getCityList());
         mvc.perform(put("/register/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 0, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
@@ -119,11 +122,11 @@ public class AccountControllerTest {
     void testLoginException() throws Exception {
         mvc.perform(put("/login/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_ulo.write(new UserLoginObject("DrBackmischung", "1234")).getJson()))
-				.andExpect(status().isUnauthorized());
+				.andExpect(status().isNotFound());
     	when(userRepository.findByUsername(any())).thenReturn(getOptionalUser());
         mvc.perform(put("/login/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_ulo.write(new UserLoginObject("DrBackmischung", "4321")).getJson()))
-				.andExpect(status().isOk());
+				.andExpect(status().isUnauthorized());
     }
 	
 }
