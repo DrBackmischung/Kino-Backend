@@ -42,7 +42,7 @@ public class AccountController {
 	public ResponseEntity<Object> register(@RequestBody UserRegistrationObject uro){
 		
 		if(!(uro.passwordHash.equals(uro.passwordConfirmHash))) {
-			return new ResponseEntity<Object>("Incorrect password!", HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<Object>("Incorrect password!", HttpStatus.UNAUTHORIZED);
 		}
 		
 		User toAdd = new User();
@@ -77,7 +77,7 @@ public class AccountController {
 		try {
 			User u = userSearch.get();
 			if(!(u.getPassword().equals(ulo.passwordHash))) {
-				return new ResponseEntity<Object>("Wrong password!", HttpStatus.UNAUTHORIZED);
+				return new ResponseEntity<Object>("Incorrect password!", HttpStatus.UNAUTHORIZED);
 			}
 			
 			Cookie c = new Cookie("userID", u.getId().toString());
