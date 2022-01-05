@@ -13,7 +13,7 @@ public class CinemaRoomTest {
 	@DisplayName("Test the constructor")
     public void testConstructor() {
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom o = new CinemaRoom(1, true, c);
+		CinemaRoom o = new CinemaRoom(1, true, c, "testRoom");
 		assertEquals(o.getStory(), 1);
 		assertEquals(o.isWheelchairAccessible(), true);
 		assertEquals(o.getCinema(), c);
@@ -23,7 +23,7 @@ public class CinemaRoomTest {
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom o = new CinemaRoom(1, true, c);
+		CinemaRoom o = new CinemaRoom(1, true, c, "testRoom");
 		o.setStory(2);
 		assertEquals(o.getStory(), 2);
 		o.setWheelchairAccessible(false);
