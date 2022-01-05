@@ -40,9 +40,9 @@ public class Booking {
 	@NotNull
 	private Date bookingDate;
 	
-	@Column
-	@Lob
-	private byte[] qrCode;
+	//@Column
+	//@Lob
+	//private byte[] qrCode;
 	
 	@Column
 	@NotNull
@@ -57,6 +57,10 @@ public class Booking {
 	@OneToMany(mappedBy="booking")
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<>();
+	
+	public Booking() {
+		
+	}
 	
 	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, @NotNull BookingState state) {
 		this.bookingDate = bookingDate;
@@ -80,11 +84,11 @@ public class Booking {
 	public UUID getId() {
 		return id;
 	}
-	
+	/*
 	public byte[] getQrCode() {
 		return qrCode;
 	}
-	
+	*/
 	public List<Ticket> getTickets() {
 		return tickets;
 	}
@@ -100,11 +104,11 @@ public class Booking {
 	public void setShow(Show show) {
 		this.show = show;
 	}
-	
+	/*
 	public void setQrCode(byte[] qrCode) {
 		this.qrCode = qrCode;
 	}
-	
+	*/
 	public void setState(BookingState state) {
 		this.state = state;
 	}
