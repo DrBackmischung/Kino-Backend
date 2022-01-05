@@ -124,19 +124,19 @@ public class UserControllerTest {
     	when(repo.findById(uuid)).thenReturn(getOptionalUser());
         mvc.perform(
             put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, null, null, null, 0, null, null, null)).getJson()))
-        		.andExpect(status().isCreated());
+        		.andExpect(status().isOk());
 
     	when(repo.findById(uuid)).thenReturn(getOptionalUser());
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(
             put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 68159, "Mannheim", null, uuid)).getJson()))
-        		.andExpect(status().isCreated());
+        		.andExpect(status().isOk());
 
     	when(repo.findById(uuid)).thenReturn(getOptionalUser());
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(
             put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 68199, "Mannheim", null, uuid)).getJson()))
-        		.andExpect(status().isCreated());
+        		.andExpect(status().isOk());
 
     }
 
