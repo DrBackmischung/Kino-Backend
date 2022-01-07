@@ -156,7 +156,7 @@ public class ProfileControllerTest {
     void testGetBookingsException() throws Exception {
     	when(bookingRepositroy.findAllByUser(any())).thenReturn(getOptionalBookings());
         mvc.perform(get("/user/"+uuid+"/bookings"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
     
     @Test
