@@ -34,6 +34,7 @@ import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+import de.wi2020sebgroup1.cinema.services.HTMLService;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
@@ -90,6 +91,7 @@ public class AccountControllerTest {
     
     @Test
     void testRegister() throws Exception {
+    	when(HTMLService.read(any(), any())).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
