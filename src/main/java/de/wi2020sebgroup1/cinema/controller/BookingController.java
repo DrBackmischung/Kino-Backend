@@ -27,14 +27,13 @@ import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.BookingState;
 import de.wi2020sebgroup1.cinema.enums.TicketState;
-import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
-import de.wi2020sebgroup1.cinema.service.QRCodeGenerator;
-import de.wi2020sebgroup1.cinema.service.SeatService;
+import de.wi2020sebgroup1.cinema.services.QRCodeGenerator;
+import de.wi2020sebgroup1.cinema.services.SeatService;
 
 @Controller
 @RestController
@@ -62,6 +61,7 @@ public class BookingController {
 	@Autowired
 	QRCodeGenerator qrCodeGenerator;
 	
+	@SuppressWarnings("static-access")
 	@PutMapping("/add")
 	@Transactional
 	public ResponseEntity<Object> addBooking(@RequestBody BookingConfigurationObject bookingObject){

@@ -5,13 +5,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class HTMLService {
 	
-	public static String read(String fileName, String username) {
+	public String read(String fileName, String username) {
 		
 		String s = null;
 		String filePath = new File("").getAbsolutePath();
-		String path = filePath+"\\src\\main\\resources\\html\\"+fileName;
+		String path = filePath+"/src/main/resources/html/"+fileName;
+		System.out.println("=lul=");
+		System.out.println(path);
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 

@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema.service;
+package de.wi2020sebgroup1.cinema.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,6 +22,7 @@ public class QRCodeGenerator {
 			BitMatrix bitMatrix = qrCodeWriter.encode(bookingID.toString(), null, 800, 800);
 			
 			ByteArrayOutputStream pngOutPutStream = new ByteArrayOutputStream();
+			@SuppressWarnings("unused")
 			MatrixToImageConfig conf = new MatrixToImageConfig(0x000000, 0xFFFFFF);
 			
 			MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutPutStream);
