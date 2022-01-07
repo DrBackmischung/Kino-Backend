@@ -13,7 +13,7 @@ public class UserTest {
 	@DisplayName("Test the 1st constructor")
     public void testConstructor() {
 		Role r = new Role(null, null);
-		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
 		assertEquals(o.getUserName(), "DrBackmischung");
         assertEquals(o.getName(), "Neunzig");
         assertEquals(o.getFirstName(), "Mathis");
@@ -25,7 +25,7 @@ public class UserTest {
 	@Test
 	@DisplayName("Test the 2nd constructor")
     public void testConstructor2() {
-		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm");
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", null, null, null, null, null);
 		assertEquals(o.getUserName(), "DrBackmischung");
         assertEquals(o.getName(), "Neunzig");
         assertEquals(o.getFirstName(), "Mathis");
@@ -39,7 +39,7 @@ public class UserTest {
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
 		Role r = new Role(null, null);
-		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
 		o.setUserName("User");
 		assertEquals(o.getUserName(), "User");
 		o.setName("name");
@@ -59,14 +59,14 @@ public class UserTest {
     public void testCompare() {
 		UUID u = new UUID(2,2);
 		Role r = new Role(null, null);
-		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
 		o.setId(u);
-		User o2 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		User o2 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
 		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
-		User o3 = new User(null, null, null, null, null, null);
-		User o4 = new User(null, null, null, null, null, null);
+		User o3 = new User(null, null, null, null, null, null, null, null, null, null, null);
+		User o4 = new User(null, null, null, null, null, null, null, null, null, null, null);
 		assertEquals(o3.hashCode(), o4.hashCode());
 		assertEquals(o3.equals(o4), true);
     }
@@ -76,13 +76,13 @@ public class UserTest {
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
 		Role r = new Role(null, null);
-		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
-		User o2 = new User("DrPudding", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
-		User o3 = new User("DrBackmischung", "Achzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
-		User o4 = new User("DrBackmischung", "Neunzig", "Neele", "mathis.neunzig@gmail.com", "ichBinDumm", r);
-		User o5 = new User("DrBackmischung", "Neunzig", "Mathis", "kitty.neunzig@gmail.com", "ichBinDumm", r);
-		User o6 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinSchlau", r);
-		User o7 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", null);
+		User o = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
+		User o2 = new User("DrPudding", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
+		User o3 = new User("DrBackmischung", "Achzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
+		User o4 = new User("DrBackmischung", "Neunzig", "Neele", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
+		User o5 = new User("DrBackmischung", "Neunzig", "Mathis", "kitty.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
+		User o6 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinSchlau", r, null, null, null, null, null);
+		User o7 = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", null, null, null, null, null, null);
 		User o8 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
@@ -93,7 +93,7 @@ public class UserTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
-		User onull = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r);
+		User onull = new User("DrBackmischung", "Neunzig", "Mathis", "mathis.neunzig@gmail.com", "ichBinDumm", r, null, null, null, null, null);
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }

@@ -24,7 +24,7 @@ import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatBluePrintRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
-import de.wi2020sebgroup1.cinema.service.SeatBlueprintService;
+import de.wi2020sebgroup1.cinema.services.SeatBlueprintService;
 
 @Controller
 @RestController
