@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class HTMLService {
 	
 	public String read(String fileName, String username) {
