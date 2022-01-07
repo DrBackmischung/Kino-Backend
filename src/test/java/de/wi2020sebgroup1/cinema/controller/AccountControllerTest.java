@@ -1,6 +1,7 @@
 package de.wi2020sebgroup1.cinema.controller;
 
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -91,7 +92,7 @@ public class AccountControllerTest {
     
     @Test
     void testRegister() throws Exception {
-    	when(HTMLService.read(any(), any())).thenReturn("<h1>Test</h1>");
+    	when(HTMLService.read(anyString(), anyString())).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
