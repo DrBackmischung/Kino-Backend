@@ -71,6 +71,7 @@ public class AccountController {
 		toAdd.setNumber(uro.number);
 
 		try {
+			System.out.println("Sender: "+emailSender.toString());
 			emailSender.send(composeMail(uro.email, "Registration Completed!", "Hi!"));
 			System.out.println("Sender: "+emailSender.toString());
 //			emailSender.send(composeMail(uro.email, "Registration Completed!", htmlService.read("Registration.html", uro.username)));
