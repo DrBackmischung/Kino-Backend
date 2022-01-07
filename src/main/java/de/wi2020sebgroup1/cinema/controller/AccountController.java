@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
-import de.wi2020sebgroup1.cinema.helper.UserVerificator;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 import de.wi2020sebgroup1.cinema.services.EmailService;
@@ -79,11 +77,6 @@ public class AccountController {
 			if(!(u.getPassword().equals(ulo.passwordHash))) {
 				return new ResponseEntity<Object>("Incorrect password!", HttpStatus.UNAUTHORIZED);
 			}
-			
-			Cookie c = new Cookie("userID", u.getId().toString());
-			response.addCookie(c);
-			Cookie c2 = new Cookie("key", ""+u.getId().hashCode()+UserVerificator.KEY_OFFSET);
-			response.addCookie(c2);
 		} catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("No user for username found!", HttpStatus.NOT_FOUND);
 		}
