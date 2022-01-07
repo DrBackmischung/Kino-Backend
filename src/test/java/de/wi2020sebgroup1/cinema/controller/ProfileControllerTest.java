@@ -136,7 +136,7 @@ public class ProfileControllerTest {
     void testGetBookings() throws Exception {
     	when(ticketRepository.findAll()).thenReturn(getTickets());
     	when(bookingRepositroy.findById(uuid)).thenReturn(getOptionalBooking());
-        mvc.perform(get("/user/"+uuid+"/tickets"))
+        mvc.perform(get("/user/"+uuid+"/bookings"))
                 .andExpect(status().isOk());
     }
     
