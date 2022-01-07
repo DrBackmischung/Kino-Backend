@@ -45,6 +45,9 @@ public class TokenController {
 	@Autowired
     private JavaMailSender emailSender;
 	
+	@Autowired
+	HTMLService htmlService;
+	
 	@PutMapping("/reset")
 	public ResponseEntity<Object> startReset(@RequestBody TokenConfigurationObject tco){
 		Token t = new Token();
@@ -62,7 +65,7 @@ public class TokenController {
 		Token saved = tokenRepository.save(t);
 		
 		try {
-			emailSender.send(composeMail(saved.getUser().getEmail(), "Password change requested", HTMLService.read("PWReset.html", saved.getUser().getUserName())));
+			emailSender.send(composeMail(saved.getUser().getEmail(), "Password change requested", htmlService.read("PWReset.html", saved.getUser().getUserName())));
 		} catch (MailException | MessagingException e) {
 			e.printStackTrace();
 		}

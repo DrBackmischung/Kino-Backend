@@ -92,8 +92,7 @@ public class AccountControllerTest {
     	return Optional.of(s);
     }
     
-    @SuppressWarnings("static-access")
-	@Test
+    @Test
     void testRegister() throws Exception {
     	when(htmlService.read("Registration.html", "DrBackmischung")).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
