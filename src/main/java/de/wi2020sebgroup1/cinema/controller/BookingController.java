@@ -84,7 +84,7 @@ public class BookingController {
 					tickets.add(ticket);
 				}
 				
-				Booking booking = new Booking(bookingObject.bookingDate, tickets, show, bookingObject.state);
+				Booking booking = new Booking(bookingObject.bookingDate, tickets, show, user , bookingObject.state);
 				//bookingRepositroy.save(booking);
 				//booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 				
