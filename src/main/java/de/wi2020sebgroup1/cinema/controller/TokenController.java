@@ -32,7 +32,7 @@ import de.wi2020sebgroup1.cinema.services.EmailService;
 public class TokenController {
 	
 	@Autowired
-	TokenRepository repo;
+	TokenRepository tokenRepository;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -54,14 +54,14 @@ public class TokenController {
 						Response.NOT_FOUND.status());
 			}
 		}
-		Token saved = repo.save(t);
+		Token saved = tokenRepository.save(t);
 		emailSender.send(EmailService.composeMail(saved.getUser().getEmail(), "Reset Password!", "Hi "+saved.getUser().getUserName()+"! Click here to reset the password: "+saved.getId()));
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
 	
 	@PutMapping("/reset/{tokenID}/{userID}")
 	public ResponseEntity<Object> reset(@PathVariable UUID tokenID, @PathVariable UUID userID, @RequestBody PWResetObject pwr){
-		Optional<Token> tokenSearch = repo.findById(tokenID);
+		Optional<Token> tokenSearch = tokenRepository.findById(tokenID);
 		try {
 			Token t = tokenSearch.get();
 			if(t.getUser().getId() != userID) {
@@ -82,7 +82,7 @@ public class TokenController {
 				return new ResponseEntity<Object>(new UserNotFoundException(userID).getMessage(),
 						Response.NOT_FOUND.status());
 			}
-			return new ResponseEntity<Object>(repo.save(t), Response.CHANGED.status());
+			return new ResponseEntity<Object>(tokenRepository.save(t), Response.CHANGED.status());
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(),
 					Response.NOT_FOUND.status());
@@ -91,7 +91,7 @@ public class TokenController {
 	
 	@GetMapping("/check/{id}")
 	public ResponseEntity<Object> check(@PathVariable UUID tokenID){
-		Optional<Token> tokenSearch = repo.findById(tokenID);
+		Optional<Token> tokenSearch = tokenRepository.findById(tokenID);
 		try {
 			Token t = tokenSearch.get();
 			return new ResponseEntity<Object>(t.isValid(), Response.OK.status());
