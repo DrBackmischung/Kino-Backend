@@ -54,6 +54,11 @@ public class Booking {
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
+	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+	
 	@OneToMany(mappedBy="booking")
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<>();
@@ -62,15 +67,21 @@ public class Booking {
 		
 	}
 	
-	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, @NotNull BookingState state) {
+	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, 
+			@NotNull User user, @NotNull BookingState state) {
 		this.bookingDate = bookingDate;
 		this.tickets = tickets;
 		this.state = state;
+		this.user = user;
 		this.show = show;
 	}
 
 	public BookingState getState() {
 		return state;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 	public Date getBookingDate() {
@@ -111,6 +122,10 @@ public class Booking {
 	*/
 	public void setState(BookingState state) {
 		this.state = state;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public void setTickets(ArrayList<Ticket> tickets) {
