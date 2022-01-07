@@ -103,6 +103,7 @@ public class AccountController {
 		MimeMessage mail = emailSender.createMimeMessage();
 		System.out.println("PrintStuff");
 		System.out.println(mail.toString());
+		System.out.println("PrintStuff");
 		MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false, "UTF-8");
 		System.out.println(messageHelper.toString());
         messageHelper.setFrom(to);
