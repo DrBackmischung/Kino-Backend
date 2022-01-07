@@ -4,9 +4,14 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +30,7 @@ import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
 import de.wi2020sebgroup1.cinema.helper.Response;
 import de.wi2020sebgroup1.cinema.repositories.TokenRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
-import de.wi2020sebgroup1.cinema.services.EmailService;
+import de.wi2020sebgroup1.cinema.services.HTMLService;
 
 @Controller
 @RestController
@@ -55,7 +60,12 @@ public class TokenController {
 			}
 		}
 		Token saved = tokenRepository.save(t);
-		emailSender.send(EmailService.composeMail(saved.getUser().getEmail(), "Reset Password!", "Hi "+saved.getUser().getUserName()+"! Click here to reset the password: "+saved.getId()));
+		
+		try {
+			emailSender.send(composeMail(saved.getUser().getEmail(), "Password change requested", HTMLService.read("PWReset.html", saved.getUser().getUserName())));
+		} catch (MailException | MessagingException e) {
+			e.printStackTrace();
+		}
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
 	
@@ -98,6 +108,19 @@ public class TokenController {
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(), Response.NOT_FOUND.status());
 		}
+	}
+	
+	public MimeMessage composeMail(String to, String subject, String body) throws MessagingException {
+
+		MimeMessage mail = emailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false, "UTF-8");
+        messageHelper.setFrom(to);
+        messageHelper.setTo(to);
+        messageHelper.setSubject(subject);
+        messageHelper.setText(body, true);
+        
+        return mail;
+        
 	}
 	
 }
