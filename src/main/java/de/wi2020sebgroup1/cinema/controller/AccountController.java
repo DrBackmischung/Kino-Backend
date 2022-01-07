@@ -4,16 +4,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +20,7 @@ import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+import de.wi2020sebgroup1.cinema.services.EmailService;
 import de.wi2020sebgroup1.cinema.services.HTMLService;
 
 @Controller
@@ -36,9 +32,6 @@ public class AccountController {
 	
 	@Autowired
 	CityRepository cityRepository;
-	
-	@Autowired
-    private JavaMailSender emailSender;
 	
 	@Autowired
 	HTMLService htmlService;
@@ -71,11 +64,8 @@ public class AccountController {
 		toAdd.setNumber(uro.number);
 
 		try {
-			System.out.println("Sender: "+emailSender.toString());
-			emailSender.send(composeMail(uro.email, "Registration Completed!", "Hi!"));
-			System.out.println("Sender: "+emailSender.toString());
-//			emailSender.send(composeMail(uro.email, "Registration Completed!", htmlService.read("Registration.html", uro.username)));
-		} catch (MailException | MessagingException e) {
+			EmailService.sendMail(uro.email, "Registration completed!", uro.username, "Registration.html");
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -97,24 +87,6 @@ public class AccountController {
 		
 		return new ResponseEntity<Object>(null, HttpStatus.OK);
 		
-	}
-	
-	public MimeMessage composeMail(String to, String subject, String body) throws MessagingException {
-
-		MimeMessage mail = emailSender.createMimeMessage();
-		System.out.println("PrintStuff");
-		System.out.println(mail.toString());
-		System.out.println("PrintStuff");
-		MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false, "UTF-8");
-		System.out.println(messageHelper.toString());
-        messageHelper.setFrom(to);
-        messageHelper.setTo(to);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(body, true);
-        System.out.println(mail.toString());
-        
-        return mail;
-        
 	}
 	
 }

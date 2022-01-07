@@ -1,35 +1,60 @@
 package de.wi2020sebgroup1.cinema.services;
 
-import org.springframework.mail.SimpleMailMessage;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class EmailService {
 	
 	public final static String EMAIL = "wwi2020seb@gmail.com";
 	
-	public static SimpleMailMessage composeMail(String to, String subject, String body) {
+	private static Message prepareMessage(Session session, String acc, String to, String subject, String username, String file){
+        try {
+            Message message = new MimeMessage(session);
 
-        final SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(subject);
-        email.setText(body);
-        email.setTo(to);
-        email.setFrom(EMAIL);
-        
-        return email;
-        
-	}
-	
-	public static SimpleMailMessage composeMail(String to, String subject, String body, String attachedFilePath) {
+            message.setFrom(new InternetAddress(acc));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Buchungsbestätigung Kinoticket");
+            Multipart multipart = new MimeMultipart();
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText("");
+            multipart.addBodyPart(messageBodyPart);
+            message.setContent(HTMLService.read(file, username), "text/html");
 
-		// handle attached filed
-		
-        final SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(subject);
-        email.setText(body);
-        email.setTo(to);
-        email.setFrom(EMAIL);
-        
-        return email;
-        
-	}
+            return message;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void sendMail(String to, String subject, String username, String file) throws Exception{
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth",  "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(EMAIL, "Kino2020SEB");
+            }
+        });
+
+        Message message = prepareMessage(session, EMAIL, to, subject, username, file);
+        Transport.send(message);
+    }
 	
 }

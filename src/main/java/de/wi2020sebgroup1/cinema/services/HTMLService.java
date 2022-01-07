@@ -10,18 +10,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class HTMLService {
 	
-	public String read(String fileName, String username) {
+	public static String read(String fileName, String username) {
 		
 		String s = null;
 		String filePath = new File("").getAbsolutePath();
 		String path = filePath+"/src/main/resources/html/"+fileName;
-		System.out.println("===========");
-		System.out.println("===========");
-		System.out.println("===========");
+		System.out.println("=lul=");
 		System.out.println(path);
-		System.out.println("===========");
-		System.out.println("===========");
-		System.out.println("===========");
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 
