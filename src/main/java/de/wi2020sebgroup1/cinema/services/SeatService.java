@@ -32,13 +32,14 @@ public class SeatService {
 	@Autowired
 	SemaphoreVault semaphoreVault;
 	
+	@SuppressWarnings("static-access")
 	public boolean reserveSeats(ArrayList<UUID> seats, UUID showId) {
 		
 		boolean allFreeAndReserved = true;
 		ArrayList<Seat> booked = new ArrayList<>();
 		
 		try {
-			SemaphoreVault.getSemaphore(showId).acquire();
+			semaphoreVault.getSemaphore(showId).acquire();
 			for(UUID seat:seats) {
 				
 				Seat toBook = seatRepository.findById(seat).get();
@@ -56,7 +57,7 @@ public class SeatService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			SemaphoreVault.getSemaphore(showId).release();
+			semaphoreVault.getSemaphore(showId).release();
 		}
 		
 		
@@ -72,12 +73,13 @@ public class SeatService {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	public boolean freeSeats(ArrayList<UUID> seats, UUID showId) {
 		
 		ArrayList<Seat> changedSeats = new ArrayList<>();
 		
 		try {
-			SemaphoreVault.getSemaphore(showId).acquire();
+			semaphoreVault.getSemaphore(showId).acquire();
 			
 			for(UUID seat:seats) {
 				Seat toFree = seatRepository.findById(seat).get();
@@ -89,7 +91,7 @@ public class SeatService {
 			e.printStackTrace();
 			return false;
 		}finally {
-			SemaphoreVault.getSemaphore(showId).release();
+			semaphoreVault.getSemaphore(showId).release();
 		}
 		
 		seatRepository.saveAll(changedSeats);
