@@ -44,9 +44,8 @@ public class CreditCard {
 		
 	}
 
-	public CreditCard(UUID id, String cardNumber, String name, String firstName, int expiryYear, int expiryMonth) {
+	public CreditCard(String cardNumber, String name, String firstName, int expiryYear, int expiryMonth) {
 		super();
-		this.id = id;
 		this.cardNumber = cardNumber;
 		this.name = name;
 		this.firstName = firstName;
