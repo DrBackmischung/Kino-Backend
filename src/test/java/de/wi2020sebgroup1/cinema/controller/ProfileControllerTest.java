@@ -95,12 +95,6 @@ public class ProfileControllerTest {
     	return Optional.of(list);
     }
     
-    ArrayList<Ticket> getTickets() {
-    	ArrayList<Ticket> list = new ArrayList<>();
-    	list.add(new Ticket(TicketState.PAID, getUser(), null, null, null));
-    	return list;
-    }
-    
     Optional<List<News>> getOptionalNews() {
     	List<News> list = new ArrayList<>();
     	list.add(new News(new Date(2), new Time(2), "head", "content", "link", getUser()));
@@ -113,15 +107,10 @@ public class ProfileControllerTest {
     	return Optional.of(list);
     }
     
-    Booking getBooking() {
-    	Booking p = new Booking(new Date(2), getTickets(), null, BookingState.Canceled);
-    	p.setId(uuid);
-    	return p;
-    }
-    
-    Optional<Booking> getOptionalBooking() {
-    	Booking p = getBooking();
-    	return Optional.of(p);
+    Optional<List<Booking>> getOptionalBookings() {
+    	List<Booking> list = new ArrayList<>();
+    	list.add(new Booking(new Date(2), new ArrayList<Ticket>(), null, BookingState.Paid));
+    	return Optional.of(list); 
     }
     
     @Test
@@ -132,13 +121,13 @@ public class ProfileControllerTest {
                 .andExpect(status().isOk());
     }
     
-//    @Test
-//    void testGetBookings() throws Exception {
-//    	when(ticketRepository.findAll()).thenReturn(getTickets());
-//    	when(bookingRepositroy.findById(uuid)).thenReturn(getOptionalBooking());
-//        mvc.perform(get("/user/"+uuid+"/bookings"))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    void testGetBookings() throws Exception {
+    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+    	when(bookingRepositroy.findAllByUser(any())).thenReturn(getOptionalBookings());
+        mvc.perform(get("/user/"+uuid+"/bookings"))
+                .andExpect(status().isOk());
+    }
     
     @Test
     void testGetNews() throws Exception {
@@ -161,6 +150,13 @@ public class ProfileControllerTest {
     	when(ticketRepository.findAllByUser(any())).thenReturn(getOptionalTickets());
         mvc.perform(get("/user/"+uuid+"/tickets"))
                 .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void testGetBookingsException() throws Exception {
+    	when(bookingRepositroy.findAllByUser(any())).thenReturn(getOptionalBookings());
+        mvc.perform(get("/user/"+uuid+"/bookings"))
+                .andExpect(status().isOk());
     }
     
     @Test

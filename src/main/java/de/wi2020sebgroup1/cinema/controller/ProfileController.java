@@ -1,7 +1,5 @@
 package de.wi2020sebgroup1.cinema.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.wi2020sebgroup1.cinema.entities.Booking;
-import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
@@ -58,17 +54,13 @@ public class ProfileController {
 	
 	@GetMapping("/{id}/bookings")
 	public ResponseEntity<Object> getBookings(@PathVariable UUID id){
-		Iterable<Ticket> list = ticketRepository.findAll();
-		List<UUID> u = new ArrayList<>();
-		for(Ticket t : list) {
-			if(t.getUser().getId().equals(id) && !u.contains(t.getBooking().getId()))
-				u.add(t.getBooking().getId());
+		Optional<User> u = userReporitory.findById(id);
+		try {
+			User user = u.get();
+			return new ResponseEntity<Object>(bookingRepositroy.findAllByUser(user), HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
-		List<Booking> b = new ArrayList<>();
-		for(UUID uuid : u) {
-			b.add(bookingRepositroy.findById(uuid).get());
-		}
-		return new ResponseEntity<Object>(b, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}/reviews")
