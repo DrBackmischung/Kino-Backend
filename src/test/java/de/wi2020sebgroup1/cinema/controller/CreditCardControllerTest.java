@@ -71,13 +71,6 @@ public class CreditCardControllerTest {
     }
     
     @Test
-    void testGetAll() throws Exception {
-    	when(repo.findAll()).thenReturn(new ArrayList<CreditCard>());
-        mvc.perform(get("/creditcard/getAll"))
-                .andExpect(status().isOk());
-    }
-    
-    @Test
     void testGetById() throws Exception {
         when(repo.findById(uuid)).thenReturn(getOptionalCreditCard());
         MockHttpServletResponse response = mvc.perform(get("/creditcard/"+uuid)

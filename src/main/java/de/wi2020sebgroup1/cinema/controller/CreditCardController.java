@@ -28,11 +28,6 @@ public class CreditCardController {
 	@Autowired
 	CreditCardRepository creditCardRepository;
 	
-	@GetMapping("/getAll")
-	public ResponseEntity<Iterable<CreditCard>> getCC(){
-		return new ResponseEntity<>(creditCardRepository.findAll(), HttpStatus.OK);
-	}	
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		
