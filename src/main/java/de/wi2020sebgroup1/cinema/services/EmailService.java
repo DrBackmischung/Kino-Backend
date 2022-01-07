@@ -14,22 +14,29 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class EmailService {
+	
+	@Autowired
+	HTMLService htmlService;
 	
 	public final static String EMAIL = "wwi2020seb@gmail.com";
 	
-	private static Message prepareMessage(Session session, String acc, String to, String subject, String username, String file){
+	public Message prepareMessage(Session session, String acc, String to, String subject, String username, String file){
         try {
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(acc));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("Buchungsbestätigung Kinoticket");
+            message.setSubject(subject);
             Multipart multipart = new MimeMultipart();
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText("");
             multipart.addBodyPart(messageBodyPart);
-            message.setContent(HTMLService.read(file, username), "text/html");
+            message.setContent(htmlService.read(file, username), "text/html");
 
             return message;
         }catch (Exception e){
@@ -38,7 +45,7 @@ public class EmailService {
         return null;
     }
 
-    public static void sendMail(String to, String subject, String username, String file) throws Exception{
+    public void sendMail(String to, String subject, String username, String file) throws Exception{
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");

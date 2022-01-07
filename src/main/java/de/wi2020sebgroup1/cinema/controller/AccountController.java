@@ -21,7 +21,6 @@ import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 import de.wi2020sebgroup1.cinema.services.EmailService;
-import de.wi2020sebgroup1.cinema.services.HTMLService;
 
 @Controller
 @RestController
@@ -34,7 +33,7 @@ public class AccountController {
 	CityRepository cityRepository;
 	
 	@Autowired
-	HTMLService htmlService;
+	EmailService emailService;
 	
 	@PutMapping("/registration")
 	public ResponseEntity<Object> register(@RequestBody UserRegistrationObject uro){
@@ -64,7 +63,7 @@ public class AccountController {
 		toAdd.setNumber(uro.number);
 
 		try {
-			EmailService.sendMail(uro.email, "Registration completed!", uro.username, "Registration.html");
+			emailService.sendMail(uro.email, "Registration completed!", uro.username, "Registration.html");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

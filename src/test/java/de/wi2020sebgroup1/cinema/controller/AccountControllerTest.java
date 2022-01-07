@@ -20,7 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -34,6 +33,7 @@ import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+import de.wi2020sebgroup1.cinema.services.EmailService;
 import de.wi2020sebgroup1.cinema.services.HTMLService;
 
 @SpringBootTest
@@ -50,7 +50,7 @@ public class AccountControllerTest {
 	CityRepository cityRepository;
 	
 	@MockBean
-    private JavaMailSender emailSender;
+	EmailService emailService;
 	
 	@MockBean
 	HTMLService htmlService;
@@ -92,9 +92,9 @@ public class AccountControllerTest {
     	return Optional.of(s);
     }
     
-    @SuppressWarnings("static-access")
-	@Test
+    @Test
     void testRegister() throws Exception {
+    	when(emailService.prepareMessage(any(), "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", "DrBackmischung", "Registration.html"));
     	when(htmlService.read("Registration.html", "DrBackmischung")).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")

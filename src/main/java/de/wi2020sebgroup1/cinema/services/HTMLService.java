@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HTMLService {
 	
-	public static String read(String fileName, String username) {
+	public String read(String fileName, String username) {
 		
 		String s = null;
 		String filePath = new File("").getAbsolutePath();
