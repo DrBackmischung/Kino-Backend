@@ -11,7 +11,14 @@ public class HTMLService {
 		
 		String s = null;
 		String filePath = new File("").getAbsolutePath();
-		String path = filePath+"\\src\\main\\resources\\html\\"+fileName;
+		String path = filePath+"/src/main/resources/html/"+fileName;
+		System.out.println("===========");
+		System.out.println("===========");
+		System.out.println("===========");
+		System.out.println(path);
+		System.out.println("===========");
+		System.out.println("===========");
+		System.out.println("===========");
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 
