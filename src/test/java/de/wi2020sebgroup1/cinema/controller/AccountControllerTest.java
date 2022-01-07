@@ -15,6 +15,7 @@ import java.util.UUID;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -110,7 +111,7 @@ public class AccountControllerTest {
                 return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
             }
         });
-    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", "DrBackmischung", "Registration.html"));
+    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", "DrBackmischung", "Registration.html")).thenReturn(new MimeMessage(session));
     	when(htmlService.read("Registration.html", "DrBackmischung")).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
