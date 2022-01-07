@@ -1,6 +1,7 @@
 package de.wi2020sebgroup1.cinema.controller;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +38,7 @@ import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.NewsRepository;
 import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
 import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
+import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
@@ -56,6 +58,9 @@ public class ProfileControllerTest {
 	
 	@MockBean
 	ReviewRepository reviewRepository;
+	
+	@MockBean
+	UserRepository userRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -79,22 +84,33 @@ public class ProfileControllerTest {
     	return u;
     }
     
+    Optional<User> getOptionalUser() {
+    	User u = getUser();
+    	return Optional.of(u);
+    }
+    
+    Optional<List<Ticket>> getOptionalTickets() {
+    	ArrayList<Ticket> list = new ArrayList<>();
+    	list.add(new Ticket(TicketState.PAID, getUser(), null, null, null));
+    	return Optional.of(list);
+    }
+    
     ArrayList<Ticket> getTickets() {
     	ArrayList<Ticket> list = new ArrayList<>();
     	list.add(new Ticket(TicketState.PAID, getUser(), null, null, null));
     	return list;
     }
     
-    List<News> getNews() {
+    Optional<List<News>> getOptionalNews() {
     	List<News> list = new ArrayList<>();
     	list.add(new News(new Date(2), new Time(2), "head", "content", "link", getUser()));
-    	return list;
+    	return Optional.of(list);
     }
     
-    List<Review> getReviews() {
+    Optional<List<Review>> getOptionalReviews() {
     	List<Review> list = new ArrayList<>();
     	list.add(new Review(new Date(2), new Time(2), "head", "content", null, getUser()));
-    	return list;
+    	return Optional.of(list);
     }
     
     Booking getBooking() {
@@ -110,7 +126,8 @@ public class ProfileControllerTest {
     
     @Test
     void testGetTickets() throws Exception {
-    	when(ticketRepository.findAll()).thenReturn(getTickets());
+    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+    	when(ticketRepository.findAllByUser(any())).thenReturn(getOptionalTickets());
         mvc.perform(get("/user/"+uuid+"/tickets"))
                 .andExpect(status().isOk());
     }
@@ -125,16 +142,39 @@ public class ProfileControllerTest {
     
     @Test
     void testGetNews() throws Exception {
-    	when(newsRepository.findAll()).thenReturn(getNews());
+    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+    	when(newsRepository.findAllByUser(any())).thenReturn(getOptionalNews());
         mvc.perform(get("/user/"+uuid+"/news"))
                 .andExpect(status().isOk());
     }
     
     @Test
     void testGetReviews() throws Exception {
-    	when(reviewRepository.findAll()).thenReturn(getReviews());
+    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+    	when(reviewRepository.findAllByUser(any())).thenReturn(getOptionalReviews());
         mvc.perform(get("/user/"+uuid+"/reviews"))
                 .andExpect(status().isOk());
+    }
+    
+    @Test
+    void testGetTicketsException() throws Exception {
+    	when(ticketRepository.findAllByUser(any())).thenReturn(getOptionalTickets());
+        mvc.perform(get("/user/"+uuid+"/tickets"))
+                .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void testGetNewsException() throws Exception {
+    	when(newsRepository.findAllByUser(any())).thenReturn(getOptionalNews());
+        mvc.perform(get("/user/"+uuid+"/news"))
+                .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void testGetReviewsException() throws Exception {
+    	when(reviewRepository.findAllByUser(any())).thenReturn(getOptionalReviews());
+        mvc.perform(get("/user/"+uuid+"/reviews"))
+                .andExpect(status().isNotFound());
     }
 
 }
