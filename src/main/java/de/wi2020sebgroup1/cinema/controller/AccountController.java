@@ -71,7 +71,8 @@ public class AccountController {
 		toAdd.setNumber(uro.number);
 
 		try {
-			emailSender.send(composeMail(uro.email, "Registration Completed!", htmlService.read("Registration.html", uro.username)));
+			emailSender.send(composeMail(uro.email, "Registration Completed!", "Hi!"));
+//			emailSender.send(composeMail(uro.email, "Registration Completed!", htmlService.read("Registration.html", uro.username)));
 		} catch (MailException | MessagingException e) {
 			e.printStackTrace();
 		}
