@@ -72,6 +72,7 @@ public class AccountController {
 
 		try {
 			emailSender.send(composeMail(uro.email, "Registration Completed!", "Hi!"));
+			System.out.println("Sender: "+emailSender.toString());
 //			emailSender.send(composeMail(uro.email, "Registration Completed!", htmlService.read("Registration.html", uro.username)));
 		} catch (MailException | MessagingException e) {
 			e.printStackTrace();
@@ -100,11 +101,15 @@ public class AccountController {
 	public MimeMessage composeMail(String to, String subject, String body) throws MessagingException {
 
 		MimeMessage mail = emailSender.createMimeMessage();
+		System.out.println("PrintStuff");
+		System.out.println(mail.toString());
 		MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false, "UTF-8");
+		System.out.println(messageHelper.toString());
         messageHelper.setFrom(to);
         messageHelper.setTo(to);
         messageHelper.setSubject(subject);
         messageHelper.setText(body, true);
+        System.out.println(mail.toString());
         
         return mail;
         
