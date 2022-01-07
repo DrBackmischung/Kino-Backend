@@ -51,6 +51,9 @@ public class AccountControllerTest {
 	
 	@MockBean
     private JavaMailSender emailSender;
+	
+	@MockBean
+	HTMLService htmlService;
     
     @Autowired
     WebApplicationContext wac;
@@ -89,9 +92,10 @@ public class AccountControllerTest {
     	return Optional.of(s);
     }
     
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     void testRegister() throws Exception {
-    	when(HTMLService.read("Registration.html", "DrBackmischung")).thenReturn("<h1>Test</h1>");
+    	when(htmlService.read("Registration.html", "DrBackmischung")).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
