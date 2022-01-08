@@ -74,8 +74,6 @@ public class BookingController {
 			try {
 				User user = userRepositroy.findById(bookingObject.userID).get();
 				
-				
-				
 				for(UUID seat : seatIDs) {
 					// Nochmal try catch wegen dem findById?
 					Seat seatObject = seatRepository.findById(seat).get();
@@ -125,9 +123,6 @@ public class BookingController {
 		ArrayList<UUID> seatsToChange = new ArrayList<>();
 		try {
 			Booking booking = bookingRepositroy.findById(id).get();
-			System.out.println("PrintStuff");
-			System.out.println(booking.getState().toString());
-			System.out.println(bookingObject.state.toString());
 			if(booking.getState() != bookingObject.state) {
 				if(bookingObject.state == BookingState.Canceled) {
 					List<Ticket> bookings =  booking.getTickets();

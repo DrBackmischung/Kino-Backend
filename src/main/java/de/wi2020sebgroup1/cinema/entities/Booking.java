@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -131,6 +130,42 @@ public class Booking {
 	public void setTickets(ArrayList<Ticket> tickets) {
 		this.tickets = tickets;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bookingDate == null) ? 0 : bookingDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((show == null) ? 0 : show.hashCode());
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Booking other = (Booking) obj;
+		if (bookingDate != other.bookingDate)
+			return false;
+		if (id != other.id)
+			return false;
+		if (show != other.show)
+			return false;
+		if (state != other.state)
+			return false;
+		if (tickets != other.tickets)
+			return false;
+		if (user != other.user)
+			return false;
+		return true;
+	}
 
 }
