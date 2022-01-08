@@ -216,9 +216,11 @@ public class BookingControllerTest {
     	mvc.perform(put("/booking/"+uuid+"/changeStatus/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), BookingState.Canceled)).getJson()))
 				.andExpect(status().isOk());
+    	when(repo.findById(uuid)).thenReturn(getOptionalBooking());
     	mvc.perform(put("/booking/"+uuid+"/changeStatus/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), BookingState.Paid)).getJson()))
 				.andExpect(status().isOk());
+    	when(repo.findById(uuid)).thenReturn(getOptionalBooking());
     	mvc.perform(put("/booking/"+uuid+"/changeStatus/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), BookingState.Reserved)).getJson()))
 				.andExpect(status().isNotModified());

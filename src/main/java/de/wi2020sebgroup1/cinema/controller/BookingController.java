@@ -88,7 +88,7 @@ public class BookingController {
 				//booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 				
 				ticketRepository.saveAll(tickets);
-				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
+				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.CREATED);
 			} catch(Exception e) {
 				seatService.freeSeats(seatIDs, bookingObject.showID);
 				ticketRepository.deleteAll(tickets);
