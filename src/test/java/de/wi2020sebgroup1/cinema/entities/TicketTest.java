@@ -16,7 +16,7 @@ public class TicketTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		User u = new User(null, null, null, null, null, null);
+		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
@@ -31,7 +31,7 @@ public class TicketTest {
 	@Test
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
-		User u = new User(null, null, null, null, null, null);
+		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
@@ -52,7 +52,7 @@ public class TicketTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		UUID id = new UUID(2,2);
-		User u = new User(null, null, null, null, null, null);
+		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
@@ -73,7 +73,7 @@ public class TicketTest {
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
-		User u = new User(null, null, null, null, null, null);
+		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);

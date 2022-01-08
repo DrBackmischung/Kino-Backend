@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
 @Entity	
-@Table(name="Role")
+@Table(name="role")
 public class Role {
 	
 	@Id

@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOrigins(Arrays.asList(
         		"https://wi2020seb-cinema.azurewebsites.net/",
         		"https://wi2020seb-cinema.azurewebsites-dev.net/",
+        		"https://kino-frontend.vercel.app/",
+        		"https://kino-frontend-*-.vercel.app/",
         		"https://localhost/",
         		"https://localhost:3000/",
         		"https://localhost:3001/",

@@ -1,4 +1,4 @@
-package de.wi2020sebgroup1.cinema.service;
+package de.wi2020sebgroup1.cinema.services;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -32,6 +32,7 @@ public class SeatService {
 	@Autowired
 	SemaphoreVault semaphoreVault;
 	
+	@SuppressWarnings("static-access")
 	public boolean reserveSeats(ArrayList<UUID> seats, UUID showId) {
 		
 		boolean allFreeAndReserved = true;
@@ -72,6 +73,7 @@ public class SeatService {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	public boolean freeSeats(ArrayList<UUID> seats, UUID showId) {
 		
 		ArrayList<Seat> changedSeats = new ArrayList<>();
