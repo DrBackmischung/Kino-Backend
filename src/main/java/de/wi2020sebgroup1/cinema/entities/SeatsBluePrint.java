@@ -3,19 +3,14 @@ package de.wi2020sebgroup1.cinema.entities;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -147,10 +142,21 @@ public class SeatsBluePrint {
 		if (getClass() != obj.getClass())
 			return false;
 		SeatsBluePrint other = (SeatsBluePrint) obj;
-		return Objects.equals(cinemaRoom, other.cinemaRoom) && Objects.equals(id, other.id) && line == other.line
-				&& place == other.place && Objects.equals(price, other.price);
+		if (id != other.id)
+			return false;
+		if (line != other.line)
+			return false;
+		if (place != other.place)
+			return false;
+		if (seatingPlan != other.seatingPlan)
+			return false;
+		if (cinemaRoom != other.cinemaRoom)
+			return false;
+		if (type != other.type)
+			return false;
+		if (price != other.price)
+			return false;
+		return true;
 	}
-	
-	
 
 }
