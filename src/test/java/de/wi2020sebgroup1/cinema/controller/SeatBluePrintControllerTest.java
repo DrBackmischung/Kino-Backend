@@ -71,6 +71,7 @@ public class SeatBluePrintControllerTest {
 	
 	JacksonTester<SeatsBlueprintConfigurationObject> jtco;
 	JacksonTester<List<SeatsBlueprintConfigurationObject>> jtcolist;
+	JacksonTester<List<UUID>> jtuuid;
 	
 	static UUID uuid;
 	
@@ -142,9 +143,31 @@ public class SeatBluePrintControllerTest {
     
     @Test
     void testGetByIdException() throws Exception {
-        mvc.perform(get("/booking/"+new UUID(0, 0))
+        mvc.perform(get("/seatsBlueprint/room/"+new UUID(0, 0))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testPut() throws Exception{
+
+    	when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
+    	when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+    	when(seatBlueprintService.add(getSBPCO())).thenReturn(new ResponseEntity<>("Test", HttpStatus.CREATED));
+    	mvc.perform(put("/seatsBlueprint/add/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new SeatsBlueprintConfigurationObject(2, 2, SeatType.LODGE, uuid)).getJson()))
+				.andExpect(status().isOk());
+    }
+
+    @Test
+    void testMassPut() throws Exception{
+
+    	when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
+    	when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+    	when(seatBlueprintService.add(getSBPCO())).thenReturn(new ResponseEntity<>("Test", HttpStatus.CREATED));
+    	mvc.perform(put("/seatsBlueprint/massAdd/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtcolist.write(getSBPCO()).getJson()))
+				.andExpect(status().isOk());
     }
 
     @Test
@@ -161,32 +184,10 @@ public class SeatBluePrintControllerTest {
     void testMassDelete() throws Exception{
 
     	when(seatBlueprintService.delete(getIDs())).thenReturn(new ResponseEntity<>("Test", HttpStatus.OK));
-        mvc.perform(
-            delete("/seatsBlueprint/massDelete/"))
-        		.andExpect(status().isOk());
+        mvc.perform(delete("/seatsBlueprint/massDelete/")
+			.contentType(MediaType.APPLICATION_JSON).content(jtuuid.write(getIDs()).getJson()))
+			.andExpect(status().isOk());
 
-    }
-
-    @Test
-    void testPut() throws Exception{
-
-    	when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
-    	when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
-    	when(seatBlueprintService.add(getSBPCO())).thenReturn(new ResponseEntity<>("Test", HttpStatus.CREATED));
-    	mvc.perform(put("/seatsBlueprint/add/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new SeatsBlueprintConfigurationObject(2, 2, SeatType.LODGE, uuid)).getJson()))
-				.andExpect(status().isCreated());
-    }
-
-    @Test
-    void testMassPut() throws Exception{
-
-    	when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
-    	when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
-    	when(seatBlueprintService.add(getSBPCO())).thenReturn(new ResponseEntity<>("Test", HttpStatus.CREATED));
-    	mvc.perform(put("/seatsBlueprint/massAdd/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jtcolist.write(getSBPCO()).getJson()))
-				.andExpect(status().isCreated());
     }
     
 }
