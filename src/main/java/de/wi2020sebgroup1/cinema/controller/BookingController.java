@@ -125,6 +125,9 @@ public class BookingController {
 		ArrayList<UUID> seatsToChange = new ArrayList<>();
 		try {
 			Booking booking = bookingRepositroy.findById(id).get();
+			System.out.println("PrintStuff");
+			System.out.println(booking.getState().toString());
+			System.out.println(bookingObject.toString());
 			if(booking.getState() != bookingObject.state) {
 				if(bookingObject.state == BookingState.Canceled) {
 					List<Ticket> bookings =  booking.getTickets();
@@ -138,8 +141,7 @@ public class BookingController {
 				}
 				booking.setState(bookingObject.state);
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
-			}
-			else {
+			} else {
 				//TODO change to no changes exception
 				return new ResponseEntity<Object>(HttpStatus.NOT_MODIFIED);
 			}
