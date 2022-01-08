@@ -84,7 +84,7 @@ public class SeatBlueprintService {
 			CinemaRoom cinemaRoom = cinemaRoomRepository.findById(id).get();
 			return new ResponseEntity<Object>(seatBluePrintRepository.findAllByCinemaRoom(cinemaRoom), HttpStatus.OK);
 		}
-		catch(IllegalArgumentException iE) {
+		catch(NoSuchElementException e) {
 			//TODO add custom exception
 			return new ResponseEntity<Object>(new String("Cinema Room not found"), HttpStatus.NOT_FOUND);
 		}
