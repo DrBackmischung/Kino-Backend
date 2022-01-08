@@ -17,13 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.configurationObject.SeatsBlueprintConfigurationObject;
-import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
-import de.wi2020sebgroup1.cinema.entities.Price;
-import de.wi2020sebgroup1.cinema.entities.SeatsBluePrint;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatBluePrintRepository;
-import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.services.SeatBlueprintService;
 
 @Controller
