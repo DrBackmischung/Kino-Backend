@@ -146,7 +146,7 @@ public class SeatBluePrintControllerTest {
     void testGetByIdException() throws Exception {
         when(seatBlueprintService.getAllForRoom(uuid)).thenReturn(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         when(cinemaRoomRepository.findById(uuid)).thenThrow(new NoSuchElementException());
-        mvc.perform(get("/seatsBlueprint/room/"+new UUID(0,0))
+        mvc.perform(get("/seatsBlueprint/room/"+uuid)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
