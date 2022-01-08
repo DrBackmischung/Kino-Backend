@@ -62,6 +62,7 @@ public class BookingTest {
 		o2.setId(uuid);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+		assertEquals(o.equals(o), true);
 		Booking o3 = new Booking(null, null, null, null, null);
 		Booking o4 = new Booking(null, null, null, null, null);
 		assertEquals(o3.hashCode(), o4.hashCode());
