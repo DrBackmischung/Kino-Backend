@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import org.apache.catalina.valves.SemaphoreValve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,14 +70,12 @@ public class BookingController {
 		ArrayList<UUID> seatIDs = bookingObject.seatIDs;
 		
 		Show show = showRepository.findById(bookingObject.showID).get();
-		
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
 			try {
 				User user = userRepositroy.findById(bookingObject.userID).get();
 				
-				
-				
 				for(UUID seat : seatIDs) {
+					// Nochmal try catch wegen dem findById?
 					Seat seatObject = seatRepository.findById(seat).get();
 					Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
 					tickets.add(ticket);
@@ -89,16 +86,15 @@ public class BookingController {
 				//booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 				
 				ticketRepository.saveAll(tickets);
-				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
-			}
-			catch(Exception e) {
+				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.CREATED);
+			} catch(Exception e) {
 				seatService.freeSeats(seatIDs, bookingObject.showID);
 				ticketRepository.deleteAll(tickets);
 				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONFLICT);
 			}
 			
 			
-		}else {
+		} else {
 			//TODO CHANGE TO CUSTOM RESPONSE
 			return new ResponseEntity<Object>(HttpStatus.CONFLICT);
 		}
@@ -140,12 +136,11 @@ public class BookingController {
 				}
 				booking.setState(bookingObject.state);
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
-			}
-			else {
+			} else {
 				//TODO change to no changes exception
 				return new ResponseEntity<Object>(HttpStatus.NOT_MODIFIED);
 			}
-		}catch(NoSuchElementException e) {
+		} catch(NoSuchElementException e) {
 			//TODO change to custom response
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		} 
