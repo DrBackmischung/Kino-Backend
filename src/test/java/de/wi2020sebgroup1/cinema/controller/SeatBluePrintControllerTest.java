@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -143,6 +144,8 @@ public class SeatBluePrintControllerTest {
     
     @Test
     void testGetByIdException() throws Exception {
+    	when(cinemaRoomRepository.findById(uuid)).thenThrow(new NoSuchElementException());
+        when(seatBlueprintService.getAllForRoom(uuid)).thenReturn(new ResponseEntity<>(getSeats(), HttpStatus.NOT_FOUND));
         mvc.perform(get("/seatsBlueprint/room/"+new UUID(0, 0))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
