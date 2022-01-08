@@ -71,6 +71,8 @@ public class BookingController {
 		
 		Show show = showRepository.findById(bookingObject.showID).get();
 		
+		System.out.println("PrintStuff2");
+		System.out.println(seatService.reserveSeats(seatIDs, bookingObject.showID));
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
 			try {
 				User user = userRepositroy.findById(bookingObject.userID).get();
@@ -92,7 +94,7 @@ public class BookingController {
 			} catch(Exception e) {
 				seatService.freeSeats(seatIDs, bookingObject.showID);
 				ticketRepository.deleteAll(tickets);
-				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONFLICT);
+				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONTINUE);
 			}
 			
 			
