@@ -15,8 +15,6 @@ public class HTMLService {
 		String s = null;
 		String filePath = new File("").getAbsolutePath();
 		String path = filePath+"/src/main/resources/html/"+fileName;
-		System.out.println("=lul=");
-		System.out.println(path);
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 
