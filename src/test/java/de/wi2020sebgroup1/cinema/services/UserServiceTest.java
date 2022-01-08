@@ -1,7 +1,6 @@
 package de.wi2020sebgroup1.cinema.services;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -9,6 +8,7 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
@@ -23,7 +23,7 @@ public class UserServiceTest {
 	@MockBean
 	private UserRepository userRepository;
 	
-	@MockBean
+	@Autowired
 	UserService userService;
     
     User getUser() {
@@ -41,8 +41,16 @@ public class UserServiceTest {
 	@Test
 	void testResolve() {
 		when(userRepository.findById(getUser().getId())).thenReturn(getOptionalUser());
-		when(userService.resolve(getUser().getId())).thenReturn(getUser());
-		assertEquals(getUser().getId(), userService.resolve(getUser().getId()).getId());
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	userService.resolve(getUser().getId());                
+            }
+        });
+	}
+	
+	@Test
+	void testResolveException() {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() {
