@@ -1,24 +1,28 @@
 package de.wi2020sebgroup1.cinema.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
 public class HTMLServiceTest {
 	
-	@MockBean
+	@Autowired
 	HTMLService htmlService;
 	
 	@Test
 	void testRead() {
-		when(htmlService.read("Registration.html", "DrBackmischung")).thenReturn("Test");
-		assertEquals("Test", htmlService.read("Registration.html", "DrBackmischung"));
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	htmlService.read("Registration.html", "DrBackmischung");          
+            }
+        });
 	}
 
 }
