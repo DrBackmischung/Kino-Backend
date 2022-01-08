@@ -70,9 +70,6 @@ public class BookingController {
 		ArrayList<UUID> seatIDs = bookingObject.seatIDs;
 		
 		Show show = showRepository.findById(bookingObject.showID).get();
-		
-		System.out.println("PrintStuff2");
-		System.out.println(seatService.reserveSeats(seatIDs, bookingObject.showID));
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
 			try {
 				User user = userRepositroy.findById(bookingObject.userID).get();
@@ -80,6 +77,7 @@ public class BookingController {
 				
 				
 				for(UUID seat : seatIDs) {
+					// Nochmal try catch wegen dem findById?
 					Seat seatObject = seatRepository.findById(seat).get();
 					Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
 					tickets.add(ticket);
@@ -94,7 +92,7 @@ public class BookingController {
 			} catch(Exception e) {
 				seatService.freeSeats(seatIDs, bookingObject.showID);
 				ticketRepository.deleteAll(tickets);
-				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONTINUE);
+				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONFLICT);
 			}
 			
 			
@@ -129,7 +127,7 @@ public class BookingController {
 			Booking booking = bookingRepositroy.findById(id).get();
 			System.out.println("PrintStuff");
 			System.out.println(booking.getState().toString());
-			System.out.println(bookingObject.toString());
+			System.out.println(bookingObject.state.toString());
 			if(booking.getState() != bookingObject.state) {
 				if(bookingObject.state == BookingState.Canceled) {
 					List<Ticket> bookings =  booking.getTickets();

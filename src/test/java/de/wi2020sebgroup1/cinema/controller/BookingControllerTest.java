@@ -192,6 +192,7 @@ public class BookingControllerTest {
     	when(seatService.reserveSeats(getIDs(), uuid)).thenReturn(true);
     	when(userRepositroy.findById(uuid)).thenReturn(getOptionalUser());
     	when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
+    	when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
     	mvc.perform(put("/booking/add/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), BookingState.Paid)).getJson()))
 				.andExpect(status().isCreated());
