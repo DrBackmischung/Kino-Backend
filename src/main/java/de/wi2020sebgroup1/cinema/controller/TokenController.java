@@ -64,32 +64,32 @@ public class TokenController {
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
 	
-	@PutMapping("/reset/{tokenID}/{userID}")
-	public ResponseEntity<Object> reset(@PathVariable UUID tokenID, @PathVariable UUID userID, @RequestBody PWResetObject pwr){
-		Optional<Token> tokenSearch = tokenRepository.findById(tokenID);
+	@PutMapping("/reset/confirm/")
+	public ResponseEntity<Object> reset(@RequestBody PWResetObject pwr){
+		Optional<Token> tokenSearch = tokenRepository.findById(pwr.tokenID);
 		try {
 			Token t = tokenSearch.get();
-			if(t.getUser().getId() != userID) {
-				return new ResponseEntity<Object>(new TokenNotApplicableByGivenUserException(tokenID, userID).getMessage(),
+			if(t.getUser().getId() != pwr.userID) {
+				return new ResponseEntity<Object>(new TokenNotApplicableByGivenUserException(pwr.tokenID, pwr.userID).getMessage(),
 						Response.UNAUTHORIZED.status());
 			}
 			if(!t.isValid()) {
-				return new ResponseEntity<Object>(new TokenNotValidException(tokenID).getMessage(),
+				return new ResponseEntity<Object>(new TokenNotValidException(pwr.tokenID).getMessage(),
 						Response.UNAUTHORIZED.status());
 			}
 			t.setValid(false);
-			Optional<User> userSearch = userRepository.findById(userID);
+			Optional<User> userSearch = userRepository.findById(pwr.userID);
 			try {
 				User u = userSearch.get();
 				u.setPassword(pwr.password);
 				userRepository.save(u);
 			} catch (NoSuchElementException e) {
-				return new ResponseEntity<Object>(new UserNotFoundException(userID).getMessage(),
+				return new ResponseEntity<Object>(new UserNotFoundException(pwr.userID).getMessage(),
 						Response.NOT_FOUND.status());
 			}
 			return new ResponseEntity<Object>(tokenRepository.save(t), Response.CHANGED.status());
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(),
+			return new ResponseEntity<Object>(new TokenNotFoundException(pwr.tokenID).getMessage(),
 					Response.NOT_FOUND.status());
 		}
 	}
