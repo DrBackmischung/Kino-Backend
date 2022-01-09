@@ -4,14 +4,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +24,7 @@ import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
 import de.wi2020sebgroup1.cinema.helper.Response;
 import de.wi2020sebgroup1.cinema.repositories.TokenRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
-import de.wi2020sebgroup1.cinema.services.HTMLService;
+import de.wi2020sebgroup1.cinema.services.EmailService;
 
 @Controller
 @RestController
@@ -43,10 +37,7 @@ public class TokenController {
 	UserRepository userRepository;
 	
 	@Autowired
-    private JavaMailSender emailSender;
-	
-	@Autowired
-	HTMLService htmlService;
+	EmailService emailService;
 	
 	@PutMapping("/reset")
 	public ResponseEntity<Object> startReset(@RequestBody TokenConfigurationObject tco){
@@ -63,12 +54,13 @@ public class TokenController {
 			}
 		}
 		Token saved = tokenRepository.save(t);
-		
+
 		try {
-			emailSender.send(composeMail(saved.getUser().getEmail(), "Password change requested", htmlService.read("PWReset.html", saved.getUser().getUserName())));
-		} catch (MailException | MessagingException e) {
+			emailService.sendMail(saved.getUser().getEmail(), "Password reset!", saved.getUser().getUserName(), "PWReset.html");
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
 	
@@ -111,19 +103,6 @@ public class TokenController {
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(), Response.NOT_FOUND.status());
 		}
-	}
-	
-	public MimeMessage composeMail(String to, String subject, String body) throws MessagingException {
-
-		MimeMessage mail = emailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false, "UTF-8");
-        messageHelper.setFrom(to);
-        messageHelper.setTo(to);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(body, true);
-        
-        return mail;
-        
 	}
 	
 }
