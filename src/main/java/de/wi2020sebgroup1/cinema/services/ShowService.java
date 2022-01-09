@@ -33,7 +33,7 @@ public class ShowService {
 		
 		
 		try {
-			Movie movie = null;
+			Movie movie = movieRepository.findById(movieId).get();
 			try {
 				movie = movieRepository.findById(movieId).get();
 			}
@@ -50,7 +50,7 @@ public class ShowService {
 			
 		}
 		catch(Exception e) {
-			return new ResponseEntity<Object>(new String("Error finding shows!"), HttpStatus.CONFLICT);
+			return new ResponseEntity<Object>(new String("Error finding shows!"), HttpStatus.NOT_FOUND);
 		}
 		
 		

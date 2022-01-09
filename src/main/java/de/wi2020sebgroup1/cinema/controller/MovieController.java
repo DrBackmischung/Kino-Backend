@@ -87,9 +87,15 @@ public class MovieController {
 	 * 
 	 * @return ResponseEntity
 	 */
-	@GetMapping("/getAll")
+	@GetMapping()
 	public ResponseEntity<Iterable<Movie>> getAll(){
 		return new ResponseEntity<Iterable<Movie>>(movieRepository.findAll(), HttpStatus.OK);	
+	}
+	
+	@GetMapping("/getAll")
+	public ResponseEntity<Iterable<Movie>> getAllOld(){
+		
+		return getAll();
 	}
 	
 	/**
@@ -120,7 +126,7 @@ public class MovieController {
 	 * @return ResponseEntity
 	 */
 	@GetMapping("/{id}/shows")
-	public ResponseEntity<Object> getShowsForMovieTest(@PathVariable UUID id){
+	public ResponseEntity<Object> getShowsForMovie(@PathVariable UUID id){
 		return showService.getAllByMovie(id);
 	}
 	
@@ -141,29 +147,5 @@ public class MovieController {
 			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	/* DEPRICATED
-	 * @GetMapping("/{id}/shows")
-	public ResponseEntity<Object> getShowsForMovie(@PathVariable UUID id){
-		
-		Optional<Movie> requested = movieRepository.findById(id);
-		
-		try {
-			Optional<List<Show>> shows = showRepository.findAllByMovie(requested.get());
-			
-			try {
-				return new ResponseEntity<Object>(shows.get(), HttpStatus.OK);
-			}
-			catch (NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String("No Shows for Movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
-			}
-		}
-		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
-		}
-		
-	}
-	 * 
-	 */
 
 }
