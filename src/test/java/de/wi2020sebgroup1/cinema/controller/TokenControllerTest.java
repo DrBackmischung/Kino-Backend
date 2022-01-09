@@ -85,6 +85,7 @@ public class TokenControllerTest {
     
     Token getToken() {
     	Token s = new Token();
+    	s.setUser(getUser());
     	s.setId(uuid);
     	s.setValid(true);
     	return s;
@@ -95,20 +96,9 @@ public class TokenControllerTest {
     	return Optional.of(s);
     }
     
-    Token getTokenID() {
-    	Token s = new Token();
-    	s.setId(new UUID(4, 4));
-    	s.setValid(true);
-    	return s;
-    }
-    
-    Optional<Token> getOptionalTokenID() {
-    	Token s = getTokenID();
-    	return Optional.of(s);
-    }
-    
     Token getTokenNV() {
     	Token s = new Token();
+    	s.setUser(getUser());
     	s.setId(uuid);
     	s.setValid(false);
     	return s;
@@ -151,9 +141,9 @@ public class TokenControllerTest {
         mvc.perform(put("/reset/confirm")
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password", uuid, uuid)).getJson()))
 				.andExpect(status().isNotFound());
-    	when(repo.findById(uuid)).thenReturn(getOptionalTokenID());
+    	when(repo.findById(uuid)).thenReturn(getOptionalToken());
         mvc.perform(put("/reset/confirm")
-        		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password", uuid, uuid)).getJson()))
+        		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password", uuid, new UUID(5,5))).getJson()))
 				.andExpect(status().isUnauthorized());
     	when(repo.findById(uuid)).thenReturn(getOptionalTokenNV());
         mvc.perform(put("/reset/confirm")
