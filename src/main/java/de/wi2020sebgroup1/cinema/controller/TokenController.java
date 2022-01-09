@@ -72,7 +72,7 @@ public class TokenController {
 			System.out.println("PrintStuff");
 			System.out.println(t.getUser().getId().toString());
 			System.out.println(pwr.userID.toString());
-			if(t.getUser().getId().toString().equals(pwr.userID.toString())) {
+			if(!t.getUser().getId().toString().equals(pwr.userID.toString())) {
 				return new ResponseEntity<Object>(new TokenNotApplicableByGivenUserException(pwr.tokenID, pwr.userID).getMessage(),
 						Response.UNAUTHORIZED.status());
 			}

@@ -133,7 +133,7 @@ public class TokenControllerTest {
     	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
         mvc.perform(put("/reset/confirm")
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password", uuid, uuid)).getJson()))
-				.andExpect(status().isUnauthorized());
+				.andExpect(status().isOk());
     }
     
     @Test
@@ -146,7 +146,7 @@ public class TokenControllerTest {
     	when(repo.findById(uuid)).thenReturn(getOptionalToken());
         mvc.perform(put("/reset/confirm")
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password", uuid, new UUID(5,5))).getJson()))
-				.andExpect(status().isNotFound());
+				.andExpect(status().isUnauthorized());
         
     	when(repo.findById(uuid)).thenReturn(getOptionalTokenNV());
         mvc.perform(put("/reset/confirm")
