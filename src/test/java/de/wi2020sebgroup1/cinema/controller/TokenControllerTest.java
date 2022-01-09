@@ -159,19 +159,19 @@ public class TokenControllerTest {
 				.andExpect(status().isNotFound());
     }
     
-//    @Test
-//    void testCheck() throws Exception {
-//    	when(repo.findById(uuid)).thenReturn(getOptionalToken());
-//        mvc.perform(get("/check/"+uuid)
-//            .accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isOk());
-//    }
-//    
-//    @Test
-//    void testCheckException() throws Exception {
-//        mvc.perform(get("/check/"+uuid)
-//            .accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isNotFound());
-//    }
+    @Test
+    void testCheck() throws Exception {
+    	when(repo.findById(uuid)).thenReturn(getOptionalToken());
+        mvc.perform(get("/check/"+uuid)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+    
+    @Test
+    void testCheckException() throws Exception {
+        mvc.perform(get("/check/"+uuid)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
 
 }

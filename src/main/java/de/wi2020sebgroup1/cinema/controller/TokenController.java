@@ -100,13 +100,13 @@ public class TokenController {
 	}
 	
 	@GetMapping("/check/{id}")
-	public ResponseEntity<Object> check(@PathVariable UUID tokenID){
-		Optional<Token> tokenSearch = tokenRepository.findById(tokenID);
+	public ResponseEntity<Object> check(@PathVariable UUID id){
+		Optional<Token> tokenSearch = tokenRepository.findById(id);
 		try {
 			Token t = tokenSearch.get();
 			return new ResponseEntity<Object>(t.isValid(), Response.OK.status());
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(), Response.NOT_FOUND.status());
+			return new ResponseEntity<Object>(new TokenNotFoundException(id).getMessage(), Response.NOT_FOUND.status());
 		}
 	}
 	

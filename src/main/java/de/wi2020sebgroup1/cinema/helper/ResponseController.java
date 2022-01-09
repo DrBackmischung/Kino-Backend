@@ -23,11 +23,6 @@ public class ResponseController {
 	@Autowired
 	ResponseRepository repo;
 	
-	@GetMapping("")
-	public ResponseEntity<Object> error() {
-		return new ResponseEntity<Object>("Error!", Response.OK.status());
-	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable int id){
 		Optional<de.wi2020sebgroup1.cinema.helper.ResponseEntity> responseEntity = repo.findById(id);
