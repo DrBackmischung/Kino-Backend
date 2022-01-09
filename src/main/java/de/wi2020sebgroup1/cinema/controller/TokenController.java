@@ -64,7 +64,7 @@ public class TokenController {
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
 	
-	@PutMapping("/reset/confirm/")
+	@PutMapping("/reset/confirm")
 	public ResponseEntity<Object> reset(@RequestBody PWResetObject pwr){
 		Optional<Token> tokenSearch = tokenRepository.findById(pwr.tokenID);
 		try {
