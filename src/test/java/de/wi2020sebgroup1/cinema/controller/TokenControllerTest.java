@@ -129,26 +129,26 @@ public class TokenControllerTest {
     void testResetFinal() throws Exception {
     	when(repo.findById(uuid)).thenReturn(getOptionalToken());
     	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
-        mvc.perform(put("/reset/"+uuid+"/"+uuid+"/")
+        mvc.perform(put("/reset/"+uuid+"/"+uuid)
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password")).getJson()))
 				.andExpect(status().isCreated());
     }
     
     @Test
     void testResetFinalException() throws Exception {
-        mvc.perform(put("/reset/"+uuid+"/"+uuid+"/")
+        mvc.perform(put("/reset/"+uuid+"/"+uuid)
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password")).getJson()))
 				.andExpect(status().isNotFound());
     	when(repo.findById(uuid)).thenReturn(getOptionalToken());
-        mvc.perform(put("/reset/"+uuid+"/"+new UUID(1,1)+"/")
+        mvc.perform(put("/reset/"+uuid+"/"+new UUID(1,1))
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password")).getJson()))
 				.andExpect(status().isUnauthorized());
     	when(repo.findById(uuid)).thenReturn(getOptionalTokenNV());
-        mvc.perform(put("/reset/"+uuid+"/"+uuid+"/")
+        mvc.perform(put("/reset/"+uuid+"/"+uuid)
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password")).getJson()))
 				.andExpect(status().isUnauthorized());
     	when(repo.findById(uuid)).thenReturn(getOptionalToken());
-        mvc.perform(put("/reset/"+uuid+"/"+uuid+"/")
+        mvc.perform(put("/reset/"+uuid+"/"+uuid)
         		.contentType(MediaType.APPLICATION_JSON).content(jtpwro.write(new PWResetObject("password")).getJson()))
 				.andExpect(status().isNotFound());
     }
