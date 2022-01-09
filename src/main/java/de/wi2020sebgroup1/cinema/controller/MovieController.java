@@ -23,6 +23,7 @@ import de.wi2020sebgroup1.cinema.exceptions.MovieNotCreatableException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
+import de.wi2020sebgroup1.cinema.services.ShowService;
 
 @Controller
 @RestController
@@ -34,6 +35,9 @@ public class MovieController {
 	
 	@Autowired
 	ShowRepository showRepository;
+	
+	@Autowired
+	ShowService showService;
 	
 	@PutMapping("/add")
 	public ResponseEntity<Object> addMovie(@RequestBody Movie movie){
@@ -104,6 +108,11 @@ public class MovieController {
 			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
+	}
+	
+	@GetMapping("/{id}/showsExperimental")
+	public ResponseEntity<Object> getShowsForMovieTest(@PathVariable UUID id){
+		return showService.getAllByMovie(id);
 	}
 	
 	@DeleteMapping("/{id}")
