@@ -75,7 +75,7 @@ public class TokenController {
 			}
 			if(!t.isValid()) {
 				return new ResponseEntity<Object>(new TokenNotValidException(pwr.tokenID).getMessage(),
-						Response.UNAUTHORIZED.status());
+						Response.CONTINUE.status());
 			}
 			t.setValid(false);
 			Optional<User> userSearch = userRepository.findById(pwr.userID);
