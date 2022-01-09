@@ -69,10 +69,15 @@ public class TokenController {
 		Optional<Token> tokenSearch = tokenRepository.findById(pwr.tokenID);
 		try {
 			Token t = tokenSearch.get();
+			System.out.println("PrintStuff");
+			System.out.println(t.getUser().getId().toString());
+			System.out.println(pwr.userID.toString());
 			if(t.getUser().getId().toString().equals(pwr.userID.toString())) {
 				return new ResponseEntity<Object>(new TokenNotApplicableByGivenUserException(pwr.tokenID, pwr.userID).getMessage(),
 						Response.UNAUTHORIZED.status());
 			}
+			System.out.println("PrintStuff Valid");
+			System.out.println(t.isValid());
 			if(!t.isValid()) {
 				return new ResponseEntity<Object>(new TokenNotValidException(pwr.tokenID).getMessage(),
 						Response.UNAUTHORIZED.status());

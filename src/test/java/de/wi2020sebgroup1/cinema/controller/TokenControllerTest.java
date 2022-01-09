@@ -93,7 +93,6 @@ public class TokenControllerTest {
     
     Optional<Token> getOptionalToken() {
     	Token s = getToken();
-    	s.getUser().setId(uuid);
     	return Optional.of(s);
     }
     
