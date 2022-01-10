@@ -87,16 +87,18 @@ public class MovieController {
 	 * 
 	 * @return ResponseEntity
 	 */
-	@GetMapping()
+	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<Movie>> getAll(){
 		return new ResponseEntity<Iterable<Movie>>(movieRepository.findAll(), HttpStatus.OK);	
 	}
 	
+	/*
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<Movie>> getAllOld(){
 		
 		return getAll();
 	}
+	*/
 	
 	/**
 	 * Call to get a specific movie

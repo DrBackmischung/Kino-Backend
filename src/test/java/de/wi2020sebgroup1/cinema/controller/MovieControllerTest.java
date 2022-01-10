@@ -97,7 +97,7 @@ public class MovieControllerTest {
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<Movie>());
-        mvc.perform(get("/movie"))
+        mvc.perform(get("/movie/getAll"))
                 .andExpect(status().isOk());
     }
     
