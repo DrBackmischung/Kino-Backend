@@ -23,6 +23,7 @@ import de.wi2020sebgroup1.cinema.exceptions.MovieNotCreatableException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
+import de.wi2020sebgroup1.cinema.services.ShowService;
 
 @Controller
 @RestController
@@ -35,6 +36,15 @@ public class MovieController {
 	@Autowired
 	ShowRepository showRepository;
 	
+	@Autowired
+	ShowService showService;
+	
+	/**
+	 * Call to add a movie
+	 * 
+	 * @param movie - the movie to add
+	 * @return ResponseEntity - the added movie
+	 */
 	@PutMapping("/add")
 	public ResponseEntity<Object> addMovie(@RequestBody Movie movie){
 		
@@ -47,6 +57,13 @@ public class MovieController {
 		}
 	}
 	
+	/**
+	 * Call to update a movie
+	 * 
+	 * @param id - the movie to update
+	 * @param movie - the new movie details
+	 * @return ResponseEntity - the updated movie
+	 */
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Object> updateMovie(@PathVariable UUID id,@RequestBody Movie movie){
 		
@@ -65,11 +82,30 @@ public class MovieController {
 		
 	}
 	
+	/**
+	 * Call to get all movies in the database
+	 * 
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<Movie>> getAll(){
 		return new ResponseEntity<Iterable<Movie>>(movieRepository.findAll(), HttpStatus.OK);	
 	}
 	
+	/*
+	@GetMapping("/getAll")
+	public ResponseEntity<Iterable<Movie>> getAllOld(){
+		
+		return getAll();
+	}
+	*/
+	
+	/**
+	 * Call to get a specific movie
+	 * 
+	 * @param id movie
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		
@@ -85,27 +121,23 @@ public class MovieController {
 		
 	}
 	
+	/**
+	 * Call to get all Shows for a given movie until the next thursday
+	 * 
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/{id}/shows")
 	public ResponseEntity<Object> getShowsForMovie(@PathVariable UUID id){
-		
-		Optional<Movie> requested = movieRepository.findById(id);
-		
-		try {
-			Optional<List<Show>> shows = showRepository.findAllByMovie(requested.get());
-			
-			try {
-				return new ResponseEntity<Object>(shows.get(), HttpStatus.OK);
-			}
-			catch (NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String("No Shows for Movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
-			}
-		}
-		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
-		}
-		
+		return showService.getAllByMovie(id);
 	}
 	
+	/**
+	 * Call to delete a movie
+	 * 
+	 * @param id - id of the movie to delete
+	 * @return ResponseEntity - status of delete
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteMovie(@PathVariable UUID id){
 		Optional<Movie> o = movieRepository.findById(id);
