@@ -37,6 +37,7 @@ import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
+import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -64,6 +65,9 @@ public class TicketControllerTest {
 	
 	@MockBean
 	ShowRepository showRepository;
+	
+	@MockBean
+	SemaphoreVault semaphoreVault;
     
 	@Autowired
     WebApplicationContext wac;
@@ -186,7 +190,7 @@ public class TicketControllerTest {
     }
 
     @Test
-    void testPutException() throws Exception{
+    void testPutException() throws Exception {
         
         mvc.perform(
             put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
@@ -201,6 +205,10 @@ public class TicketControllerTest {
             put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isNotAcceptable());
 
+    }
+    
+    @Test
+    void testPutSemaphore() throws Exception {
         when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
         when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
         when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
@@ -210,10 +218,9 @@ public class TicketControllerTest {
             @Override
             public void execute() throws Exception {
             	mvc.perform(
-                        put("/ticket/add/"));       
+                        put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()));       
             }
         });
-
     }
 
     @Test
