@@ -29,8 +29,11 @@ public class PriceTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID u = new UUID(2,2);
 		Price o = new Price(5.5, SeatType.PARQUET);
+		o.setId(u);
 		Price o2 = new Price(5.5, SeatType.PARQUET);
+		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
 		Price o3 = new Price(5.5, SeatType.PARQUET);

@@ -164,6 +164,8 @@ public class Ticket {
 			return false;
 		if (user != other.user)
 			return false;
+		if (booking != other.booking)
+			return false;
 		return true;
 	}
 	

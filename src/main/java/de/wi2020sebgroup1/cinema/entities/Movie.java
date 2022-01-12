@@ -206,7 +206,13 @@ public class Movie {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + ((pictureLink == null) ? 0 : pictureLink.hashCode());
+		result = prime * result + ((trailerLink == null) ? 0 : trailerLink.hashCode());
+		result = prime * result + ((originalTitle == null) ? 0 : originalTitle.hashCode());
+		result = prime * result + ((originalDescription == null) ? 0 : originalDescription.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
+		result = prime * result + ((genre == null) ? 0 : genre.hashCode());
+		result = prime * result + FSK;
 		return result;
 	}
 
@@ -231,10 +237,19 @@ public class Movie {
 			return false;
 		if (pictureLink != other.pictureLink)
 			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
+		if (title != other.title)
+			return false;
+		if (trailerLink != other.trailerLink)
+			return false;
+		if (originalTitle != other.originalTitle)
+			return false;
+		if (originalDescription != other.originalDescription)
+			return false;
+		if (actors != other.actors)
+			return false;
+		if (genre != other.genre)
+			return false;
+		if (FSK != other.FSK)
 			return false;
 		return true;
 	}
