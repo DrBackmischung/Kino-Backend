@@ -117,6 +117,11 @@ public class UserControllerTest {
     	return l;
     }
     
+    List<City> getEmptyCityList() {
+    	List<City> l = new ArrayList<>();
+    	return l;
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<User>());
@@ -167,6 +172,14 @@ public class UserControllerTest {
         		.andExpect(status().isOk());
 
     	when(repo.findById(uuid)).thenReturn(getOptionalUser());
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getEmptyCityList());
+    	when(creditCardRepository.findById(uuid)).thenReturn(getOptionalCreditCard());
+    	when(roleRepository.findById(uuid)).thenReturn(getOptionalRole());
+        mvc.perform(
+            put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 26127, "Oldenburg", null, uuid)).getJson()))
+        		.andExpect(status().isOk());
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalUser());
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(
             put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 68199, "Mannheim", null, uuid)).getJson()))
@@ -179,6 +192,25 @@ public class UserControllerTest {
 
         mvc.perform(
             put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, null, null, null, 0, null, null, null)).getJson()))
+        		.andExpect(status().isNotFound());
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalUser());
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(creditCardRepository.findById(uuid)).thenReturn(getOptionalCreditCard());
+        mvc.perform(
+            put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 68159, "Mannheim", null, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    void testUpdateException2() throws Exception{
+
+    	when(repo.findById(uuid)).thenReturn(getOptionalUser());
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getEmptyCityList());
+    	when(roleRepository.findById(uuid)).thenReturn(getOptionalRole());
+        mvc.perform(
+            put("/user/"+uuid).contentType(MediaType.APPLICATION_JSON).content(jtco.write(new UserConfigurationObject(null, null, null, null, null, uuid, null, null, 26127, "Oldenburg", null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }
