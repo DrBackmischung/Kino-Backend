@@ -140,7 +140,6 @@ public class Ticket {
 		result = prime * result + ((seat == null) ? 0 : seat.hashCode());
 		result = prime * result + ((show == null) ? 0 : show.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		result = prime * result + ((booking == null) ? 0 : booking.hashCode());
 		return result;
 	}
 
