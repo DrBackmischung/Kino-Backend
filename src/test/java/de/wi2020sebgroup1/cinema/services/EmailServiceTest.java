@@ -55,4 +55,15 @@ public class EmailServiceTest {
 		
 	}
 	
+	@Test
+	void testSendMessageException() {
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() throws Exception {
+            	emailService.sendMail("wwi2020seb@yes", "Test :3", "DrBackmischung", "Registration.html");
+            }
+        });
+		
+	}
+	
 }

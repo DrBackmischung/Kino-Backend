@@ -117,6 +117,22 @@ public class TokenControllerTest {
     
     @Test
     void testReset() throws Exception {
+    	mvc.perform(put("/reset/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, null)).getJson()))
+				.andExpect(status().isCreated());
+    	
+    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+        mvc.perform(put("/reset/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, uuid)).getJson()))
+				.andExpect(status().isCreated());
+    }
+    
+    @Test
+    void testResetMail() throws Exception {
+        when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+        mvc.perform(put("/reset/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, null)).getJson()))
+				.andExpect(status().isCreated());
     	Properties properties = new Properties();
 	    properties.put("mail.smtp.auth",  "true");
 	    properties.put("mail.smtp.starttls.enable", "true");
@@ -130,20 +146,15 @@ public class TokenControllerTest {
         });
     	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Password reset!", "DrBackmischung", "PWReset.html")).thenReturn(new MimeMessage(session));
     	when(htmlService.read("PWReset.html", "DrBackmischung")).thenReturn("<h1>Test Reset</h1>");
-        mvc.perform(put("/reset/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, null)).getJson()))
-				.andExpect(status().isCreated());
-    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+        when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
         mvc.perform(put("/reset/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, uuid)).getJson()))
 				.andExpect(status().isCreated());
+		
     }
     
     @Test
     void testResetException() throws Exception {
-        mvc.perform(put("/reset/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, null)).getJson()))
-				.andExpect(status().isCreated());
         mvc.perform(put("/reset/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, uuid)).getJson()))
 				.andExpect(status().isNotFound());
