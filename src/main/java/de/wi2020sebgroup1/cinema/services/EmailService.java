@@ -39,10 +39,10 @@ public class EmailService {
             message.setContent(htmlService.read(file, username), "text/html");
 
             return message;
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     public void sendMail(String to, String subject, String username, String file) throws Exception{

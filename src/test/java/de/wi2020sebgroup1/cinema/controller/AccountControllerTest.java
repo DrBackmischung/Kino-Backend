@@ -98,6 +98,11 @@ public class AccountControllerTest {
     	return Optional.of(s);
     }
     
+    List<City> getEmptyCityList() {
+    	List<City> l = new ArrayList<>();
+    	return l;
+    }
+    
     @Test
     void testRegister() throws Exception {
     	Properties properties = new Properties();
@@ -124,6 +129,10 @@ public class AccountControllerTest {
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 0, "Mannheim")).getJson()))
+				.andExpect(status().isCreated());
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getEmptyCityList());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68199, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
     }
     
