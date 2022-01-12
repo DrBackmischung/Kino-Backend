@@ -7,9 +7,9 @@ import org.springframework.test.context.TestPropertySource;
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
 class CinemaApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
+   @Test
+   public void main() {
+      CinemaApplication.main(new String[] {});
+   }
 
 }
