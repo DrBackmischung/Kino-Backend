@@ -85,9 +85,9 @@ public class NewsTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
-		News onull = new News(new Date(2), null, "News!", "Mathis stinkt", "127.0.0.1", null);
+		News onull = new News(d, t, "News!", "Mathis stinkt", "127.0.0.1", user);
 		onull.setId(new UUID(2,2));
-		assertEquals(o.equals(onull), false);
+		assertEquals(o.equals(onull), false); 
     }
 	
 }
