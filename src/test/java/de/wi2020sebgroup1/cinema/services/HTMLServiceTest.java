@@ -1,6 +1,7 @@
 package de.wi2020sebgroup1.cinema.services;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -21,6 +22,16 @@ public class HTMLServiceTest {
             @Override
             public void execute() {
             	htmlService.read("Registration.html", "DrBackmischung");          
+            }
+        });
+	}
+	
+	@Test
+	void testReadException() {
+		assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() {
+            	htmlService.read("", "DrBackmischung");          
             }
         });
 	}

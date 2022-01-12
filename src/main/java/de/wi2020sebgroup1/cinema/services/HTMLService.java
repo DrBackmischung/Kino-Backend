@@ -3,7 +3,6 @@ package de.wi2020sebgroup1.cinema.services;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class HTMLService {
             }
 
             s = sb.toString();
-        } catch (IOException e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 		
