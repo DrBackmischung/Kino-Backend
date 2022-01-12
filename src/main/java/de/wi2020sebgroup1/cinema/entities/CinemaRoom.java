@@ -139,6 +139,7 @@ public class CinemaRoom {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + story;
 		result = prime * result + (wheelchairAccessible ? 1231 : 1237);
+		result = prime * result + ((roomName == null) ? 0 : roomName.hashCode());
 		return result;
 	}
 

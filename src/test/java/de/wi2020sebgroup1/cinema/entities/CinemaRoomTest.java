@@ -48,10 +48,13 @@ public class CinemaRoomTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		UUID u = new UUID(2,2);
+		CinemaRoomSeatingPlan cr = new CinemaRoomSeatingPlan(10);
 		CinemaRoom o = new CinemaRoom(1, false, null, null);
 		o.setId(u);
+		o.setSeatingPlan(cr);
 		CinemaRoom o2 = new CinemaRoom(1, false, null, null);
 		o2.setId(u);
+		o2.setSeatingPlan(cr);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
 		CinemaRoom o3 = new CinemaRoom(1, false, null, null);
