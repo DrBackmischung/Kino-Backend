@@ -98,7 +98,7 @@ public class SeatServiceTest {
             	seatService.reserveSeats(getIds(), uuid);           
             }
         });
-	}
+	} 
 	
 	@Test
 	void testReserveNoId() {
