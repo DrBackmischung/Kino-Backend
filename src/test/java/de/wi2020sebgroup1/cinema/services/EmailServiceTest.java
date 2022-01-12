@@ -45,6 +45,29 @@ public class EmailServiceTest {
 	}
 	
 	@Test
+	void testPrepareMessageException() {
+		
+    	Properties properties = new Properties();
+	    properties.put("mail.smtp.auth",  "true");
+	    properties.put("mail.smtp.starttls.enable", "true");
+	    properties.put("mail.smtp.host", "smtp.gmail.com");
+	    properties.put("mail.smtp.port", "587");
+	    Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
+            }
+        });
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathisSeineMail", "Registration completed!", "DrBackmischung", "Registration.html");          
+            }
+        });
+    	
+	}
+	
+	@Test
 	void testSendMessage() {
 		assertDoesNotThrow(new Executable() {
             @Override

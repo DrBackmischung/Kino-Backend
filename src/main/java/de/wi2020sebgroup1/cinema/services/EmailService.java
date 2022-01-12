@@ -40,7 +40,7 @@ public class EmailService {
             message.setContent(htmlService.read(file, username), "text/html");
 
             return message;
-        } catch (Exception e){
+        } catch (MessagingException e){
             e.printStackTrace();
             return null;
         }
