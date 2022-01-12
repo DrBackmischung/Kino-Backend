@@ -6,7 +6,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Optional;
+import java.util.Properties;
 import java.util.UUID;
+
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -111,6 +117,19 @@ public class TokenControllerTest {
     
     @Test
     void testReset() throws Exception {
+    	Properties properties = new Properties();
+	    properties.put("mail.smtp.auth",  "true");
+	    properties.put("mail.smtp.starttls.enable", "true");
+	    properties.put("mail.smtp.host", "smtp.gmail.com");
+	    properties.put("mail.smtp.port", "587");
+	    Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
+            }
+        });
+    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Password reset!", "DrBackmischung", "PWReset.html")).thenReturn(new MimeMessage(session));
+    	when(htmlService.read("PWReset.html", "DrBackmischung")).thenReturn("<h1>Test Reset</h1>");
         mvc.perform(put("/reset/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, null)).getJson()))
 				.andExpect(status().isCreated());
@@ -122,6 +141,9 @@ public class TokenControllerTest {
     
     @Test
     void testResetException() throws Exception {
+        mvc.perform(put("/reset/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, null)).getJson()))
+				.andExpect(status().isCreated());
         mvc.perform(put("/reset/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, uuid)).getJson()))
 				.andExpect(status().isNotFound());

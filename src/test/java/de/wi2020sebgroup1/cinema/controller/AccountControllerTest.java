@@ -140,7 +140,10 @@ public class AccountControllerTest {
     void testRegisterException() throws Exception {
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "4321", "Parkring", "21", 68159, "Mannheim")).getJson()))
-				.andExpect(status().isUnauthorized());
+				.andExpect(status().isUnauthorized());when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
+				.andExpect(status().isCreated());
     }
     
     @Test
