@@ -47,6 +47,7 @@ import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.SeatBluePrintRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
@@ -74,6 +75,9 @@ public class ShowControllerTest {
 	
 	@MockBean
 	CinemaRoomSeatingPlanRepository seatingPlanRepository;
+	
+	@MockBean
+	SeatBluePrintRepository seatBluePrintRepository;
 	
 	@MockBean
 	SeatRepository seatRepository;
@@ -223,7 +227,7 @@ public class ShowControllerTest {
             .andExpect(status().isNotFound());
     }
 
-   /* @Test
+    @Test
     void testPut() throws Exception{
         
         mvc.perform(
@@ -260,19 +264,18 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
-        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
-        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        mvc.perform(
-            put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
-        		.andExpect(status().isNotFound());
+//        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
+//        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
+//        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+//        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+//        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
+//        mvc.perform(
+//            put("/show/add/")
+//            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
+//        		.andExpect(status().isNotFound());
 
     }
 
-*/
     @Test
     void testDelete() throws Exception{
 
