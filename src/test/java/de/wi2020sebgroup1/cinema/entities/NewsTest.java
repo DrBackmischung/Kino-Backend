@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,10 +44,17 @@ public class NewsTest {
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
+		UUID u = new UUID(2,2);
 		News o = new News(null, null, "News!", "Mathis stinkt", "127.0.0.1", null);
+		o.setId(u);
 		News o2 = new News(null, null, "News!", "Mathis stinkt", "127.0.0.1", null);
+		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
+		News o3 = new News(null, null, "News!", "Mathis stinkt", "127.0.0.1", null);
+		News o4 = new News(null, null, "News!", "Mathis stinkt", "127.0.0.1", null);
+		assertEquals(o3.hashCode(), o4.hashCode());
+		assertEquals(o3.equals(o4), true);
     }
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -68,6 +76,9 @@ public class NewsTest {
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(s), false);
+		News onull = new News(new Date(2), null, "News!", "Mathis stinkt", "127.0.0.1", null);
+		onull.setId(new UUID(2,2));
+		assertEquals(o.equals(onull), false);
     }
 	
 }
