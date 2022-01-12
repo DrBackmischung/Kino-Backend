@@ -143,6 +143,7 @@ public class ShowController {
 		return new ResponseEntity<Object>(showRepository.findAll(), HttpStatus.OK);
 	}
 	
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		
