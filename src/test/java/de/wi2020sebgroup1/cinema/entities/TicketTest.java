@@ -89,7 +89,7 @@ public class TicketTest {
 		Ticket o4 = new Ticket(TicketState.RESERVED, u, null, p, s2);
 		Ticket o5 = new Ticket(TicketState.RESERVED, u, s, null, s2);
 		Ticket o6 = new Ticket(TicketState.RESERVED, u, s, p, null);
-		Ticket o7 = new Ticket(TicketState.RESERVED, u, s, p, null);
+		Ticket o7 = new Ticket(TicketState.RESERVED, u, s, p, s2);
 		o7.setBooking(new Booking());
 		Ticket o8 = null;
 		String st = "Test";

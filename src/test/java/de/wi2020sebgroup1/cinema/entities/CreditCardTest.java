@@ -45,6 +45,7 @@ public class CreditCardTest {
 		CreditCard o2 = new CreditCard("1234", "Neunzig", "Mathis", 2026, 7);
 		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
 		CreditCard o3 = new CreditCard("1234", "Neunzig", "Mathis", 2026, 7);
 		CreditCard o4 = new CreditCard("1234", "Neunzig", "Mathis", 2026, 7);
