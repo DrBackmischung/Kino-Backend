@@ -4,14 +4,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +24,7 @@ import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
 import de.wi2020sebgroup1.cinema.helper.Response;
 import de.wi2020sebgroup1.cinema.repositories.TokenRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
-import de.wi2020sebgroup1.cinema.services.HTMLService;
+import de.wi2020sebgroup1.cinema.services.EmailService;
 
 @Controller
 @RestController
@@ -43,10 +37,7 @@ public class TokenController {
 	UserRepository userRepository;
 	
 	@Autowired
-    private JavaMailSender emailSender;
-	
-	@Autowired
-	HTMLService htmlService;
+	EmailService emailService;
 	
 	@PutMapping("/reset")
 	public ResponseEntity<Object> startReset(@RequestBody TokenConfigurationObject tco){
@@ -63,67 +54,60 @@ public class TokenController {
 			}
 		}
 		Token saved = tokenRepository.save(t);
-		
+
 		try {
-			emailSender.send(composeMail(saved.getUser().getEmail(), "Password change requested", htmlService.read("PWReset.html", saved.getUser().getUserName())));
-		} catch (MailException | MessagingException e) {
+			emailService.sendMail(saved.getUser().getEmail(), "Password reset!", saved.getUser().getUserName(), "PWReset.html");
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
 	
-	@PutMapping("/reset/{tokenID}/{userID}")
-	public ResponseEntity<Object> reset(@PathVariable UUID tokenID, @PathVariable UUID userID, @RequestBody PWResetObject pwr){
-		Optional<Token> tokenSearch = tokenRepository.findById(tokenID);
+	@PutMapping("/reset/confirm")
+	public ResponseEntity<Object> reset(@RequestBody PWResetObject pwr){
+		Optional<Token> tokenSearch = tokenRepository.findById(pwr.tokenID);
 		try {
 			Token t = tokenSearch.get();
-			if(t.getUser().getId() != userID) {
-				return new ResponseEntity<Object>(new TokenNotApplicableByGivenUserException(tokenID, userID).getMessage(),
+			System.out.println("PrintStuff");
+			System.out.println(t.getUser().getId().toString());
+			System.out.println(pwr.userID.toString());
+			if(!t.getUser().getId().toString().equals(pwr.userID.toString())) {
+				return new ResponseEntity<Object>(new TokenNotApplicableByGivenUserException(pwr.tokenID, pwr.userID).getMessage(),
 						Response.UNAUTHORIZED.status());
 			}
+			System.out.println("PrintStuff Valid");
+			System.out.println(t.isValid());
 			if(!t.isValid()) {
-				return new ResponseEntity<Object>(new TokenNotValidException(tokenID).getMessage(),
+				return new ResponseEntity<Object>(new TokenNotValidException(pwr.tokenID).getMessage(),
 						Response.UNAUTHORIZED.status());
 			}
 			t.setValid(false);
-			Optional<User> userSearch = userRepository.findById(userID);
+			Optional<User> userSearch = userRepository.findById(pwr.userID);
 			try {
 				User u = userSearch.get();
 				u.setPassword(pwr.password);
 				userRepository.save(u);
 			} catch (NoSuchElementException e) {
-				return new ResponseEntity<Object>(new UserNotFoundException(userID).getMessage(),
+				return new ResponseEntity<Object>(new UserNotFoundException(pwr.userID).getMessage(),
 						Response.NOT_FOUND.status());
 			}
 			return new ResponseEntity<Object>(tokenRepository.save(t), Response.CHANGED.status());
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(),
+			return new ResponseEntity<Object>(new TokenNotFoundException(pwr.tokenID).getMessage(),
 					Response.NOT_FOUND.status());
 		}
 	}
 	
 	@GetMapping("/check/{id}")
-	public ResponseEntity<Object> check(@PathVariable UUID tokenID){
-		Optional<Token> tokenSearch = tokenRepository.findById(tokenID);
+	public ResponseEntity<Object> check(@PathVariable UUID id){
+		Optional<Token> tokenSearch = tokenRepository.findById(id);
 		try {
 			Token t = tokenSearch.get();
 			return new ResponseEntity<Object>(t.isValid(), Response.OK.status());
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>(new TokenNotFoundException(tokenID).getMessage(), Response.NOT_FOUND.status());
+			return new ResponseEntity<Object>(new TokenNotFoundException(id).getMessage(), Response.NOT_FOUND.status());
 		}
-	}
-	
-	public MimeMessage composeMail(String to, String subject, String body) throws MessagingException {
-
-		MimeMessage mail = emailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false, "UTF-8");
-        messageHelper.setFrom(to);
-        messageHelper.setTo(to);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(body, true);
-        
-        return mail;
-        
 	}
 	
 }

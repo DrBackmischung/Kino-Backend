@@ -61,12 +61,6 @@ public class ResponseControllerTest {
     }
     
     @Test
-    void testGetStart() throws Exception {
-        mvc.perform(get("/error"))
-                .andExpect(status().isOk());
-    }
-    
-    @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<ResponseEntity>());
         mvc.perform(get("/error/getAll"))

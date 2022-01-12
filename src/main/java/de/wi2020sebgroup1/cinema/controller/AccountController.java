@@ -84,7 +84,7 @@ public class AccountController {
 			return new ResponseEntity<Object>("No user for username found!", HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Object>(null, HttpStatus.OK);
+		return new ResponseEntity<Object>(true, HttpStatus.OK);
 		
 	}
 	
