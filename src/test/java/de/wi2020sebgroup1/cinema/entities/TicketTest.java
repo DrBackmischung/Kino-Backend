@@ -46,6 +46,9 @@ public class TicketTest {
         assertEquals(o.getPrice(), null);
         o.setSeat(null);
         assertEquals(o.getSeat(), null);
+        Booking b = new Booking();
+        o.setBooking(b);
+        assertEquals(o.getBooking(), b);
     }
 	
 	@Test
@@ -54,12 +57,15 @@ public class TicketTest {
 		UUID id = new UUID(2,2);
 		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
+		Booking b = new Booking();
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
 		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
 		o.setId(id);
+		o.setBooking(b);
 		Ticket o2 = new Ticket(TicketState.RESERVED, u, s, p, s2);
 		o2.setId(id);
+		o2.setBooking(b);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
@@ -83,7 +89,9 @@ public class TicketTest {
 		Ticket o4 = new Ticket(TicketState.RESERVED, u, null, p, s2);
 		Ticket o5 = new Ticket(TicketState.RESERVED, u, s, null, s2);
 		Ticket o6 = new Ticket(TicketState.RESERVED, u, s, p, null);
-		Ticket o7 = null;
+		Ticket o7 = new Ticket(TicketState.RESERVED, u, s, p, null);
+		o7.setBooking(new Booking());
+		Ticket o8 = null;
 		String st = "Test";
 		assertEquals(o.equals(o2), false);
 		assertEquals(o.equals(o3), false);
@@ -91,6 +99,7 @@ public class TicketTest {
 		assertEquals(o.equals(o5), false);
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
+		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(st), false);
 		Ticket onull = new Ticket(TicketState.CANCELLED, u, s, p, s2);
 		onull.setId(new UUID(2,2));
