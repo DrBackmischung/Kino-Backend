@@ -50,6 +50,7 @@ public class ReviewTest {
 		Review o2 = new Review(null, null, "Review!", "Mathis stinkt", null, null);
 		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
+		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
 		Review o3 = new Review(null, null, "Review!", "Mathis stinkt", null, null);
 		Review o4 = new Review(null, null, "Review!", "Mathis stinkt", null, null);
