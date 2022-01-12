@@ -33,13 +33,16 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.wi2020sebgroup1.cinema.configurationObject.SeatsBlueprintConfigurationObject;
 import de.wi2020sebgroup1.cinema.configurationObject.ShowConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Cinema;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Price;
 import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.entities.SeatsBluePrint;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
@@ -173,6 +176,18 @@ public class ShowControllerTest {
     	l.add(new Seat(3, 2, SeatType.PREMIUM, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
     	return Optional.of(l);
     }
+	
+	List<SeatsBluePrint> getSBP() {
+		List<SeatsBluePrint> l = new ArrayList<>();
+		Price p = new Price();
+		CinemaRoom c = new CinemaRoom();
+		CinemaRoomSeatingPlan cr = new CinemaRoomSeatingPlan();
+		c.setSeatingPlan(cr);
+		l.add(new SeatsBluePrint(1, 1, SeatType.LODGE, p, c, cr));
+		l.add(new SeatsBluePrint(2, 1, SeatType.LODGE, p, c, cr));
+		l.add(new SeatsBluePrint(1, 2, SeatType.LODGE, p, c, cr));
+		return l;
+	}
     
     @Test
     void testGetAll() throws Exception {
@@ -244,6 +259,17 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
+        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        when(seatBluePrintRepository.findAllByCinemaRoom(getCinemaRoom())).thenReturn(getSBP());
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isCreated());
+
     }
 
     @Test
@@ -263,16 +289,6 @@ public class ShowControllerTest {
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
-
-//        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-//        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomWithoutLayout());
-//        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-//        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
-//        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
-//        mvc.perform(
-//            put("/show/add/")
-//            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
-//        		.andExpect(status().isNotFound());
 
     }
 
