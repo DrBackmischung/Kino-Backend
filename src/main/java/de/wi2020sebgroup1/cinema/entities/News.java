@@ -147,40 +147,19 @@ public class News {
 		if (getClass() != obj.getClass())
 			return false;
 		News other = (News) obj;
-		if (content == null) {
-			if (other.content != null)
-				return false;
-		} else if (!content.equals(other.content))
+		if (content != other.content)
 			return false;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
+		if (date != other.date)
 			return false;
-		if (header == null) {
-			if (other.header != null)
-				return false;
-		} else if (!header.equals(other.header))
+		if (header != other.header)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
-		if (pictureLink == null) {
-			if (other.pictureLink != null)
-				return false;
-		} else if (!pictureLink.equals(other.pictureLink))
+		if (pictureLink != other.pictureLink)
 			return false;
-		if (time == null) {
-			if (other.time != null)
-				return false;
-		} else if (!time.equals(other.time))
+		if (time != other.time)
 			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
+		if (user != other.user)
 			return false;
 		return true;
 	}

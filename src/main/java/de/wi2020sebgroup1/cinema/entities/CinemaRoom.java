@@ -139,6 +139,7 @@ public class CinemaRoom {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + story;
 		result = prime * result + (wheelchairAccessible ? 1231 : 1237);
+		result = prime * result + ((roomName == null) ? 0 : roomName.hashCode());
 		return result;
 	}
 
@@ -152,6 +153,8 @@ public class CinemaRoom {
 			return false;
 		CinemaRoom other = (CinemaRoom) obj;
 		if (cinema != other.cinema)
+			return false;
+		if (roomName != other.roomName)
 			return false;
 		if (cinemaRoomSeatingPlan != other.cinemaRoomSeatingPlan)
 			return false;
