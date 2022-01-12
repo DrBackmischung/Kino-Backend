@@ -104,13 +104,17 @@ public class ShowController {
 		}
 		
 		if(showConfigurationObject.cinemaRoomID != null) {
+			System.out.println("PrintStuff - Ich hab ne CinemaRoomID!");
 			Optional<CinemaRoom> roomSearch = cinemaRoomRepository.findById(showConfigurationObject.cinemaRoomID);
 			try {
 				CinemaRoom room = roomSearch.get();
+				System.out.println("PrintStuff - Ich hab nen CinemaRoom!");
 				toAdd.setCinemaRoom(room);
 					
 					List<SeatsBluePrint> seats = seatBluePrintRepository.findAllByCinemaRoom(room);
+					System.out.println("PrintStuff - Ich hab Sitze!");
 					List<Seat> showSeats = new ArrayList<>();
+					System.out.println("PrintStuff - Größe: "+seats.size());
 
 					if(seats.size() > 0) {
 						

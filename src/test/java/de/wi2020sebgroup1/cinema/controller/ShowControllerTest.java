@@ -1,7 +1,8 @@
-	package de.wi2020sebgroup1.cinema.controller;
+package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -180,12 +181,18 @@ public class ShowControllerTest {
 	List<SeatsBluePrint> getSBP() {
 		List<SeatsBluePrint> l = new ArrayList<>();
 		Price p = new Price();
+		p.setId(uuid);
 		CinemaRoom c = new CinemaRoom();
+		c.setId(uuid);
 		CinemaRoomSeatingPlan cr = new CinemaRoomSeatingPlan();
 		c.setSeatingPlan(cr);
-		l.add(new SeatsBluePrint(1, 1, SeatType.LODGE, p, c, cr));
-		l.add(new SeatsBluePrint(2, 1, SeatType.LODGE, p, c, cr));
-		l.add(new SeatsBluePrint(1, 2, SeatType.LODGE, p, c, cr));
+		cr.setId(uuid);
+		SeatsBluePrint s1 = new SeatsBluePrint(1, 1, SeatType.LODGE, p, c, cr);
+		s1.setId(uuid);
+		SeatsBluePrint s2 = new SeatsBluePrint(2, 1, SeatType.LODGE, p, c, cr);
+		s2.setId(uuid);
+		l.add(s1);
+		l.add(s2);
 		return l;
 	}
     
@@ -259,12 +266,15 @@ public class ShowControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
+    }
+
+    @Test
+    void testPut2() throws Exception{
+
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
-        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
-        when(seatBluePrintRepository.findAllByCinemaRoom(getCinemaRoom())).thenReturn(getSBP());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        when(seatBluePrintRepository.findAllByCinemaRoom(any())).thenReturn(getSBP());
         mvc.perform(
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
