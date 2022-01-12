@@ -1,6 +1,5 @@
 package de.wi2020sebgroup1.cinema.entities;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -72,7 +71,12 @@ public class Token {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, user, valid);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (valid ? 1231 : 1237);
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
 	}
 
 	@Override
