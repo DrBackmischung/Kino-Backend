@@ -10,13 +10,25 @@ import org.junit.jupiter.api.Test;
 public class CinemaRoomTest {
 	
 	@Test
-	@DisplayName("Test the constructor")
+	@DisplayName("Test the 1st constructor")
     public void testConstructor() {
 		Cinema c = new Cinema(null, null, null, 0, 0, null);
+		CinemaRoomSeatingPlan cr = new CinemaRoomSeatingPlan(10);
 		CinemaRoom o = new CinemaRoom(1, true, c, "testRoom");
+		o.setCinemaRoomSeatingPlan(cr);
 		assertEquals(o.getStory(), 1);
 		assertEquals(o.isWheelchairAccessible(), true);
 		assertEquals(o.getCinema(), c);
+		assertEquals(o.getRoomName(), "testRoom");
+    }
+	
+	@Test
+	@DisplayName("Test the 2nd constructor")
+    public void test2ndConstructor() {
+		CinemaRoom o = new CinemaRoom(1, true, "testRoom");
+		assertEquals(o.getStory(), 1);
+		assertEquals(o.isWheelchairAccessible(), true);
+		assertEquals(o.getRoomName(), "testRoom");
     }
 	
 	@Test
@@ -32,12 +44,14 @@ public class CinemaRoomTest {
 		assertEquals(o.getCinema(), null);
     }
 	
-	/*
 	@Test
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		UUID u = new UUID(2,2);
-		Cinema c = new Cinema(null, null, null, 0, 0, null);
+		CinemaRoom o = new CinemaRoom(1, false, null, null);
+		o.setId(u);
+		CinemaRoom o2 = new CinemaRoom(1, false, null, null);
+		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
 		CinemaRoom o3 = new CinemaRoom(1, false, null, null);
@@ -52,24 +66,20 @@ public class CinemaRoomTest {
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
-		Cinema c = new Cinema(null, null, null, 0, 0, null);
-		CinemaRoom o = new CinemaRoom(1, true, c);
-		CinemaRoom o2 = new CinemaRoom(2, true, c);
-		CinemaRoom o3 = new CinemaRoom(1, false, c);
-		CinemaRoom o4 = new CinemaRoom(1, true, null);
-		CinemaRoom o5 = new CinemaRoom(1, true, c);
+		CinemaRoom o = new CinemaRoom(1, true, "testRoom");
+		CinemaRoom o2 = new CinemaRoom(2, true, "testRoom");
+		CinemaRoom o3 = new CinemaRoom(1, false, "testRoom");
+		CinemaRoom o4 = new CinemaRoom(1, true, "testRoom2");
 		CinemaRoom o6 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
 		assertEquals(o.equals(o3), false);
 		assertEquals(o.equals(o4), false);
-		assertEquals(o.equals(o5), false);
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(s), false);
-		CinemaRoom onull = new CinemaRoom(1, true, c);
+		CinemaRoom onull = new CinemaRoom(1, true, "testRoom");
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }
-    */
-
+    
 }

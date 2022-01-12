@@ -153,6 +153,8 @@ public class CinemaRoom {
 		CinemaRoom other = (CinemaRoom) obj;
 		if (cinema != other.cinema)
 			return false;
+		if (roomName != other.roomName)
+			return false;
 		if (cinemaRoomSeatingPlan != other.cinemaRoomSeatingPlan)
 			return false;
 		if (id != other.id)
