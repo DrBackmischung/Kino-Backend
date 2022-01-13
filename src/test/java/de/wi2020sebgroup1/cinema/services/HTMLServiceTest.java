@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
+
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
 public class HTMLServiceTest {
@@ -21,7 +23,8 @@ public class HTMLServiceTest {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() {
-            	htmlService.read("Registration.html", "DrBackmischung");          
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	htmlService.read("Registration.html", e);          
             }
         });
 	}
@@ -31,7 +34,8 @@ public class HTMLServiceTest {
 		assertThrows(Exception.class, new Executable() {
             @Override
             public void execute() {
-            	htmlService.read("", "DrBackmischung");          
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	htmlService.read("", e);          
             }
         });
 	}

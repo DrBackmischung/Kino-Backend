@@ -33,6 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
@@ -141,8 +142,9 @@ public class AccountControllerTest {
                 return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
             }
         });
-    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", "DrBackmischung", "Registration.html")).thenReturn(new MimeMessage(session));
-    	when(htmlService.read("Registration.html", "DrBackmischung")).thenReturn("<h1>Test</h1>");
+	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", null, null, null, null, null, null, null, null);
+    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html")).thenReturn(new MimeMessage(session));
+    	when(htmlService.read("Registration.html", e)).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))

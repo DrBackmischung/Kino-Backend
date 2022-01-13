@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(27, 27, 27);
+}
+
+img.header {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 30%;
+    height: auto;
+}
+
+img.footer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 3%;
+    height: auto;
+}
+
+h1 {
+    color: rgb(136, 71, 25);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h2, h3, h4 {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a.footer {
+    color: rgb(114, 114, 114);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+}

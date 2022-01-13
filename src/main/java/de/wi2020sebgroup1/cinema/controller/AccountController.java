@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
@@ -62,7 +63,7 @@ public class AccountController {
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
 
-		emailService.sendMail(uro.email, "Registration completed!", uro.username, "Registration.html");
+		emailService.sendMail(uro.email, "Registration completed!", new EmailVariablesObject(uro.username, uro.firstName, uro.name, null, null, null, null, null, null, null, null), "Registration.html");
 		
 		return new ResponseEntity<Object>(userRepository.save(toAdd), HttpStatus.CREATED);
 	}

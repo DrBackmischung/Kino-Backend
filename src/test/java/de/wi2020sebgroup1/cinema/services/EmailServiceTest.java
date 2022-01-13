@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
+
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
 public class EmailServiceTest {
@@ -37,8 +39,9 @@ public class EmailServiceTest {
         });
 		assertDoesNotThrow(new Executable() {
             @Override
-            public void execute() {
-            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", "DrBackmischung", "Registration.html");          
+            public void execute() throws Exception {
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html");          
             }
         });
     	
@@ -61,7 +64,8 @@ public class EmailServiceTest {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() {
-            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathisSeineMail", "Registration completed!", "DrBackmischung", "Registration.html");          
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathisSeineMail", "Registration completed!", e, "Registration.html");          
             }
         });
     	
@@ -72,7 +76,8 @@ public class EmailServiceTest {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() throws Exception {
-            	emailService.sendMail("wwi2020seb@gmail.com", "Test :3", "DrBackmischung", "Registration.html");
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.sendMail("wwi2020seb@gmail.com", "Test :3", e, "Registration.html");
             }
         });
 		
@@ -83,7 +88,8 @@ public class EmailServiceTest {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() throws Exception {
-            	emailService.sendMail("wwi2020seb@yes", "Test :3", "DrBackmischung", "Registration.html");
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.sendMail("wwi2020seb@yes", "Test :3", e, "Registration.html");
             }
         });
 		

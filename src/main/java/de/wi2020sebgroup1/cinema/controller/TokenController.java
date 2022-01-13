@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.configurationObject.PWResetObject;
 import de.wi2020sebgroup1.cinema.configurationObject.TokenConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Token;
@@ -43,8 +44,7 @@ public class TokenController {
 	public ResponseEntity<Object> startReset(@RequestBody TokenConfigurationObject tco){
 		Token t = new Token();
 		t.setValid(tco.valid);
-		String mail = null;
-		String username = null;
+		String mail = null, username = null, firstName = null, lastName = null, link = null;
 		if(tco.userID != null) {
 			Optional<User> userSearch = userRepository.findById(tco.userID);
 			try {
@@ -52,13 +52,16 @@ public class TokenController {
 				t.setUser(u);
 				mail = u.getEmail();
 				username = u.getUserName();
-			} catch (NoSuchElementException e) {
+				firstName = u.getFirstName();
+				lastName = u.getName();
+				link = "";
+			} catch (NoSuchElementException e) { 
 				return new ResponseEntity<Object>(new UserNotFoundException(tco.userID).getMessage(),
 						Response.NOT_FOUND.status());
 			}
 		}
 		Token saved = tokenRepository.save(t);
-		emailService.sendMail(mail, "Password reset!", username, "PWReset.html");
+		emailService.sendMail(mail, "Password reset!", new EmailVariablesObject(username, firstName, lastName, link, null, null, null, null, null, null, null), "PWReset.html");
 		
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}
