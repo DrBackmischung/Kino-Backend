@@ -57,24 +57,14 @@ public class SeatBlueprintService {
 		}
 		catch(NoSuchElementException nSE) {
 			return new ResponseEntity<Object>(new String("One or more given ids are not found!"), HttpStatus.CONFLICT);
-		}catch(IllegalArgumentException iAE) {
-			return new ResponseEntity<Object>(new String("Seat blueprints couldn't be saved!!"), HttpStatus.CONFLICT);
-		}catch (Exception e) {
-			return new ResponseEntity<Object>(new String("A unkown error appeared!"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
 	
 	public ResponseEntity<Object> delete(List<UUID> ids) {
-		
-		try {
-			
-			seatBluePrintRepository.deleteAllById(ids);
-			return new ResponseEntity<Object>(new String("Seat Blueprints deleted!"), HttpStatus.OK);
-		}
-		catch(IllegalArgumentException  e) {
-			return new ResponseEntity<Object>(new String("Some of the ids were null or not found!"), HttpStatus.CONFLICT);
-		}
+
+		seatBluePrintRepository.deleteAllById(ids);
+		return new ResponseEntity<Object>(new String("Seat Blueprints deleted!"), HttpStatus.OK);
 		
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -41,7 +42,7 @@ public class EmailService {
             message.setContent(htmlService.read(file, evo), "text/html");
 
             return message;
-        } catch (Exception e){
+        } catch (MessagingException e){
             e.printStackTrace();
             return null;
         }
@@ -63,7 +64,11 @@ public class EmailService {
         });
 
         Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
-        Transport.send(message);
+        try {
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
     }
 	
 }

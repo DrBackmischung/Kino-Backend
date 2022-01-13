@@ -44,23 +44,22 @@ public class TokenController {
 	public ResponseEntity<Object> startReset(@RequestBody TokenConfigurationObject tco){
 		Token t = new Token();
 		t.setValid(tco.valid);
+		String mail = null;
+		String username = null;
 		if(tco.userID != null) {
 			Optional<User> userSearch = userRepository.findById(tco.userID);
 			try {
 				User u = userSearch.get();
 				t.setUser(u);
+				mail = u.getEmail();
+				username = u.getUserName();
 			} catch (NoSuchElementException e) { 
 				return new ResponseEntity<Object>(new UserNotFoundException(tco.userID).getMessage(),
 						Response.NOT_FOUND.status());
 			}
 		}
 		Token saved = tokenRepository.save(t);
-
-		try {
-			emailService.sendMail(saved.getUser().getEmail(), "Password reset!", new EmailVariablesObject(saved.getUser().getUserName(), saved.getUser().getFirstName(), saved.getUser().getName(), "link/"+t.getId(), null, null, null, null, null, null, null), "PWReset.html");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		emailService.sendMail(mail, "Password reset!", new EmailVariablesObject(saved.getUser().getUserName(), saved.getUser().getFirstName(), saved.getUser().getName(), "link/"+t.getId(), null, null, null, null, null, null, null), "PWReset.html");
 		
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}

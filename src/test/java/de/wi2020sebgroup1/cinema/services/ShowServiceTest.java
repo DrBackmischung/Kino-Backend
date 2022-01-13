@@ -1,9 +1,10 @@
 package de.wi2020sebgroup1.cinema.services;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,9 @@ public class ShowServiceTest {
 	
 	@MockBean
 	private MovieRepository movieRepository;
+	
+	@MockBean
+	DateService dateService;
 	
 	@Autowired
 	ShowService showService;
@@ -73,8 +77,29 @@ public class ShowServiceTest {
 	@Test
 	void testGetAllByMovie() {
 		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-		when(showRepository.findAllByShowDateBetweenAndMovie(new Date(1), new Date(2), new Movie())).thenReturn(getOptionalShows());
+		when(showRepository.findAllByShowDateBetweenAndMovie(any(), any(), any())).thenReturn(getOptionalShows());
+		when(dateService.getDate()).thenReturn(LocalDate.now());
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	showService.getAllByMovie(uuid);                
+            }
+        });
+		when(dateService.getDate()).thenReturn(LocalDate.now().plusDays(3));
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	showService.getAllByMovie(uuid);                
+            }
+        });
+		when(dateService.getDate()).thenReturn(LocalDate.now().plusDays(5));
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	showService.getAllByMovie(uuid);                
+            }
+        });
+		when(dateService.getDate()).thenReturn(LocalDate.now().plusDays(7));
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() {
@@ -85,8 +110,6 @@ public class ShowServiceTest {
 	
 	@Test
 	void testGetAllByMovieException() {
-		when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
-		when(movieRepository.findById(uuid)).thenReturn(null);
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() {

@@ -74,6 +74,11 @@ public class SeatServiceTest {
     	a.add(uuid);
     	return a;
     }
+    
+    ArrayList<UUID> getNoIds() {
+    	ArrayList<UUID> a = new ArrayList<>();
+    	return a;
+    }
 	
 	@Test
 	void testReserve() {
@@ -91,6 +96,19 @@ public class SeatServiceTest {
             @Override
             public void execute() {
             	seatService.reserveSeats(getIds(), uuid);           
+            }
+        });
+	} 
+	
+	@Test
+	void testReserveNoId() {
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(true));
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+		when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(true));
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() {
+            	seatService.reserveSeats(getNoIds(), uuid);           
             }
         });
 	}

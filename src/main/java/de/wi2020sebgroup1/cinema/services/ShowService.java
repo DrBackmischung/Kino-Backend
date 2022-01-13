@@ -2,6 +2,7 @@ package de.wi2020sebgroup1.cinema.services;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ShowService {
 	
 	@Autowired
 	ShowRepository showRepository;
+	
+	@Autowired
+	DateService dateService;
 		
 	/**
 	 * This function is responsible for getting all Shows by a Movie until the next Thursday
@@ -31,28 +35,19 @@ public class ShowService {
 	 */
 	public ResponseEntity<Object> getAllByMovie(UUID movieId){
 		
-		
+		Optional<Movie> movieSearch = movieRepository.findById(movieId);
 		try {
-			Movie movie = movieRepository.findById(movieId).get();
-			try {
-				movie = movieRepository.findById(movieId).get();
-			}
-			catch(NoSuchElementException nSE) {
-				return new ResponseEntity<Object>(new MovieNotFoundException(movieId), HttpStatus.NOT_FOUND);
-			}
+			Movie movie = movieSearch.get();
 			
-			LocalDate date = LocalDate.now();
+			LocalDate date = dateService.getDate();
 			int today = date.getDayOfWeek().getValue();
 			int offset = (today > 4) ? ((4 - today) + 7) : ((4 - today));
 			LocalDate nextThursday = date.plusDays(offset);
 			
 			return new ResponseEntity<Object>(showRepository.findAllByShowDateBetweenAndMovie(java.sql.Date.valueOf(date), java.sql.Date.valueOf(nextThursday), movie).get(),HttpStatus.OK);
-			
+		} catch(NoSuchElementException nSE) {
+			return new ResponseEntity<Object>(new MovieNotFoundException(movieId), HttpStatus.NOT_FOUND);
 		}
-		catch(Exception e) {
-			return new ResponseEntity<Object>(new String("Error finding shows!"), HttpStatus.NOT_FOUND);
-		}
-		
 		
 	}
 
