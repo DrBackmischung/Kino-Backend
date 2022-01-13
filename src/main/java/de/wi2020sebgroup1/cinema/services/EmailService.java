@@ -48,7 +48,7 @@ public class EmailService {
         }
     }
 
-    public void sendMail(String to, String subject, EmailVariablesObject evo, String file) throws Exception{
+    public void sendMail(String to, String subject, EmailVariablesObject evo, String file) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");

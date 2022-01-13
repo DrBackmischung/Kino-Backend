@@ -30,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.configurationObject.PWResetObject;
 import de.wi2020sebgroup1.cinema.configurationObject.TokenConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Token;
@@ -144,8 +145,9 @@ public class TokenControllerTest {
                 return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
             }
         });
-    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Password reset!", "DrBackmischung", "PWReset.html")).thenReturn(new MimeMessage(session));
-    	when(htmlService.read("PWReset.html", "DrBackmischung")).thenReturn("<h1>Test Reset</h1>");
+	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "link", null, null, null, null, null, null, null);
+    	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Password reset!", e, "PWReset.html")).thenReturn(new MimeMessage(session));
+    	when(htmlService.read("PWReset.html", e)).thenReturn("<h1>Test Reset</h1>");
         when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
         mvc.perform(put("/reset/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TokenConfigurationObject(true, uuid)).getJson()))
