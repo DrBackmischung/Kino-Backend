@@ -61,7 +61,7 @@ public class TokenController {
 			}
 		}
 		Token saved = tokenRepository.save(t);
-		emailService.sendMail(mail, "Password reset!", new EmailVariablesObject(username, firstName, lastName, link, null, null, null, null, null, null, null), "PWReset.html");
+		emailService.sendMail(mail, "Password reset!", new EmailVariablesObject(username, firstName, lastName, link, "", "", "", "", "", "", ""), "PWReset.html");
 		
 		return new ResponseEntity<Object>(saved, Response.CREATED.status());
 	}

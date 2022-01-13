@@ -63,7 +63,7 @@ public class AccountController {
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
 
-		emailService.sendMail(uro.email, "Registration completed!", new EmailVariablesObject(uro.username, uro.firstName, uro.name, null, null, null, null, null, null, null, null), "Registration.html");
+		emailService.sendMail(uro.email, "Registration completed!", new EmailVariablesObject(uro.username, uro.firstName, uro.name, "", "", "", "", "", "", "", ""), "Registration.html");
 		
 		return new ResponseEntity<Object>(userRepository.save(toAdd), HttpStatus.CREATED);
 	}
