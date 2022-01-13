@@ -157,10 +157,7 @@ public enum Response {
 	
 	public HttpStatus status() {
 		HttpStatus h = HttpStatus.valueOf(value);
-		if (h != null)
-			return HttpStatus.valueOf(value);
-		else
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+		return h;
 	}
 
 	@Override

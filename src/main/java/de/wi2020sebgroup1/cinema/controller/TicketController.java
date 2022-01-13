@@ -81,8 +81,7 @@ public class TicketController {
 		catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>(new SeatNotFoundException(seatID).getMessage(),
 					HttpStatus.NOT_FOUND);
-		}
-		catch (Exception e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		finally

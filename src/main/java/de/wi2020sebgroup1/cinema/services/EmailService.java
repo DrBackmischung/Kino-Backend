@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -39,13 +40,13 @@ public class EmailService {
             message.setContent(htmlService.read(file, username), "text/html");
 
             return message;
-        } catch (Exception e){
+        } catch (MessagingException e){
             e.printStackTrace();
             return null;
         }
     }
 
-    public void sendMail(String to, String subject, String username, String file) throws Exception{
+    public void sendMail(String to, String subject, String username, String file) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");
@@ -61,7 +62,11 @@ public class EmailService {
         });
 
         Message message = prepareMessage(session, EMAIL, to, subject, username, file);
-        Transport.send(message);
+        try {
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
     }
 	
 }

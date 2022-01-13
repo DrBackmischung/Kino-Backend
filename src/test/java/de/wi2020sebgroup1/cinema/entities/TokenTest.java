@@ -33,15 +33,16 @@ public class TokenTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		UUID uuid = new UUID(2,2);
-		Token o = new Token(true, null);
+		User u = new User();
+		Token o = new Token(true, u);
 		o.setId(uuid);
-		Token o2 = new Token(true, null);
+		Token o2 = new Token(true, u);
 		o2.setId(uuid);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
 		assertEquals(o.equals(o), true);
-		Token o3 = new Token(true, null);
-		Token o4 = new Token(true, null);
+		Token o3 = new Token(false, null);
+		Token o4 = new Token(false, null);
 		assertEquals(o3.hashCode(), o4.hashCode());
 		assertEquals(o3.equals(o4), true);
     }
