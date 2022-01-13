@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.configurationObject.PWResetObject;
 import de.wi2020sebgroup1.cinema.configurationObject.TokenConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Token;
@@ -48,7 +49,7 @@ public class TokenController {
 			try {
 				User u = userSearch.get();
 				t.setUser(u);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException e) { 
 				return new ResponseEntity<Object>(new UserNotFoundException(tco.userID).getMessage(),
 						Response.NOT_FOUND.status());
 			}
@@ -56,7 +57,7 @@ public class TokenController {
 		Token saved = tokenRepository.save(t);
 
 		try {
-			emailService.sendMail(saved.getUser().getEmail(), "Password reset!", saved.getUser().getUserName(), "PWReset.html");
+			emailService.sendMail(saved.getUser().getEmail(), "Password reset!", new EmailVariablesObject(saved.getUser().getUserName(), saved.getUser().getFirstName(), saved.getUser().getName(), "link/"+t.getId(), null, null, null, null, null, null, null), "PWReset.html");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

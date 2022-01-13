@@ -17,6 +17,8 @@ import javax.mail.internet.MimeMultipart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
+
 @Service
 public class EmailService {
 	
@@ -25,7 +27,7 @@ public class EmailService {
 	
 	public final static String EMAIL = "wwi2020seb@gmail.com";
 	
-	public Message prepareMessage(Session session, String acc, String to, String subject, String username, String file){
+	public Message prepareMessage(Session session, String acc, String to, String subject, EmailVariablesObject evo, String file){
         try {
             Message message = new MimeMessage(session);
 
@@ -36,7 +38,7 @@ public class EmailService {
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText("");
             multipart.addBodyPart(messageBodyPart);
-            message.setContent(htmlService.read(file, username), "text/html");
+            message.setContent(htmlService.read(file, evo), "text/html");
 
             return message;
         } catch (Exception e){
@@ -45,7 +47,7 @@ public class EmailService {
         }
     }
 
-    public void sendMail(String to, String subject, String username, String file) throws Exception{
+    public void sendMail(String to, String subject, EmailVariablesObject evo, String file) throws Exception{
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");
@@ -60,7 +62,7 @@ public class EmailService {
             }
         });
 
-        Message message = prepareMessage(session, EMAIL, to, subject, username, file);
+        Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
         Transport.send(message);
     }
 	
