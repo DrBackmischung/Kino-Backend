@@ -1,8 +1,9 @@
 package de.wi2020sebgroup1.cinema.services;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,15 @@ public class HTMLService {
 	public String read(String fileName, EmailVariablesObject evo) {
 		
 		String s = null;
-		String filePath = new File("").getAbsolutePath();
-		String path = filePath+"/src/main/resources/html/"+fileName;
+		URL url = null;
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+		try {
+			url = new URL("https://raw.githubusercontent.com/DrBackmischung/Kino-Backend/dev/src/main/resources/html/"+fileName);
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
 
             String line = br.readLine();
             StringBuilder sb = new StringBuilder();
