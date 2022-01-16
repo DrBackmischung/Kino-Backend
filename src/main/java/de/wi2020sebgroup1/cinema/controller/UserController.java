@@ -68,11 +68,6 @@ public class UserController {
 		
 	}
 	
-	@PutMapping("/add")
-	public ResponseEntity<User> addUser(@RequestBody User newUser){
-		return new ResponseEntity<>( userRepository.save(newUser), HttpStatus.CREATED);
-	}
-	
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody UserConfigurationObject uco){
 		
@@ -134,12 +129,15 @@ public class UserController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable UUID id){
-		Optional<User> o = userRepository.findById(id);
+		
 		try {
+			Optional<User> o = userRepository.findById(id);
 			userRepository.deleteById(o.get().getId());
 			return new ResponseEntity<>(id, HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (NoSuchElementException nSE) {
 			return new ResponseEntity<Object>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

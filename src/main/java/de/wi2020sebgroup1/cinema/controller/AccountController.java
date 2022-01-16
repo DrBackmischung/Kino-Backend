@@ -19,6 +19,7 @@ import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.exceptions.UserAlreadyExistsException;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 import de.wi2020sebgroup1.cinema.services.EmailService;
@@ -39,8 +40,25 @@ public class AccountController {
 	@PutMapping("/registration")
 	public ResponseEntity<Object> register(@RequestBody UserRegistrationObject uro){
 		
+		boolean alreadyExists = false;
+		
 		if(!(uro.passwordHash.equals(uro.passwordConfirmHash))) {
 			return new ResponseEntity<Object>("Incorrect password!", HttpStatus.UNAUTHORIZED);
+		}
+		
+		
+		try {
+			User user = userRepository.findByUsernameSpecial(uro.username);
+			alreadyExists = true;
+		}catch(Exception e) {};
+		
+		try {
+			User user = userRepository.findByEmailEquals(uro.email).get();
+			alreadyExists = true;
+		}catch(Exception e) {};
+		
+		if(alreadyExists) {
+			return new ResponseEntity<Object>(new UserAlreadyExistsException(uro.email, uro.username), HttpStatus.CONFLICT);
 		}
 		
 		User toAdd = new User();
