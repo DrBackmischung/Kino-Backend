@@ -147,15 +147,6 @@ public class UserControllerTest {
     }
 
     @Test
-    void testPut() throws Exception{
-        
-        mvc.perform(
-            put("/user/add/").contentType(MediaType.APPLICATION_JSON).content(jt.write(getUser()).getJson()))
-        		.andExpect(status().isCreated());
-
-    }
-
-    @Test
     void testUpdate() throws Exception{
 
     	when(repo.findById(uuid)).thenReturn(getOptionalUser());
