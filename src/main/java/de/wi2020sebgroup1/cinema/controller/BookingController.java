@@ -8,7 +8,10 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,16 +83,19 @@ public class BookingController {
 					Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
 					tickets.add(ticket);
 				}
-				
-				Booking booking = new Booking(bookingObject.bookingDate, tickets, show, user , bookingObject.state);
-				//bookingRepositroy.save(booking);
-				//booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
+				UUID bookingId = UUID.randomUUID();
+				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, show, user , bookingObject.state);
+				booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 				
 				ticketRepository.saveAll(tickets);
+				
+				ResponseEntity<Object> response = new ResponseEntity<Object>(HttpStatus.CREATED);
+				
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.CREATED);
 			} catch(Exception e) {
 				seatService.freeSeats(seatIDs, bookingObject.showID);
 				ticketRepository.deleteAll(tickets);
+				
 				return new ResponseEntity<Object>(e.getMessage(),HttpStatus.CONFLICT);
 			}
 			
@@ -109,12 +115,27 @@ public class BookingController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		try {
+			Booking booking = bookingRepositroy.findById(id).get();
 			return new ResponseEntity<Object>(bookingRepositroy.findById(id).get(), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {
 			//TODO change to custom response
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping("/{id}/qrCode")
+	public HttpEntity<byte[]> getBookingQrCode(@PathVariable UUID id){
+		
+		Booking booking = bookingRepositroy.findById(id).get();
+		byte[] qrCode = booking.getQrCode();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		headers.setContentLength(qrCode.length);
+		
+		return new HttpEntity<>(qrCode, headers);
+				
 	}
 	
 	@PutMapping("/{id}/changeStatus")

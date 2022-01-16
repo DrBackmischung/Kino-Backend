@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -32,16 +33,15 @@ public class Booking {
 	
 	@Id
 	@Column(columnDefinition= "VARBINARY(16)")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
 	@Column
 	@NotNull
 	private Date bookingDate;
 	
-	//@Column
-	//@Lob
-	//private byte[] qrCode;
+	@Column
+	@Lob
+	private byte[] qrCode;
 	
 	@Column
 	@NotNull
@@ -66,8 +66,9 @@ public class Booking {
 		
 	}
 	
-	public Booking(@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, 
+	public Booking(@NotNull UUID id,@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, 
 			@NotNull User user, @NotNull BookingState state) {
+		this.id = id;
 		this.bookingDate = bookingDate;
 		this.tickets = tickets;
 		this.state = state;
@@ -94,11 +95,11 @@ public class Booking {
 	public UUID getId() {
 		return id;
 	}
-	/*
+	
 	public byte[] getQrCode() {
 		return qrCode;
 	}
-	*/
+	
 	public List<Ticket> getTickets() {
 		return tickets;
 	}
@@ -114,11 +115,11 @@ public class Booking {
 	public void setShow(Show show) {
 		this.show = show;
 	}
-	/*
+	
 	public void setQrCode(byte[] qrCode) {
 		this.qrCode = qrCode;
 	}
-	*/
+	
 	public void setState(BookingState state) {
 		this.state = state;
 	}

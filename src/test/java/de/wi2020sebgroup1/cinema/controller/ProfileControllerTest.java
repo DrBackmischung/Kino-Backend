@@ -109,7 +109,7 @@ public class ProfileControllerTest {
     
     Optional<List<Booking>> getOptionalBookings() {
     	List<Booking> list = new ArrayList<>();
-    	list.add(new Booking(new Date(2), new ArrayList<Ticket>(), null, null, BookingState.Paid));
+    	list.add(new Booking(UUID.randomUUID(),new Date(2), new ArrayList<Ticket>(), null, null, BookingState.Paid));
     	return Optional.of(list); 
     }
     
