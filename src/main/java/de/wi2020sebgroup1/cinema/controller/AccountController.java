@@ -72,8 +72,9 @@ public class AccountController {
 	public ResponseEntity<Object> login(HttpServletResponse response, @RequestBody UserLoginObject ulo){
 		
 		Optional<User> userSearch = userRepository.findByUsername(ulo.username);
+		User u = null;
 		try {
-			User u = userSearch.get();
+			u = userSearch.get();
 			if(!(u.getPassword().equals(ulo.passwordHash))) {
 				return new ResponseEntity<Object>("Incorrect password!", HttpStatus.UNAUTHORIZED);
 			}
@@ -81,7 +82,7 @@ public class AccountController {
 			return new ResponseEntity<Object>("No user for username found!", HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Object>(true, HttpStatus.OK);
+		return new ResponseEntity<Object>(u, HttpStatus.OK);
 		
 	}
 	
