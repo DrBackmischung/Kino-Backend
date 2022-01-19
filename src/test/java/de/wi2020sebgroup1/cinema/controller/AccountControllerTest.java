@@ -104,32 +104,22 @@ public class AccountControllerTest {
     	return l;
     }
     
+    
     @Test
     void testRegister() throws Exception {
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
-    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	
+        when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
         mvc.perform(put("/registration/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68199, "Mannheim")).getJson()))
-				.andExpect(status().isCreated());
-    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
-        mvc.perform(put("/registration/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 0, "Mannheim")).getJson()))
-				.andExpect(status().isCreated());
-    	when(cityRepository.findByPlz(anyInt())).thenReturn(getEmptyCityList());
-        mvc.perform(put("/registration/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68199, "Mannheim")).getJson()))
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("Tsawlen", "Tomke", "Müller", "jost-tomke-mueller@t-online.de", "1234", "1234", "Lichtenau", "5", 35315, "Homberg (Ohm)")).getJson()))
 				.andExpect(status().isCreated());
     }
     
     @Test
     void testRegisterMail() throws Exception {
-    	
-    	mvc.perform(put("/registration/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
-				.andExpect(status().isCreated());
     	
     	Properties properties = new Properties();
 	    properties.put("mail.smtp.auth",  "true");
@@ -150,6 +140,7 @@ public class AccountControllerTest {
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
     }
+    
     
     @Test
     void testRegisterException() throws Exception {

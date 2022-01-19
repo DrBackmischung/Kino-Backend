@@ -58,7 +58,7 @@ public class User {
 	@NonNull
 	private String number;
 
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private City city;
@@ -66,7 +66,7 @@ public class User {
 	@Column
 	private String payPalMail;
 
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(cascade= CascadeType.REMOVE ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "paypalaccount_id", referencedColumnName = "id")
 	private CreditCard creditCard;
