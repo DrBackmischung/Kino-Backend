@@ -141,7 +141,7 @@ public class ReviewControllerTest {
         when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
         mvc.perform(
             put("/review/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", uuid, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", 5, uuid, uuid)).getJson()))
         		.andExpect(status().isCreated());
 
     }
@@ -151,12 +151,12 @@ public class ReviewControllerTest {
         
         mvc.perform(
             put("/review/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", uuid, null)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", 5, uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
             put("/review/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", null, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ReviewConfigurationObject(new Date(2), new Time(3), "Head", "Body", 5, null, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }
