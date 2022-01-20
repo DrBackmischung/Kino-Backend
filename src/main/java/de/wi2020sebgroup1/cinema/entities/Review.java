@@ -45,6 +45,9 @@ public class Review {
 	@NotNull
 	private String content;
 	
+	@Column
+	private int rating;
+	
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "movie_id", referencedColumnName = "id")
@@ -68,6 +71,18 @@ public class Review {
 		this.content = content;
 		this.movie = movie;
 		this.user = user;
+	}
+
+	public Review(@NotNull Date date, @NotNull Time time, @NotNull String header, @NotNull String content, Movie movie,
+			User user, int rating) {
+		super();
+		this.date = date;
+		this.time = time;
+		this.header = header;
+		this.content = content;
+		this.movie = movie;
+		this.user = user;
+		this.rating = rating;
 	}
 
 	public UUID getId() {
@@ -125,10 +140,18 @@ public class Review {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public int getRating() {
+		return rating;
+	}
+	
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(content, date, header, id, movie, time, user);
+		return Objects.hash(content, date, header, id, movie, time, user, rating);
 	}
 
 	@Override
@@ -153,6 +176,8 @@ public class Review {
 		if (time != other.time)
 			return false;
 		if (user != other.user)
+			return false;
+		if (rating != other.rating)
 			return false;
 		return true;
 	}
