@@ -6,11 +6,14 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
+import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Review;
 import de.wi2020sebgroup1.cinema.entities.User;
 
 public interface ReviewRepository extends CrudRepository<Review, UUID> {
 	
 	Optional<List<Review>> findAllByUser(User user);
+	
+	Optional<List<Review>> findAllByMovie(Movie movie);
 
 }
