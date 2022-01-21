@@ -14,7 +14,7 @@ public class ReviewTest {
 	@Test
 	@DisplayName("Test the constructor")
     public void testConstructor() {
-		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
         assertEquals(o.getDate(), null);
         assertEquals(o.getTime(), null);
         assertEquals(o.getHeader(), "Review!");
@@ -26,7 +26,7 @@ public class ReviewTest {
 	@Test
 	@DisplayName("Test Getter/Setter")
     public void testGetterSetter() {
-		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
 		o.setDate(null);
         assertEquals(o.getDate(), null);
         o.setTime(null);
@@ -45,15 +45,15 @@ public class ReviewTest {
 	@DisplayName("Equals consistency")
     public void testCompare() {
 		UUID u = new UUID(2,2);
-		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
 		o.setId(u);
-		Review o2 = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+		Review o2 = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
 		o2.setId(u);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
-		Review o3 = new Review(null, null, "Review!", "Mathis stinkt", null, null);
-		Review o4 = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+		Review o3 = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
+		Review o4 = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
 		assertEquals(o3.hashCode(), o4.hashCode());
 		assertEquals(o3.equals(o4), true);
     }
@@ -62,13 +62,13 @@ public class ReviewTest {
 	@Test
 	@DisplayName("Equals inconsistency fail")
     public void testCompareFail() {
-		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null);
-		Review o2 = new Review(new Date(2), null, "Review!", "Mathis stinkt", null, null);
-		Review o3 = new Review(null, new Time(2), "Review!", "Mathis stinkt", null, null);
-		Review o4 = new Review(null, null, "NoReview!", "Mathis stinkt", null, null);
-		Review o5 = new Review(null, null, "Review!", "Mathis stinkt nicht", null, null);
-		Review o6 = new Review(null, null, "Review!", "Mathis stinkt", new Movie(), null);
-		Review o7 = new Review(null, null, "Review!", "Mathis stinkt", null, new User());
+		Review o = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
+		Review o2 = new Review(new Date(2), null, "Review!", "Mathis stinkt", null, null, 5);
+		Review o3 = new Review(null, new Time(2), "Review!", "Mathis stinkt", null, null, 5);
+		Review o4 = new Review(null, null, "NoReview!", "Mathis stinkt", null, null, 5);
+		Review o5 = new Review(null, null, "Review!", "Mathis stinkt nicht", null, null, 5);
+		Review o6 = new Review(null, null, "Review!", "Mathis stinkt", new Movie(), null, 5);
+		Review o7 = new Review(null, null, "Review!", "Mathis stinkt", null, new User(), 5);
 		Review o8 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
@@ -79,7 +79,7 @@ public class ReviewTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(s), false);
-		Review onull = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+		Review onull = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }
