@@ -75,6 +75,18 @@ public class Review {
 		this.rating = rating;
 	}
 
+	public Review(@NotNull Date date, @NotNull Time time, @NotNull String header, @NotNull String content, Movie movie,
+			User user, int rating) {
+		super();
+		this.date = date;
+		this.time = time;
+		this.header = header;
+		this.content = content;
+		this.movie = movie;
+		this.user = user;
+		this.rating = rating;
+	}
+
 	public UUID getId() {
 		return id;
 	}
