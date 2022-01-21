@@ -64,7 +64,7 @@ public class Review {
 	}
 
 	public Review(@NotNull Date date, @NotNull Time time, @NotNull String header, @NotNull String content, Movie movie,
-			User user, int rating) {
+			User user, @NotNull int rating) {
 		super();
 		this.date = date;
 		this.time = time;
