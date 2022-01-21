@@ -54,7 +54,7 @@ public class ReviewController {
 			}
 		}
 		if(rco.movieID != null) {
-			Optional<Movie> movieSearch = movieRepository.findById(rco.userID);
+			Optional<Movie> movieSearch = movieRepository.findById(rco.movieID);
 			try {
 				Movie m = movieSearch.get();
 				toAdd.setMovie(m);
