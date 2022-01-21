@@ -66,6 +66,7 @@ public class ReviewController {
 		toAdd.setContent(rco.content);
 		toAdd.setDate(rco.date);
 		toAdd.setTime(rco.time);
+		toAdd.setRating(rco.rating);
 		
 		return new ResponseEntity<Object>(reviewRepository.save(toAdd), HttpStatus.CREATED);
 	}

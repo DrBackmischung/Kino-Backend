@@ -74,7 +74,7 @@ public class ReviewControllerTest {
     }
     
     Review getReview() {
-    	Review r = new Review(null, null, "Review!", "Mathis stinkt", null, null);
+    	Review r = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
     	r.setId(uuid);
     	return r;
     }

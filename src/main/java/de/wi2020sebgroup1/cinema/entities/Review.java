@@ -46,6 +46,7 @@ public class Review {
 	private String content;
 	
 	@Column
+	@NotNull
 	private int rating;
 	
 	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
@@ -60,17 +61,6 @@ public class Review {
 	
 	public Review() {
 		
-	}
-
-	public Review(@NotNull Date date, @NotNull Time time, @NotNull String header, @NotNull String content, Movie movie,
-			User user) {
-		super();
-		this.date = date;
-		this.time = time;
-		this.header = header;
-		this.content = content;
-		this.movie = movie;
-		this.user = user;
 	}
 
 	public Review(@NotNull Date date, @NotNull Time time, @NotNull String header, @NotNull String content, Movie movie,

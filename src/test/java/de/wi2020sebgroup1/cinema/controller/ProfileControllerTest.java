@@ -103,7 +103,7 @@ public class ProfileControllerTest {
     
     Optional<List<Review>> getOptionalReviews() {
     	List<Review> list = new ArrayList<>();
-    	list.add(new Review(new Date(2), new Time(2), "head", "content", null, getUser()));
+    	list.add(new Review(new Date(2), new Time(2), "head", "content", null, getUser(), 5));
     	return Optional.of(list);
     }
     
