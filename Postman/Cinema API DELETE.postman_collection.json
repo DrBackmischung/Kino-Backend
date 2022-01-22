@@ -65,13 +65,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/show/6c1b4f08-4afb-4e82-a65d-6fac840c1caf",
+					"raw": "{{ip}}/show/023a9a69-9cea-45c4-8918-ac7b2f292e68",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
 						"show",
-						"6c1b4f08-4afb-4e82-a65d-6fac840c1caf"
+						"023a9a69-9cea-45c4-8918-ac7b2f292e68"
 					]
 				}
 			},
@@ -136,6 +136,78 @@
 						"ticket",
 						"cancel",
 						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/user/6862a49e-5cbc-4e5a-8da1-14542827bc65",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"6862a49e-5cbc-4e5a-8da1-14542827bc65"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Creditcard",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/creditcard/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"creditcard",
+						"<id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a News",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/news/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"news",
+						"<id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Review",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/review/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"review",
+						"<id>"
 					]
 				}
 			},
