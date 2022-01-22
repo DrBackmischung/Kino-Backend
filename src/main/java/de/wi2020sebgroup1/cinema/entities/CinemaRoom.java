@@ -41,7 +41,7 @@ public class CinemaRoom {
 	@NotNull
 	private String roomName;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "cinema", referencedColumnName = "id")
 	private Cinema cinema;
@@ -52,7 +52,7 @@ public class CinemaRoom {
 	@OneToMany(mappedBy = "cinemaRoom")
 	private List<SeatsBluePrint> seatsBlueprint;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "cinemaRoomSeatingPlan_id", referencedColumnName = "id")
 	private CinemaRoomSeatingPlan cinemaRoomSeatingPlan;
 	

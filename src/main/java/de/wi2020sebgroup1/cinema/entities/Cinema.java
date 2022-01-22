@@ -46,7 +46,7 @@ public class Cinema {
 	@NotNull
 	private int stories;
 
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "city", referencedColumnName = "id")
 	private City city;

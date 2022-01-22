@@ -48,12 +48,12 @@ public class Booking {
 	@Enumerated(EnumType.ORDINAL)
 	private BookingState state;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
