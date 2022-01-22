@@ -25,13 +25,17 @@ import de.wi2020sebgroup1.cinema.configurationObject.BookingConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Booking;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.entities.Snack;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.BookingState;
 import de.wi2020sebgroup1.cinema.enums.TicketState;
+import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.SnackNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
+import de.wi2020sebgroup1.cinema.repositories.SnackRepository;
 import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 import de.wi2020sebgroup1.cinema.services.QRCodeGenerator;
@@ -58,6 +62,9 @@ public class BookingController {
 	SeatRepository seatRepository;
 	
 	@Autowired
+	SnackRepository snackRepository;
+	
+	@Autowired
 	SeatService seatService;
 	
 	@Autowired
@@ -67,10 +74,12 @@ public class BookingController {
 	@PutMapping("/add")
 	@Transactional
 	public ResponseEntity<Object> addBooking(@RequestBody BookingConfigurationObject bookingObject){
-		
+
 		ArrayList<Ticket> tickets = new ArrayList<>();
+		ArrayList<Snack> snacks = new ArrayList<>();
 		
 		ArrayList<UUID> seatIDs = bookingObject.seatIDs;
+		ArrayList<UUID> snackIDs = bookingObject.snackIDs;
 		
 		Show show = showRepository.findById(bookingObject.showID).get();
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
@@ -78,18 +87,29 @@ public class BookingController {
 				User user = userRepositroy.findById(bookingObject.userID).get();
 				
 				for(UUID seat : seatIDs) {
-					// Nochmal try catch wegen dem findById?
-					Seat seatObject = seatRepository.findById(seat).get();
-					Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
-					tickets.add(ticket);
+					try {
+						Seat seatObject = seatRepository.findById(seat).get();
+						Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
+						tickets.add(ticket);
+					} catch(NoSuchElementException e) {
+						return new ResponseEntity<Object>(new SeatNotFoundException(seat).getMessage(),HttpStatus.NOT_FOUND);
+					}
 				}
+				
+				for(UUID snack : snackIDs) {
+					try {
+						Snack snackObject = snackRepository.findById(snack).get();
+						snacks.add(snackObject);
+					} catch(NoSuchElementException e) {
+						return new ResponseEntity<Object>(new SnackNotFoundException(snack).getMessage(),HttpStatus.NOT_FOUND);
+					}
+				}
+				
 				UUID bookingId = UUID.randomUUID();
-				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, show, user , bookingObject.state);
+				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, snacks, show, user , bookingObject.state);
 				booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 				
 				ticketRepository.saveAll(tickets);
-				
-				ResponseEntity<Object> response = new ResponseEntity<Object>(HttpStatus.CREATED);
 				
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.CREATED);
 			} catch(Exception e) {
@@ -101,7 +121,6 @@ public class BookingController {
 			
 			
 		} else {
-			//TODO CHANGE TO CUSTOM RESPONSE
 			return new ResponseEntity<Object>(HttpStatus.CONFLICT);
 		}
 		
@@ -115,11 +134,9 @@ public class BookingController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		try {
-			Booking booking = bookingRepositroy.findById(id).get();
 			return new ResponseEntity<Object>(bookingRepositroy.findById(id).get(), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {
-			//TODO change to custom response
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -158,11 +175,9 @@ public class BookingController {
 				booking.setState(bookingObject.state);
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.OK);
 			} else {
-				//TODO change to no changes exception
 				return new ResponseEntity<Object>(HttpStatus.NOT_MODIFIED);
 			}
 		} catch(NoSuchElementException e) {
-			//TODO change to custom response
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		} 
 		

@@ -11,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -62,15 +60,20 @@ public class Booking {
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<>();
 	
+	@OneToMany(mappedBy="snack")
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private List<Snack> snacks = new ArrayList<>();
+	
 	public Booking() {
 		
 	}
 	
-	public Booking(@NotNull UUID id,@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull Show show, 
+	public Booking(@NotNull UUID id,@NotNull Date bookingDate, @NotNull ArrayList<Ticket> tickets, @NotNull ArrayList<Snack> snacks, @NotNull Show show, 
 			@NotNull User user, @NotNull BookingState state) {
 		this.id = id;
 		this.bookingDate = bookingDate;
 		this.tickets = tickets;
+		this.snacks = snacks;
 		this.state = state;
 		this.user = user;
 		this.show = show;
@@ -132,6 +135,18 @@ public class Booking {
 		this.tickets = tickets;
 	}
 
+	public List<Snack> getSnacks() {
+		return snacks;
+	}
+
+	public void setSnacks(List<Snack> snacks) {
+		this.snacks = snacks;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -141,6 +156,7 @@ public class Booking {
 		result = prime * result + ((show == null) ? 0 : show.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
+		result = prime * result + ((snacks == null) ? 0 : snacks.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -161,6 +177,8 @@ public class Booking {
 		if (show != other.show)
 			return false;
 		if (state != other.state)
+			return false;
+		if (snacks != other.snacks)
 			return false;
 		if (tickets != other.tickets)
 			return false;
