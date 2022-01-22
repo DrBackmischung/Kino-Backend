@@ -1,12 +1,16 @@
 package de.wi2020sebgroup1.cinema.entities;
 
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +34,10 @@ public class Snack {
 	@Column
 	@NotNull
 	private String pictureLink;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    private List<Booking> users;
 	
 	public Snack() {
 		
