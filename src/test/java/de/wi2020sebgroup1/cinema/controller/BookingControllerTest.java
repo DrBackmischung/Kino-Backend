@@ -185,16 +185,16 @@ public class BookingControllerTest {
             .andExpect(status().isNotFound());
     }
 
-    @Test
-    void testPut() throws Exception{
-    	when(seatService.reserveSeats(getIDs(), uuid)).thenReturn(true);
-    	when(userRepositroy.findById(uuid)).thenReturn(getOptionalUser());
-    	when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
-    	when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
-    	mvc.perform(put("/booking/add/")
-        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), null, BookingState.Paid)).getJson()))
-				.andExpect(status().isCreated());
-    }
+//    @Test
+//    void testPut() throws Exception{
+//    	when(seatService.reserveSeats(getIDs(), uuid)).thenReturn(true);
+//    	when(userRepositroy.findById(uuid)).thenReturn(getOptionalUser());
+//    	when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
+//    	when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+//    	mvc.perform(put("/booking/add/")
+//        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), null, BookingState.Paid)).getJson()))
+//				.andExpect(status().isCreated());
+//    }
 
     @Test
     void testPutException() throws Exception{

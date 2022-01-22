@@ -61,7 +61,7 @@ public class Booking {
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<>();
 	
-	@ManyToMany(mappedBy="booking")
+	@ManyToMany(mappedBy="bookings")
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Snack> snacks = new ArrayList<>();
 	

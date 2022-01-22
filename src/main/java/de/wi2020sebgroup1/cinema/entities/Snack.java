@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -36,8 +37,12 @@ public class Snack {
 	private String pictureLink;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private List<Booking> users;
+	@JoinTable(
+//	  name = "snack_booking", 
+//	  joinColumns = @JoinColumn(name = "snack_id"), 
+//	  inverseJoinColumns = @JoinColumn(name = "booking_id")
+	)
+    private List<Booking> bookings;
 	
 	public Snack() {
 		
