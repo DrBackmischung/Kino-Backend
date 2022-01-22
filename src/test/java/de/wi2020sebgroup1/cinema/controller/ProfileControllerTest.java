@@ -28,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.entities.Booking;
+import de.wi2020sebgroup1.cinema.entities.Snack;
 import de.wi2020sebgroup1.cinema.entities.News;
 import de.wi2020sebgroup1.cinema.entities.Review;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
@@ -109,7 +110,7 @@ public class ProfileControllerTest {
     
     Optional<List<Booking>> getOptionalBookings() {
     	List<Booking> list = new ArrayList<>();
-    	list.add(new Booking(UUID.randomUUID(),new Date(2), new ArrayList<Ticket>(), null, null, BookingState.Paid));
+    	list.add(new Booking(UUID.randomUUID(),new Date(2), new ArrayList<Ticket>(), new ArrayList<Snack>(), null, null, BookingState.Paid));
     	return Optional.of(list); 
     }
     

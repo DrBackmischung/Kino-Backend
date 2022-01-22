@@ -12,10 +12,12 @@ public class BookingConfigurationObject {
 	public UUID showID;
 	public UUID userID;
 	public ArrayList<UUID> seatIDs;
+	public ArrayList<UUID> snackIDs;
 	public BookingState state;
 	
-	public BookingConfigurationObject(Date bookDate, UUID userID, UUID showID, ArrayList<UUID> seatIDs, BookingState state) {
+	public BookingConfigurationObject(Date bookDate, UUID userID, UUID showID, ArrayList<UUID> seatIDs, ArrayList<UUID> snackIDs, BookingState state) {
 		this.seatIDs = seatIDs;
+		this.snackIDs = snackIDs;
 		this.showID = showID;
 		this.userID = userID;
 		this.bookingDate = bookDate;
