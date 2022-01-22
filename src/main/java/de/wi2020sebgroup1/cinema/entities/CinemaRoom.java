@@ -46,10 +46,10 @@ public class CinemaRoom {
 	@JoinColumn(name = "cinema", referencedColumnName = "id")
 	private Cinema cinema;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private CinemaRoomSeatingPlan seatingPlan;
 	
-	@OneToMany(mappedBy = "cinemaRoom")
+	@OneToMany(mappedBy = "cinemaRoom", cascade = CascadeType.REMOVE)
 	private List<SeatsBluePrint> seatsBlueprint;
 	
 	@OneToOne

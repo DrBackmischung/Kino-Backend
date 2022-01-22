@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import javax.management.relation.RoleNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -127,6 +128,7 @@ public class UserController {
 		
 	}
 	
+	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable UUID id){
 		

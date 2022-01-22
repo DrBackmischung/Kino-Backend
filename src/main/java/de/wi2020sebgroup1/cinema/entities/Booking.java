@@ -53,7 +53,7 @@ public class Booking {
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
