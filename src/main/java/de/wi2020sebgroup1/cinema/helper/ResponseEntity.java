@@ -22,6 +22,8 @@ public class ResponseEntity {
 	@Column
 	@NotNull
 	private String description;
+	
+	public ResponseEntity() {}
 
 	public ResponseEntity(@NotNull int id, @NotNull String name, @NotNull String description) {
 		super();
