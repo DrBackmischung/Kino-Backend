@@ -37,8 +37,10 @@ import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
+import de.wi2020sebgroup1.cinema.entities.Role;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
+import de.wi2020sebgroup1.cinema.repositories.RoleRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 import de.wi2020sebgroup1.cinema.services.EmailService;
 import de.wi2020sebgroup1.cinema.services.HTMLService;
@@ -55,6 +57,9 @@ public class AccountControllerTest {
 	
 	@MockBean
 	CityRepository cityRepository;
+	
+	@MockBean
+	RoleRepository roleRepository;
 	
 	@MockBean
 	EmailService emailService;
@@ -99,6 +104,18 @@ public class AccountControllerTest {
     	return Optional.of(s);
     }
     
+    Role getRole() {
+    	Role s = new Role();
+    	s.setID(uuid);
+    	s.setAuthorization("USER");
+    	return s;
+    }
+    
+    Optional<Role> getOptionalRole() {
+    	Role r = getRole();
+    	return Optional.of(r);
+    }
+    
     List<City> getEmptyCityList() {
     	List<City> l = new ArrayList<>();
     	return l;
@@ -108,11 +125,13 @@ public class AccountControllerTest {
     @Test
     void testRegister() throws Exception {
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
     	
         when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("Tsawlen", "Tomke", "Müller", "jost-tomke-mueller@t-online.de", "1234", "1234", "Lichtenau", "5", 35315, "Homberg (Ohm)")).getJson()))
 				.andExpect(status().isCreated());
@@ -136,6 +155,7 @@ public class AccountControllerTest {
     	when(emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html")).thenReturn(new MimeMessage(session));
     	when(htmlService.read("Registration.html", e)).thenReturn("<h1>Test</h1>");
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
