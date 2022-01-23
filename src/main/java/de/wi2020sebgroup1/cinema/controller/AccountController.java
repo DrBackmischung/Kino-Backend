@@ -19,6 +19,7 @@ import de.wi2020sebgroup1.cinema.configurationObject.UserLoginObject;
 import de.wi2020sebgroup1.cinema.configurationObject.UserRegistrationObject;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.exceptions.RoleNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.UserAlreadyExistsException;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
 import de.wi2020sebgroup1.cinema.repositories.RoleRepository;
@@ -88,7 +89,11 @@ public class AccountController {
 		toAdd.setPassword(uro.passwordHash);
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
-		toAdd.setRole(roleRepository.findByAuthorization("USER").get());
+		try {
+			toAdd.setRole(roleRepository.findByAuthorization("USER").get());
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new RoleNotFoundException("USER"), HttpStatus.NOT_FOUND);
+		}
 
 		emailService.sendMail(uro.email, "Registration completed!", new EmailVariablesObject(uro.username, uro.firstName, uro.name, "", "", "", "", "", "", "", ""), "Registration.html");
 		

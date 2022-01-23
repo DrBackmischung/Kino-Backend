@@ -14,4 +14,8 @@ public class RoleNotFoundException extends Exception {
 		super("Role with id \"" + id + "\" not found!");
 	}
 
+	public RoleNotFoundException(String authorization) {
+		super("Role with authorization \"" + authorization + "\" not found!");
+	}
+
 }

@@ -40,25 +40,17 @@ public class RoleController {
 		return new ResponseEntity<>(roleRepository.save(r), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/admin/{id}")
-	public ResponseEntity<Object> admin(@PathVariable UUID id){
+	@PutMapping("/{authorization}/{id}")
+	public ResponseEntity<Object> admin(@PathVariable String authorization, @PathVariable UUID id){
 		Optional<User> toUpdate = userRepository.findById(id);
 		try {
 			User u = toUpdate.get();
-			u.setRole(roleRepository.findByAuthorization("ADMIN").get());
-			return new ResponseEntity<>(userRepository.save(u), HttpStatus.CREATED);
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PutMapping("/user/{id}")
-	public ResponseEntity<Object> user(@PathVariable UUID id){
-		Optional<User> toUpdate = userRepository.findById(id);
-		try {
-			User u = toUpdate.get();
-			u.setRole(roleRepository.findByAuthorization("USER").get());
-			return new ResponseEntity<>(userRepository.save(u), HttpStatus.CREATED);
+			try {
+				u.setRole(roleRepository.findByAuthorization(authorization).get());
+			} catch(NoSuchElementException e) {
+				return new ResponseEntity<>(new RoleNotFoundException(authorization).getMessage(), HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(userRepository.save(u), HttpStatus.OK);
 		} catch(NoSuchElementException e) {
 			return new ResponseEntity<>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -70,7 +62,7 @@ public class RoleController {
 		try {
 			User u = search.get();
 			Role r = u.getRole();
-			return new ResponseEntity<>(r.getAutorization(), HttpStatus.CREATED);
+			return new ResponseEntity<>(r.getAutorization(), HttpStatus.OK);
 		} catch(NoSuchElementException e) {
 			return new ResponseEntity<>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
 		}
