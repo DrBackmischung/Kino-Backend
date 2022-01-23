@@ -36,17 +36,17 @@ public class Ticket {
 	@Enumerated(EnumType.ORDINAL)
 	private TicketState state;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "price_id", referencedColumnName = "id")
 	private Price price;
@@ -55,7 +55,7 @@ public class Ticket {
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "booking_id", referencedColumnName = "id")
 	private Booking booking;

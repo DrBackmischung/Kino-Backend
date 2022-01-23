@@ -41,7 +41,7 @@ public class Review {
 	@NotNull
 	private String header;
 	
-	@Column
+	@Column(columnDefinition = "TEXT")
 	@NotNull
 	private String content;
 	
@@ -49,12 +49,12 @@ public class Review {
 	@NotNull
 	private int rating;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "movie_id", referencedColumnName = "id")
 	private Movie movie;
 	
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
