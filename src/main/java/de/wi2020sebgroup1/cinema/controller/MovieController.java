@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Review;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotCreatableException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.ReviewForMovieNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.services.ShowService;
 
@@ -38,6 +41,9 @@ public class MovieController {
 	
 	@Autowired
 	ShowService showService;
+	
+	@Autowired
+	ReviewRepository reviewRepository;
 	
 	/**
 	 * Call to add a movie
@@ -130,6 +136,25 @@ public class MovieController {
 	@GetMapping("/{id}/shows")
 	public ResponseEntity<Object> getShowsForMovie(@PathVariable UUID id){
 		return showService.getAllByMovie(id);
+	}
+	
+	@GetMapping("/{id}/reviews")
+	public ResponseEntity<Object> getReviewsForMovie(@PathVariable UUID id){
+		try {
+			Movie movie = movieRepository.findById(id).get();
+		
+			try {
+				List<Review> reviews = reviewRepository.findAllByMovie(movie).get();
+				return new ResponseEntity<Object>(reviews, HttpStatus.OK);
+			}
+			catch(NoSuchElementException e) {
+				return new ResponseEntity<Object>(new ReviewForMovieNotFoundException(id), HttpStatus.NOT_FOUND);
+			}
+
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new MovieNotFoundException(id), HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	/**
