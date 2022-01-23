@@ -64,6 +64,18 @@ public class RoleController {
 		}
 	}
 	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<Object> getByUser(@PathVariable UUID id){
+		Optional<User> search = userRepository.findById(id);
+		try {
+			User u = search.get();
+			Role r = u.getRole();
+			return new ResponseEntity<>(r.getAutorization(), HttpStatus.CREATED);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		Optional<Role> r = roleRepository.findById(id);
