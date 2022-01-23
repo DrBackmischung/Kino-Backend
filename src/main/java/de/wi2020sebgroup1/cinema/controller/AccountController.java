@@ -21,6 +21,7 @@ import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.exceptions.UserAlreadyExistsException;
 import de.wi2020sebgroup1.cinema.repositories.CityRepository;
+import de.wi2020sebgroup1.cinema.repositories.RoleRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
 import de.wi2020sebgroup1.cinema.services.EmailService;
 
@@ -33,6 +34,9 @@ public class AccountController {
 	
 	@Autowired
 	CityRepository cityRepository;
+	
+	@Autowired
+	RoleRepository roleRepository;
 	
 	@Autowired
 	EmailService emailService;
@@ -84,6 +88,7 @@ public class AccountController {
 		toAdd.setPassword(uro.passwordHash);
 		toAdd.setStreet(uro.street);
 		toAdd.setNumber(uro.number);
+		toAdd.setRole(roleRepository.findByAuthorization("USER").get());
 
 		emailService.sendMail(uro.email, "Registration completed!", new EmailVariablesObject(uro.username, uro.firstName, uro.name, "", "", "", "", "", "", "", ""), "Registration.html");
 		
