@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -26,7 +25,7 @@ public class Snack {
 	
 	@Column
 	@NotNull
-	private double size;
+	private String size;
 	
 	@Column
 	@NotNull
@@ -48,7 +47,7 @@ public class Snack {
 		
 	}
 
-	public Snack(@NotNull double size, @NotNull String product, @NotNull String pictureLink) {
+	public Snack(@NotNull String size, @NotNull String product, @NotNull String pictureLink) {
 		super();
 		this.size = size;
 		this.product = product;
@@ -63,11 +62,11 @@ public class Snack {
 		this.id = id;
 	}
 
-	public double getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(double size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -94,9 +93,7 @@ public class Snack {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((pictureLink == null) ? 0 : pictureLink.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(size);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		return result;
 	}
 
