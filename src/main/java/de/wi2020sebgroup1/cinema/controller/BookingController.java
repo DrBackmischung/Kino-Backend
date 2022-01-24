@@ -3,6 +3,7 @@ package de.wi2020sebgroup1.cinema.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -30,8 +31,10 @@ import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.BookingState;
 import de.wi2020sebgroup1.cinema.enums.TicketState;
+import de.wi2020sebgroup1.cinema.exceptions.BookingNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SnackNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.TicketsForBookingNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -85,11 +88,12 @@ public class BookingController {
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
 			try {
 				User user = userRepositroy.findById(bookingObject.userID).get();
+				UUID bookingId = UUID.randomUUID();
 				
 				for(UUID seat : seatIDs) {
 					try {
 						Seat seatObject = seatRepository.findById(seat).get();
-						Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject);
+						Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject, bookingId);
 						tickets.add(ticket);
 					} catch(NoSuchElementException e) {
 						return new ResponseEntity<Object>(new SeatNotFoundException(seat).getMessage(),HttpStatus.NOT_FOUND);
@@ -105,7 +109,6 @@ public class BookingController {
 					}
 				}
 				
-				UUID bookingId = UUID.randomUUID();
 				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, snacks, show, user , bookingObject.state);
 				booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
 				
@@ -181,6 +184,28 @@ public class BookingController {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		} 
 		
+	}
+	
+	@GetMapping("/{id}/tickets")
+	public ResponseEntity<Object> getTicketsForBooking(@PathVariable UUID id){
+		
+		Optional<Booking> bookingSearch = bookingRepositroy.findById(id);
+		try {
+			Optional<List<Ticket>> ticketSearch = ticketRepository.findAllByBookingID(bookingSearch.get().getId());
+			try {
+				return new ResponseEntity<Object>(ticketSearch.get(), HttpStatus.OK);
+			}
+			catch(NoSuchElementException e)
+			{
+				return new ResponseEntity<Object>(new TicketsForBookingNotFoundException(id).getMessage(),
+						HttpStatus.NOT_FOUND);
+			}
+		}
+		catch(NoSuchElementException e)
+		{
+			return new ResponseEntity<Object>(new BookingNotFoundException(id).getMessage(),
+					HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

@@ -20,7 +20,7 @@ public class TicketTest {
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
-		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2, null);
         assertEquals(o.getState(), TicketState.RESERVED);
         assertEquals(o.getUser(), u);
         assertEquals(o.getShow(), s);
@@ -35,7 +35,7 @@ public class TicketTest {
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
-		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2, null);
 		o.setState(TicketState.PAID);
         assertEquals(o.getState(), TicketState.PAID);
         o.setUser(null);
@@ -46,9 +46,9 @@ public class TicketTest {
         assertEquals(o.getPrice(), null);
         o.setSeat(null);
         assertEquals(o.getSeat(), null);
-        Booking b = new Booking();
-        o.setBooking(b);
-        assertEquals(o.getBooking(), b);
+        UUID b = new UUID(2, 2);
+        o.setBookingID(b);
+        assertEquals(o.getBookingID(), b);
     }
 	
 	@Test
@@ -57,20 +57,20 @@ public class TicketTest {
 		UUID id = new UUID(2,2);
 		User u = new User(null, null, null, null, null, null, null, null, null, null, null);
 		Show s = new Show(null, null, null, null, null, null);
-		Booking b = new Booking();
+        UUID b = new UUID(2, 2);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
-		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2, null);
 		o.setId(id);
-		o.setBooking(b);
-		Ticket o2 = new Ticket(TicketState.RESERVED, u, s, p, s2);
+		o.setBookingID(b);
+		Ticket o2 = new Ticket(TicketState.RESERVED, u, s, p, s2, null);
 		o2.setId(id);
-		o2.setBooking(b);
+		o2.setBookingID(b);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o), true);
 		assertEquals(o.equals(o2), true);
-		Ticket o3 = new Ticket(TicketState.CANCELLED, null, null, null, null);
-		Ticket o4 = new Ticket(TicketState.CANCELLED, null, null, null, null);
+		Ticket o3 = new Ticket(TicketState.CANCELLED, null, null, null, null, null);
+		Ticket o4 = new Ticket(TicketState.CANCELLED, null, null, null, null, null);
 		assertEquals(o3.hashCode(), o4.hashCode());
 		assertEquals(o3.equals(o4), true);
     }
@@ -83,14 +83,13 @@ public class TicketTest {
 		Show s = new Show(null, null, null, null, null, null);
 		Price p = new Price(0, SeatType.PARQUET);
 		Seat s2 = new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, null, s);
-		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2);
-		Ticket o2 = new Ticket(TicketState.CANCELLED, u, s, p, s2);
-		Ticket o3 = new Ticket(TicketState.RESERVED, null, s, p, s2);
-		Ticket o4 = new Ticket(TicketState.RESERVED, u, null, p, s2);
-		Ticket o5 = new Ticket(TicketState.RESERVED, u, s, null, s2);
-		Ticket o6 = new Ticket(TicketState.RESERVED, u, s, p, null);
-		Ticket o7 = new Ticket(TicketState.RESERVED, u, s, p, s2);
-		o7.setBooking(new Booking());
+		Ticket o = new Ticket(TicketState.RESERVED, u, s, p, s2, null);
+		Ticket o2 = new Ticket(TicketState.CANCELLED, u, s, p, s2, null);
+		Ticket o3 = new Ticket(TicketState.RESERVED, null, s, p, s2, null);
+		Ticket o4 = new Ticket(TicketState.RESERVED, u, null, p, s2, null);
+		Ticket o5 = new Ticket(TicketState.RESERVED, u, s, null, s2, null);
+		Ticket o6 = new Ticket(TicketState.RESERVED, u, s, p, null, null);
+		Ticket o7 = new Ticket(TicketState.RESERVED, u, s, p, s2, new UUID(3,3));
 		Ticket o8 = null;
 		String st = "Test";
 		assertEquals(o.equals(o2), false);
@@ -101,7 +100,7 @@ public class TicketTest {
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(st), false);
-		Ticket onull = new Ticket(TicketState.CANCELLED, u, s, p, s2);
+		Ticket onull = new Ticket(TicketState.CANCELLED, u, s, p, s2, null);
 		onull.setId(new UUID(2,2));
 		assertEquals(o.equals(onull), false);
     }

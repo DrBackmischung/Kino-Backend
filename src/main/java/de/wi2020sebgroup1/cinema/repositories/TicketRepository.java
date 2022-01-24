@@ -12,5 +12,6 @@ import de.wi2020sebgroup1.cinema.entities.User;
 public interface TicketRepository extends CrudRepository<Ticket, UUID> {
 	
 	Optional<List<Ticket>> findAllByUser(User user);
+	Optional<List<Ticket>> findAllByBookingID(UUID bookingID);
 
 }

@@ -92,7 +92,7 @@ public class ProfileControllerTest {
     
     Optional<List<Ticket>> getOptionalTickets() {
     	ArrayList<Ticket> list = new ArrayList<>();
-    	list.add(new Ticket(TicketState.PAID, getUser(), null, null, null));
+    	list.add(new Ticket(TicketState.PAID, getUser(), null, null, null, null));
     	return Optional.of(list);
     }
     

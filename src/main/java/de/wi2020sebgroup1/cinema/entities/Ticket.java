@@ -54,24 +54,24 @@ public class Ticket {
 	@OneToOne
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@NotFound(action=NotFoundAction.IGNORE)
-	@JoinColumn(name = "booking_id", referencedColumnName = "id")
-	private Booking booking;
+
+	@Column
+	@NotNull
+	private UUID bookingID;
 	
 	
 	public Ticket() {
 		
 	}
 	
-	public Ticket(@NotNull TicketState state, User user, Show show, Price price, Seat seat) {
+	public Ticket(@NotNull TicketState state, User user, Show show, Price price, Seat seat, UUID bookingID) {
 		super();
 		this.state = state;
 		this.user = user;
 		this.show = show;
 		this.price = price;	
 		this.seat = seat;
+		this.bookingID = bookingID;
 	}
 		
 	public Price getPrice() {
@@ -82,8 +82,8 @@ public class Ticket {
 		return id;
 	}
 	
-	public Booking getBooking() {
-		return booking;
+	public UUID getBookingID() {
+		return bookingID;
 	}
 	
 	public Seat getSeat() {
@@ -122,8 +122,8 @@ public class Ticket {
 		this.user = user;
 	}
 	
-	public void setBooking(Booking booking) {
-		this.booking = booking;
+	public void setBookingID(UUID booking) {
+		this.bookingID = booking;
 	}
 
 	public void setId(UUID id) {
@@ -164,7 +164,7 @@ public class Ticket {
 			return false;
 		if (user != other.user)
 			return false;
-		if (booking != other.booking)
+		if (bookingID != other.bookingID)
 			return false;
 		return true;
 	}
