@@ -18,7 +18,7 @@ public class HTMLService {
 		URL url = null;
 		
 		try {
-			url = new URL("https://raw.githubusercontent.com/DrBackmischung/Kino-Backend/dev/src/main/resources/html/"+fileName);
+			url = new URL("https://raw.githubusercontent.com/DrBackmischung/Kino-Email/main/html/"+fileName);
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		}

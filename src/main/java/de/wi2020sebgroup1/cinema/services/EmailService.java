@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.services;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
+import de.wi2020sebgroup1.cinema.entities.Ticket;
 
 @Service
 public class EmailService {
@@ -49,6 +51,29 @@ public class EmailService {
     }
 
     public void sendMail(String to, String subject, EmailVariablesObject evo, String file) {
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth",  "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
+            }
+        });
+
+        Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
+        try {
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+    }
+
+    public void sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");
