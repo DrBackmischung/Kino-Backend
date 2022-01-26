@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.configurationObject.BookingConfigurationObject;
+import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.entities.Booking;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
@@ -38,6 +39,7 @@ import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.repositories.SnackRepository;
 import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
 import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+import de.wi2020sebgroup1.cinema.services.EmailService;
 import de.wi2020sebgroup1.cinema.services.QRCodeGenerator;
 import de.wi2020sebgroup1.cinema.services.SeatService;
 
@@ -70,7 +72,10 @@ public class BookingController {
 	@Autowired
 	QRCodeGenerator qrCodeGenerator;
 	
-	@SuppressWarnings("static-access")
+	@Autowired
+	EmailService emailService;
+	
+	@SuppressWarnings({ "static-access", "deprecation" })
 	@PutMapping("/add")
 	@Transactional
 	public ResponseEntity<Object> addBooking(@RequestBody BookingConfigurationObject bookingObject){
@@ -107,9 +112,19 @@ public class BookingController {
 				
 				UUID bookingId = UUID.randomUUID();
 				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, snacks, show, user , bookingObject.state);
-				booking.setQrCode(qrCodeGenerator.generateQRCode(booking.getId()));
+				byte[] qrCode = qrCodeGenerator.generateQRCode(booking.getId());
+				booking.setQrCode(qrCode);
 				
 				ticketRepository.saveAll(tickets);
+
+				emailService.sendMailBooking(
+						user.getEmail(),
+						"Buchung bestätigt!",
+						new EmailVariablesObject(user.getUserName(), user.getFirstName(), user.getName(), "", "", show.getMovie().getTitle(), show.getShowDate().getDay()+"."+show.getShowDate().getMonth()+"."+show.getShowDate().getYear(), show.getStartTime().toString().substring(0,5), "", "", ""),
+						"BookingConfirmation.html",
+						qrCode,
+						tickets
+				);
 				
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.CREATED);
 			} catch(Exception e) {
