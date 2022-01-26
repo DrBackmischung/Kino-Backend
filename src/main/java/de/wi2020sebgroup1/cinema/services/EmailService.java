@@ -211,7 +211,7 @@ public class EmailService {
     	Paragraph paragraph = new Paragraph();
 
     	paragraph = new Paragraph();
-    	paragraph.addMarkup("*Buchung für "+evo.getShowTitle()+" am "+evo.getShowDate()+" um "+evo.getShowTime()+"*", 15,
+    	paragraph.addMarkup("*Buchung für "+evo.getShowTitle()+" am "+evo.getShowDate()+" um "+evo.getShowTime()+"*\nRaum: "+evo.getString1(), 15,
     		BaseFont.Helvetica);
     	document.add(paragraph, new VerticalLayoutHint(Alignment.Left, 0, 0,
     		40, 20));

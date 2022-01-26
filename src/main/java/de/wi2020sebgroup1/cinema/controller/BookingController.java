@@ -120,7 +120,7 @@ public class BookingController {
 				emailService.sendMailBooking(
 						user.getEmail(),
 						"Buchung bestätigt!",
-						new EmailVariablesObject(user.getUserName(), user.getFirstName(), user.getName(), "", "", show.getMovie().getTitle(), show.getShowDate().getDay()+"."+show.getShowDate().getMonth()+"."+show.getShowDate().getYear(), show.getStartTime().toString().substring(0,5), "", "", ""),
+						new EmailVariablesObject(user.getUserName(), user.getFirstName(), user.getName(), "", "", show.getMovie().getTitle(), show.getShowDate().getDay()+"."+show.getShowDate().getMonth()+"."+show.getShowDate().getYear(), show.getStartTime().toString().substring(0,5), show.getCinemaRoom().getRoomName(), "", ""),
 						"BookingConfirmation.html",
 						qrCode,
 						tickets
