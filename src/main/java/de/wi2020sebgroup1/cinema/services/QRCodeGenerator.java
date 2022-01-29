@@ -2,7 +2,6 @@ package de.wi2020sebgroup1.cinema.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,11 @@ import com.google.zxing.qrcode.QRCodeWriter;
 @Service
 public class QRCodeGenerator {
 	
-	public static byte[] generateQRCode(UUID bookingID) {
+	public static byte[] generateQRCode(String msg) {
 		
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		try {
-			BitMatrix bitMatrix = qrCodeWriter.encode(bookingID.toString(), BarcodeFormat.QR_CODE, 800, 800);
+			BitMatrix bitMatrix = qrCodeWriter.encode(msg, BarcodeFormat.QR_CODE, 800, 800);
 			
 			ByteArrayOutputStream pngOutPutStream = new ByteArrayOutputStream();
 			@SuppressWarnings("unused")

@@ -112,7 +112,7 @@ public class BookingController {
 				
 				UUID bookingId = UUID.randomUUID();
 				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, snacks, show, user , bookingObject.state);
-				byte[] qrCode = qrCodeGenerator.generateQRCode(booking.getId());
+				byte[] qrCode = qrCodeGenerator.generateQRCode("https://kino-frontend.vercel.app/info/"+booking.getId());
 				booking.setQrCode(qrCode);
 				
 				ticketRepository.saveAll(tickets);
