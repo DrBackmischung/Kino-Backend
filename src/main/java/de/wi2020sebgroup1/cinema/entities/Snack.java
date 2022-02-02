@@ -35,6 +35,10 @@ public class Snack {
 	@NotNull
 	private String pictureLink;
 	
+	@Column
+	@NotNull
+	private double price;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 //	  name = "snack_booking", 
