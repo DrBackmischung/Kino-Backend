@@ -36,12 +36,12 @@ public class Ticket {
 	@Enumerated(EnumType.ORDINAL)
 	private TicketState state;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;

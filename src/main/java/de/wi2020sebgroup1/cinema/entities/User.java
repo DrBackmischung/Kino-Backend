@@ -58,7 +58,7 @@ public class User {
 	@NonNull
 	private String number;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private City city;

@@ -52,12 +52,12 @@ public class Seat {
 	@NotNull
 	private int surcharge;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "cinemaRoomSeatingPlan", referencedColumnName = "id")
 	private CinemaRoomSeatingPlan cinemaRoomSeatingPlan;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "show_id", referencedColumnName = "id")
 	private Show show;
