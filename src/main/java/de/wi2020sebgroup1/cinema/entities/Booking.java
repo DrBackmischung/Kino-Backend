@@ -144,9 +144,6 @@ public class Booking {
 		this.snacks = snacks;
 	}
 
-	public void setTickets(List<Ticket> tickets) {
-		this.tickets = tickets;
-	}
 
 	@Override
 	public int hashCode() {

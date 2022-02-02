@@ -29,9 +29,10 @@ public class SnackController {
 	SnackRepository snackRepository;
 	
 	@PutMapping("/add")
-	public ResponseEntity<Object> addNews(@RequestBody Snack e){
+	public ResponseEntity<Object> addSnack(@RequestBody Snack e){
 		return new ResponseEntity<Object>(snackRepository.save(e), HttpStatus.CREATED);
 	}
+	
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<Object> getAll(){
