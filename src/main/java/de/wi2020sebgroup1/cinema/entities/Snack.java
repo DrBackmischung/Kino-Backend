@@ -47,11 +47,28 @@ public class Snack {
 		
 	}
 
-	public Snack(@NotNull String size, @NotNull String product, @NotNull String pictureLink) {
+	public Snack(@NotNull String size, @NotNull String product, @NotNull String pictureLink, @NotNull double price) {
 		super();
 		this.size = size;
 		this.product = product;
 		this.pictureLink = pictureLink;
+		this.price = price;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	public UUID getId() {
@@ -94,6 +111,7 @@ public class Snack {
 		result = prime * result + ((pictureLink == null) ? 0 : pictureLink.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result = prime * result + ((price == 0) ? 0 : (int) price * 7);
 		return result;
 	}
 
@@ -113,6 +131,8 @@ public class Snack {
 		if (product != other.product)
 			return false;
 		if (size != other.size)
+			return false;
+		if (price != other.price)
 			return false;
 		return true;
 	}
