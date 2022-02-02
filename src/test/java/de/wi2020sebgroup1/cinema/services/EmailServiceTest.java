@@ -2,6 +2,8 @@ package de.wi2020sebgroup1.cinema.services;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -12,9 +14,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
 import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
+import de.wi2020sebgroup1.cinema.entities.Price;
+import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.entities.Ticket;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
+import de.wi2020sebgroup1.cinema.enums.TicketState;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:test.properties")
@@ -22,6 +31,19 @@ public class EmailServiceTest {
 
 	@Autowired
     EmailService emailService;
+
+	@MockBean
+	QRCodeGenerator qrCodeGenerator;
+	
+	private List<Ticket> getTickets() {
+		List<Ticket> list = new ArrayList<>();
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PARQUET), new Seat(0, 0, SeatType.PARQUET, SeatState.PAID, 0, null, null)));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.LODGE), new Seat(0, 0, SeatType.LODGE, SeatState.PAID, 0, null, null)));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.WHEELCHAIR), new Seat(0, 0, SeatType.WHEELCHAIR, SeatState.PAID, 0, null, null)));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.DOUBLESEAT), new Seat(0, 0, SeatType.DOUBLESEAT, SeatState.PAID, 0, null, null)));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PREMIUM), new Seat(0, 0, SeatType.PREMIUM, SeatState.PAID, 0, null, null)));
+		return list;
+	}
 	
 	@Test
 	void testPrepareMessage() {
@@ -90,6 +112,19 @@ public class EmailServiceTest {
             public void execute() throws Exception {
         	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
             	emailService.sendMail("wwi2020seb@yes", "Test :3", e, "Registration.html");
+            }
+        });
+		
+	}
+	
+	@Test
+	void testSendMessageBooking() {
+		assertDoesNotThrow(new Executable() {
+            @SuppressWarnings("static-access")
+			@Override
+            public void execute() throws Exception {
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.sendMailBooking("wwi2020seb@gmail.com", "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets());
             }
         });
 		

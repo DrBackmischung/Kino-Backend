@@ -8,10 +8,7 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -154,20 +151,6 @@ public class BookingController {
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
-	}
-	
-	@GetMapping("/{id}/qrCode")
-	public HttpEntity<byte[]> getBookingQrCode(@PathVariable UUID id){
-		
-		Booking booking = bookingRepositroy.findById(id).get();
-		byte[] qrCode = booking.getQrCode();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.IMAGE_PNG);
-		headers.setContentLength(qrCode.length);
-		
-		return new HttpEntity<>(qrCode, headers);
-				
 	}
 	
 	@PutMapping("/{id}/changeStatus")

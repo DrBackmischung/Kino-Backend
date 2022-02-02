@@ -51,19 +51,14 @@ public class AccountController {
 			return new ResponseEntity<Object>("Incorrect password!", HttpStatus.UNAUTHORIZED);
 		}
 		
-		try {
-			User user = userRepository.findByUsernameSpecial(uro.username);
-			if(user != null) {
-				alreadyExists = true;
-			}
-			
-		}catch(Exception e) {};
+		User user = userRepository.findByUsernameSpecial(uro.username);
+		if(user != null) {
+			alreadyExists = true;
+		}
 		
 		try {
-			User user = userRepository.findByEmailEquals(uro.email).get();
-			if(user != null) {
-				alreadyExists = true;
-			}
+			user = userRepository.findByEmailEquals(uro.email).get();
+			alreadyExists = true;
 		}catch(Exception e) {};
 		
 		if(alreadyExists) {

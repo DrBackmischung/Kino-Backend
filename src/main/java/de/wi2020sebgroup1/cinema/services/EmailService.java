@@ -97,36 +97,8 @@ public class EmailService {
             return null;
 		}
     }
-	
-	public Message prepareQRMessage(Session session, String acc, String to, String subject, EmailVariablesObject evo, ByteArrayInputStream stream){
-        try {
-            Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress(acc));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject(subject);
-            Multipart multipart = new MimeMultipart();
-            MimeBodyPart qr = new MimeBodyPart();
-            MimeBodyPart msg = new MimeBodyPart();
-            DataSource dataSource = new ByteArrayDataSource(stream, "application/pdf");
-            qr.setDataHandler(new DataHandler(dataSource));
-            qr.setFileName("QRCode.pdf");
-            msg.setContent(htmlService.read("QRCode.html", evo), "text/html");
-            multipart.addBodyPart(msg);
-            multipart.addBodyPart(qr);
-            message.setContent(multipart);
-
-            return message;
-        } catch (MessagingException e){
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-			e.printStackTrace();
-            return null;
-		}
-    }
-
-    public void sendMail(String to, String subject, EmailVariablesObject evo, String file) {
+    public boolean sendMail(String to, String subject, EmailVariablesObject evo, String file) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");
@@ -146,10 +118,12 @@ public class EmailService {
 			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			return false;
 		}
+        return true;
     }
 
-    public void sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
+    public boolean sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth",  "true");
@@ -170,9 +144,12 @@ public class EmailService {
 			Transport.send(message);
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
     }
     
     public ByteArrayInputStream createDocument(EmailVariablesObject evo, byte[] qrcode, List<Ticket> tickets) throws IOException {
@@ -245,12 +222,11 @@ public class EmailService {
     }
     
     public String convertSeatType(Seat s) {
-    	if(s.getType() == SeatType.PARQUET) return "Parkett";
     	if(s.getType() == SeatType.LODGE) return "Loge";
-    	if(s.getType() == SeatType.PREMIUM) return "Premium";
-    	if(s.getType() == SeatType.DOUBLESEAT) return "Sofa / Doppelsitz";
-    	if(s.getType() == SeatType.WHEELCHAIR) return "Rollstuhlplatz";
-		return null;
+    	else if(s.getType() == SeatType.PREMIUM) return "Premium";
+    	else if(s.getType() == SeatType.DOUBLESEAT) return "Sofa / Doppelsitz";
+    	else if(s.getType() == SeatType.WHEELCHAIR) return "Rollstuhlplatz";
+    	else return "Parkett";
     }
 	
 }

@@ -31,8 +31,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Review;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @SpringBootTest
@@ -47,6 +49,9 @@ public class MovieControllerTest {
 	
 	@MockBean
 	ShowRepository showRepository;
+	
+	@MockBean
+	ReviewRepository reviewRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -94,6 +99,12 @@ public class MovieControllerTest {
     	return Optional.of(l);
     }
     
+    Optional<List<Review>> getOptionalReviews(){
+    	List<Review> list = new ArrayList<>();
+    	list.add(new Review());
+    	return Optional.of(list);
+    }
+    
     @Test
     void testGetAll() throws Exception {
     	when(repo.findAll()).thenReturn(new ArrayList<Movie>());
@@ -118,16 +129,26 @@ public class MovieControllerTest {
             .andExpect(status().isNotFound());
     }
     
-    /* Weiß nicht wie der funktioniert. 
     @Test
-    void testGetShowsById() throws Exception {
+    void testGetReview() throws Exception {
         when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        when(showRepository.findAllByMovie(any())).thenReturn(getOptionalShows());
-        mvc.perform(get("/movie/"+uuid+"/shows")
+        when(reviewRepository.findAllByMovie(getMovie())).thenReturn(getOptionalReviews());
+        mvc.perform(get("/movie/"+uuid+"/reviews")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
     }
-    */
+    
+    @Test
+    void testGetReviewException() throws Exception {
+        mvc.perform(get("/movie/"+uuid+"/reviews")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+        
+        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(get("/movie/"+uuid+"/reviews")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
     
     @Test
     void testGetShowsByIdException() throws Exception {
