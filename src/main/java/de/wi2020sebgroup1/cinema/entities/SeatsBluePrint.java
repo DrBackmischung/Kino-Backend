@@ -3,6 +3,7 @@ package de.wi2020sebgroup1.cinema.entities;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,12 +49,12 @@ public class SeatsBluePrint {
 	@JoinColumn(name = "price_id", referencedColumnName = "id")
 	private Price price;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "cinemaRoom_id", referencedColumnName = "id")
 	private CinemaRoom cinemaRoom;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "seatingPlan_id", referencedColumnName = "id")
 	private CinemaRoomSeatingPlan seatingPlan;

@@ -3,6 +3,7 @@ package de.wi2020sebgroup1.cinema.entities;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class CinemaRoomSeatingPlan {
 	@NotNull
 	private int reihen;
 	
-	@OneToOne(mappedBy = "cinemaRoomSeatingPlan")
+	@OneToOne(mappedBy = "cinemaRoomSeatingPlan", cascade = CascadeType.PERSIST)
 	private CinemaRoom cinemaRoom;
 	
 	@OneToMany(mappedBy = "seatingPlan")
