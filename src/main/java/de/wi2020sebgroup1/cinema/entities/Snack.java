@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.cinema.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,9 +40,11 @@ public class Snack {
 	@NotNull
 	private double price;
 	
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable
-    private List<Booking> bookings;
+    private List<Booking> bookings = new ArrayList<>();
+	
 	
 	public Snack() {
 		
