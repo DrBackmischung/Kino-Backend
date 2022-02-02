@@ -33,11 +33,6 @@ public class SnackController {
 		return new ResponseEntity<Object>(snackRepository.save(e), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/altAdd")
-	public ResponseEntity<Snack> addSnackAlt(@RequestBody Snack snack){
-		return new ResponseEntity<Snack>(snackRepository.save(snack), HttpStatus.CREATED);
-	}
-	
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<Object> getAll(){
