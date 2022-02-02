@@ -67,6 +67,21 @@ public class UserController {
 			return new ResponseEntity<Object>(new UserNotFoundException(id), HttpStatus.NOT_FOUND);
 		}
 		
+	}	
+	
+	@GetMapping("/mail/{email}")
+	public ResponseEntity<Object> getSpecificByMail(@PathVariable String email){
+		
+		Optional<User> user = userRepository.findByEmail(email);
+		
+		try {
+			User toReturn = user.get();
+			return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("Kein User für "+email, HttpStatus.NOT_FOUND);
+		}
+		
 	}
 	
 	@PutMapping("/{id}")
