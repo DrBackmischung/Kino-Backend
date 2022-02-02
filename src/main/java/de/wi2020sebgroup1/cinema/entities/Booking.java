@@ -57,7 +57,7 @@ public class Booking {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
-	@OneToMany(mappedBy="booking")
+	@OneToMany(mappedBy="bookingID")
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<>();
 	

@@ -40,11 +40,7 @@ public class Snack {
 	private double price;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-//	  name = "snack_booking", 
-//	  joinColumns = @JoinColumn(name = "snack_id"), 
-//	  inverseJoinColumns = @JoinColumn(name = "booking_id")
-	)
+	@JoinTable
     private List<Booking> bookings;
 	
 	public Snack() {
