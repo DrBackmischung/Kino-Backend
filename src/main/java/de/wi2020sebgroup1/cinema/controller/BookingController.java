@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgroup1.cinema.configurationObject.BookingConfigurationObject;
 import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.entities.Booking;
+import de.wi2020sebgroup1.cinema.entities.Price;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.entities.Snack;
@@ -37,6 +38,7 @@ import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SnackNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.TicketsForBookingNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
+import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 import de.wi2020sebgroup1.cinema.repositories.SnackRepository;
@@ -78,6 +80,9 @@ public class BookingController {
 	@Autowired
 	EmailService emailService;
 	
+	@Autowired
+	PriceRepository priceRepository;
+	
 	@SuppressWarnings({ "static-access", "deprecation" })
 	@PutMapping("/add")
 	@Transactional
@@ -87,7 +92,7 @@ public class BookingController {
 		ArrayList<Snack> snacks = new ArrayList<>();
 		
 		ArrayList<UUID> seatIDs = bookingObject.seatIDs;
-		ArrayList<UUID> snackIDs = bookingObject.snackIDs;
+		ArrayList<UUID> snackIDs = (bookingObject.snackIDs != null) ? bookingObject.snackIDs : null;
 		
 		Show show = showRepository.findById(bookingObject.showID).get();
 		if(seatService.reserveSeats(seatIDs, bookingObject.showID)) {
@@ -98,21 +103,26 @@ public class BookingController {
 				for(UUID seat : seatIDs) {
 					try {
 						Seat seatObject = seatRepository.findById(seat).get();
-						Ticket ticket = new Ticket(TicketState.RESERVED,user,show,null,seatObject, bookingId);
+						Price price = priceRepository.findByType(seatObject.getType()).get();
+						Ticket ticket = new Ticket(TicketState.RESERVED,user,show,price,seatObject, bookingId);
 						tickets.add(ticket);
 					} catch(NoSuchElementException e) {
 						return new ResponseEntity<Object>(new SeatNotFoundException(seat).getMessage(),HttpStatus.NOT_FOUND);
 					}
 				}
 				
-				for(UUID snack : snackIDs) {
-					try {
-						Snack snackObject = snackRepository.findById(snack).get();
-						snacks.add(snackObject);
-					} catch(NoSuchElementException e) {
-						return new ResponseEntity<Object>(new SnackNotFoundException(snack).getMessage(),HttpStatus.NOT_FOUND);
+				if(snackIDs != null && (!snackIDs.isEmpty())) {
+					for(UUID snack : snackIDs) {
+						try {
+							Snack snackObject = snackRepository.findById(snack).get();
+							snacks.add(snackObject);
+						} catch(NoSuchElementException e) {
+							return new ResponseEntity<Object>(new SnackNotFoundException(snack).getMessage(),HttpStatus.NOT_FOUND);
+						}
 					}
 				}
+				
+				
 				
 				Booking booking = new Booking(bookingId, bookingObject.bookingDate, tickets, snacks, show, user , bookingObject.state);
 				byte[] qrCode = qrCodeGenerator.generateQRCode("https://kino-frontend.vercel.app/info/"+booking.getId());
