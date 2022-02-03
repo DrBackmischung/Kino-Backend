@@ -216,9 +216,9 @@ public class BookingController {
 		
 		Optional<Booking> bookingSearch = bookingRepositroy.findById(id);
 		try {
-			Optional<List<Ticket>> ticketSearch = ticketRepository.findAllByBookingID(bookingSearch.get().getId());
+			List<Ticket> ticketSearch = ticketRepository.findAllByBookingID(id);
 			try {
-				return new ResponseEntity<Object>(ticketSearch.get(), HttpStatus.OK);
+				return new ResponseEntity<Object>(ticketSearch, HttpStatus.OK);
 			}
 			catch(NoSuchElementException e)
 			{
