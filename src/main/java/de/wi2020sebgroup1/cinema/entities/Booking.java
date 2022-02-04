@@ -57,7 +57,7 @@ public class Booking {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
-	@OneToMany(mappedBy="booking")
+	@OneToMany(mappedBy="bookingID")
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<>();
 	
@@ -144,9 +144,6 @@ public class Booking {
 		this.snacks = snacks;
 	}
 
-	public void setTickets(List<Ticket> tickets) {
-		this.tickets = tickets;
-	}
 
 	@Override
 	public int hashCode() {
