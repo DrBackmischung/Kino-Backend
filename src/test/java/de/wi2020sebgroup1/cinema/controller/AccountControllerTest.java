@@ -124,6 +124,11 @@ public class AccountControllerTest {
     
     @Test
     void testRegister() throws Exception {
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung0", "Mathis", "Neunzig", "mathis.neunzig0@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
+				.andExpect(status().isCreated());
+        
     	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
     	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
         mvc.perform(put("/registration/")
@@ -134,6 +139,12 @@ public class AccountControllerTest {
     	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("Tsawlen", "Tomke", "Müller", "jost-tomke-mueller@t-online.de", "1234", "1234", "Lichtenau", "5", 35315, "Homberg (Ohm)")).getJson()))
+				.andExpect(status().isCreated());
+        
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung2", "Mathis", "Neunzig", "mathis.neunzig2@gmail.com", "1234", "1234", "Parkring", "21", 0, "Mannheim")).getJson()))
 				.andExpect(status().isCreated());
     }
     
@@ -163,10 +174,66 @@ public class AccountControllerTest {
     
     
     @Test
+    void testRegisterExists() throws Exception {
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
+				.andExpect(status().isCreated());
+    	
+        when(userRepository.findByUsernameSpecial("DrBackmischung")).thenReturn(getOptionalUser().get());
+        when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Tomke", "Müller", "jost-tomke-mueller@t-online.de", "1234", "1234", "Lichtenau", "5", 35315, "Homberg (Ohm)")).getJson()))
+				.andExpect(status().isNotAcceptable());
+    }
+    
+    @Test
+    void testRegisterExists2() throws Exception {
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
+				.andExpect(status().isCreated());
+    	
+        when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+    	when(userRepository.findByEmailEquals("mathis.neunzig@gmail.com")).thenReturn(getOptionalUser());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Tomke", "Müller", "mathis.neunzig@gmail.com", "1234", "1234", "Lichtenau", "5", 35315, "Homberg (Ohm)")).getJson()))
+				.andExpect(status().isNotAcceptable());
+    }
+
+    
+    @Test
+    void testRegisterExists3() throws Exception {
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
+				.andExpect(status().isCreated());
+    	
+        when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(roleRepository.findByAuthorization("USER")).thenReturn(getOptionalRole());
+    	when(userRepository.findByEmailEquals("mathis.neunzig@gmail.com")).thenReturn(null);
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Tomke", "Müller", "mathis.neunzig@gmail.com", "1234", "1234", "Lichtenau", "5", 35315, "Homberg (Ohm)")).getJson()))
+				.andExpect(status().isCreated());
+    }
+    
+    
+    @Test
     void testRegisterException() throws Exception {
         mvc.perform(put("/registration/")
         		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "4321", "Parkring", "21", 68159, "Mannheim")).getJson()))
-				.andExpect(status().isUnauthorized());when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+				.andExpect(status().isUnauthorized());
+        
+        when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+    	when(cityRepository.findByPlz(anyInt())).thenReturn(getCityList());
+        mvc.perform(put("/registration/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jt_uro.write(new UserRegistrationObject("DrBackmischung", "Mathis", "Neunzig", "mathis.neunzig@gmail.com", "1234", "1234", "Parkring", "21", 68159, "Mannheim")).getJson()))
+				.andExpect(status().isNotFound());
     }
     
     @Test

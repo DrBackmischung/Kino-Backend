@@ -69,7 +69,8 @@ public class ReviewTest {
 		Review o5 = new Review(null, null, "Review!", "Mathis stinkt nicht", null, null, 5);
 		Review o6 = new Review(null, null, "Review!", "Mathis stinkt", new Movie(), null, 5);
 		Review o7 = new Review(null, null, "Review!", "Mathis stinkt", null, new User(), 5);
-		Review o8 = null;
+		Review o8 = new Review(null, null, "Review!", "Mathis stinkt", null, null, 3);
+		Review o9 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);
 		assertEquals(o.equals(o3), false);
@@ -78,6 +79,7 @@ public class ReviewTest {
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
 		assertEquals(o.equals(o8), false);
+		assertEquals(o.equals(o9), false);
 		assertEquals(o.equals(s), false);
 		Review onull = new Review(null, null, "Review!", "Mathis stinkt", null, null, 5);
 		onull.setId(new UUID(2,2));

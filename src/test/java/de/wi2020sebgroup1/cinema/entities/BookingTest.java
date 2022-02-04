@@ -48,6 +48,8 @@ public class BookingTest {
         assertEquals(o.getUser(), null);
         o.setState(null);
         assertEquals(o.getState(), null);
+        o.setSnacks(null);
+        assertEquals(o.getSnacks(), null);
     }
 	
 	@Test
@@ -57,17 +59,18 @@ public class BookingTest {
 		UUID bookingID = UUID.randomUUID();
 		Date d = new Date(0);
 		ArrayList<Ticket> t = new ArrayList<>();
+		ArrayList<Snack> sn = new ArrayList<>();
 		Show s = new Show(null, null, null, null, null, null);
 		User u = new User(null, null, null, null, null, null, null, null, null, null);
-		Booking o = new Booking(bookingID, d, t, null, s, u, BookingState.Paid);
+		Booking o = new Booking(bookingID, d, t, sn, s, u, BookingState.Paid);
 		o.setId(uuid);
-		Booking o2 = new Booking(bookingID, d, t, null, s, u, BookingState.Paid);
+		Booking o2 = new Booking(bookingID, d, t, sn, s, u, BookingState.Paid);
 		o2.setId(uuid);
 		assertEquals(o.hashCode(), o2.hashCode());
 		assertEquals(o.equals(o2), true);
 		assertEquals(o.equals(o), true);
-		Booking o3 = new Booking(bookingID, null, null, null, null, null, null);
-		Booking o4 = new Booking(bookingID, null, null, null, null, null, null);
+		Booking o3 = new Booking(null, null, null, null, null, null, null);
+		Booking o4 = new Booking(null, null, null, null, null, null, null);
 		assertEquals(o3.hashCode(), o4.hashCode());
 		assertEquals(o3.equals(o4), true);
     }
@@ -87,7 +90,8 @@ public class BookingTest {
 		Booking o4 = new Booking(bId, d, t, null, null, u, BookingState.Paid);
 		Booking o5 = new Booking(bId, d, t, null, s, null, BookingState.Paid);
 		Booking o6 = new Booking(bId, d, t, null, s, u, null);
-		Booking o7 = null;
+		Booking o7 = new Booking(bId, d, t, new ArrayList<>(), s, u, BookingState.Paid);
+		Booking o8 = null;
 		String str = "Test";
 		assertEquals(o.equals(o2), false);
 		assertEquals(o.equals(o3), false);
@@ -95,6 +99,7 @@ public class BookingTest {
 		assertEquals(o.equals(o5), false);
 		assertEquals(o.equals(o6), false);
 		assertEquals(o.equals(o7), false);
+		assertEquals(o.equals(o8), false);
 		assertEquals(o.equals(str), false);
 		Booking onull = new Booking(bId, d, t, null, s, u, BookingState.Paid);
 		onull.setId(new UUID(2,2));

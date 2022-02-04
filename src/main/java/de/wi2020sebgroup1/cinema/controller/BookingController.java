@@ -3,16 +3,12 @@ package de.wi2020sebgroup1.cinema.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,10 +29,8 @@ import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
 import de.wi2020sebgroup1.cinema.enums.BookingState;
 import de.wi2020sebgroup1.cinema.enums.TicketState;
-import de.wi2020sebgroup1.cinema.exceptions.BookingNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SnackNotFoundException;
-import de.wi2020sebgroup1.cinema.exceptions.TicketsForBookingNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
@@ -169,20 +163,6 @@ public class BookingController {
 		}
 	}
 	
-	@GetMapping("/{id}/qrCode")
-	public HttpEntity<byte[]> getBookingQrCode(@PathVariable UUID id){
-		
-		Booking booking = bookingRepositroy.findById(id).get();
-		byte[] qrCode = booking.getQrCode();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.IMAGE_PNG);
-		headers.setContentLength(qrCode.length);
-		
-		return new HttpEntity<>(qrCode, headers);
-				
-	}
-	
 	@PutMapping("/{id}/changeStatus")
 	public ResponseEntity<Object> changeToPaid(@RequestBody BookingConfigurationObject bookingObject, @PathVariable UUID id){
 		
@@ -213,24 +193,8 @@ public class BookingController {
 	
 	@GetMapping("/{id}/tickets")
 	public ResponseEntity<Object> getTicketsForBooking(@PathVariable UUID id){
-		
-		Optional<Booking> bookingSearch = bookingRepositroy.findById(id);
-		try {
-			List<Ticket> ticketSearch = ticketRepository.findAllByBookingID(id);
-			try {
-				return new ResponseEntity<Object>(ticketSearch, HttpStatus.OK);
-			}
-			catch(NoSuchElementException e)
-			{
-				return new ResponseEntity<Object>(new TicketsForBookingNotFoundException(id).getMessage(),
-						HttpStatus.NOT_FOUND);
-			}
-		}
-		catch(NoSuchElementException e)
-		{
-			return new ResponseEntity<Object>(new BookingNotFoundException(id).getMessage(),
-					HttpStatus.NOT_FOUND);
-		}
+		List<Ticket> ticketSearch = ticketRepository.findAllByBookingID(id);
+		return new ResponseEntity<Object>(ticketSearch, HttpStatus.OK);
 	}
 
 }

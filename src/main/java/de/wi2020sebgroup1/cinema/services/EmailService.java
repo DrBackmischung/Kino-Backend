@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -52,6 +51,7 @@ public class EmailService {
 	
 	public Message prepareMessage(Session session, String acc, String to, String subject, EmailVariablesObject evo, String file){
         try {
+        	to.trim();
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(acc));
@@ -64,7 +64,7 @@ public class EmailService {
             message.setContent(htmlService.read(file, evo), "text/html");
 
             return message;
-        } catch (MessagingException e){
+        } catch (Exception e){
             e.printStackTrace();
             return null;
         }
@@ -72,6 +72,7 @@ public class EmailService {
 	
 	public Message prepareMessageWithAttachment(Session session, String acc, String to, String subject, EmailVariablesObject evo, String file, ByteArrayInputStream stream){
         try {
+        	to.trim();
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(acc));
@@ -89,90 +90,63 @@ public class EmailService {
             message.setContent(multipart);
 
             return message;
-        } catch (MessagingException e){
+        } catch (Exception e){
             e.printStackTrace();
             return null;
-        } catch (IOException e) {
-			e.printStackTrace();
-            return null;
-		}
-    }
-	
-	public Message prepareQRMessage(Session session, String acc, String to, String subject, EmailVariablesObject evo, ByteArrayInputStream stream){
-        try {
-            Message message = new MimeMessage(session);
-
-            message.setFrom(new InternetAddress(acc));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject(subject);
-            Multipart multipart = new MimeMultipart();
-            MimeBodyPart qr = new MimeBodyPart();
-            MimeBodyPart msg = new MimeBodyPart();
-            DataSource dataSource = new ByteArrayDataSource(stream, "application/pdf");
-            qr.setDataHandler(new DataHandler(dataSource));
-            qr.setFileName("QRCode.pdf");
-            msg.setContent(htmlService.read("QRCode.html", evo), "text/html");
-            multipart.addBodyPart(msg);
-            multipart.addBodyPart(qr);
-            message.setContent(multipart);
-
-            return message;
-        } catch (MessagingException e){
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-			e.printStackTrace();
-            return null;
-		}
+        }
     }
 
-    public void sendMail(String to, String subject, EmailVariablesObject evo, String file) {
-
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth",  "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587"); 
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
-            }
-        });
-
-        Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
+    public boolean sendMail(String to, String subject, EmailVariablesObject evo, String file) {
         try {
+
+        	to.trim();
+            Properties properties = new Properties();
+            properties.put("mail.smtp.auth",  "true");
+            properties.put("mail.smtp.starttls.enable", "true");
+            properties.put("mail.smtp.host", "smtp.gmail.com");
+            properties.put("mail.smtp.port", "587"); 
+
+            Session session = Session.getInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
+                }
+            });
+
+            Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
 			Transport.send(message);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
+        return true;
     }
 
-    public void sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
-
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth",  "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
-            }
-        });
-
-        Message message;
+    public boolean sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
 		try {
+
+	    	to.trim();
+	        Properties properties = new Properties();
+	        properties.put("mail.smtp.auth",  "true");
+	        properties.put("mail.smtp.starttls.enable", "true");
+	        properties.put("mail.smtp.host", "smtp.gmail.com");
+	        properties.put("mail.smtp.port", "587");
+
+	        Session session = Session.getInstance(properties, new Authenticator() {
+	            @Override
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
+	            }
+	        });
+
+	        Message message;
 			message = prepareMessageWithAttachment(session, EMAIL, to, subject, evo, file, createDocument(evo, qrcode, tickets));
 			Transport.send(message);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
+			return false;
 		}
+		return true;
     }
     
     public ByteArrayInputStream createDocument(EmailVariablesObject evo, byte[] qrcode, List<Ticket> tickets) throws IOException {
@@ -245,12 +219,11 @@ public class EmailService {
     }
     
     public String convertSeatType(Seat s) {
-    	if(s.getType() == SeatType.PARQUET) return "Parkett";
     	if(s.getType() == SeatType.LODGE) return "Loge";
-    	if(s.getType() == SeatType.PREMIUM) return "Premium";
-    	if(s.getType() == SeatType.DOUBLESEAT) return "Sofa / Doppelsitz";
-    	if(s.getType() == SeatType.WHEELCHAIR) return "Rollstuhlplatz";
-		return null;
+    	else if(s.getType() == SeatType.PREMIUM) return "Premium";
+    	else if(s.getType() == SeatType.DOUBLESEAT) return "Sofa / Doppelsitz";
+    	else if(s.getType() == SeatType.WHEELCHAIR) return "Rollstuhlplatz";
+    	else return "Parkett";
     }
 	
 }
