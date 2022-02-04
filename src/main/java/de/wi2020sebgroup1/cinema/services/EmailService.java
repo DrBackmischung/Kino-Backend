@@ -217,7 +217,7 @@ public class EmailService {
     	}
 
     	paragraph = new Paragraph();
-    	paragraph.addMarkup("Die AGBs sind auf der Website unter localhost:8080 zu sehen. Bitte besuchen Sie localhost:3000 für weitere Informationen. Für eine Widerufserklärung besuchen Sie bitte localhost:5999.", 6,
+    	paragraph.addMarkup("Die AGBs sind auf der Website unter 'https://kino-frontend.vercel.app/agbs' zu sehen. Bitte besuchen Sie 'https://kino-frontend.vercel.app/' für weitere Informationen.", 6,
     		BaseFont.Times);
     	paragraph.setAbsolutePosition(new Position(hMargin, vMargin));
     	document.add(paragraph);
