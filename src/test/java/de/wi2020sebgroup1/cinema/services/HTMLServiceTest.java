@@ -19,7 +19,7 @@ public class HTMLServiceTest {
 	HTMLService htmlService;
 	
 	@Test
-	void testRead() {
+	void testRead() throws Exception {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() {
@@ -30,7 +30,7 @@ public class HTMLServiceTest {
 	}
 	
 	@Test
-	void testReadException() {
+	void testReadException() throws Exception {
 		assertThrows(Exception.class, new Executable() {
             @Override
             public void execute() {

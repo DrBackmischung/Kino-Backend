@@ -69,7 +69,7 @@ public class ReviewTest {
 		Review o5 = new Review(null, null, "Review!", "Mathis stinkt nicht", null, null, 5);
 		Review o6 = new Review(null, null, "Review!", "Mathis stinkt", new Movie(), null, 5);
 		Review o7 = new Review(null, null, "Review!", "Mathis stinkt", null, new User(), 5);
-		Review o8 = new Review(null, null, "Review!", "Mathis stinkt", null, new User(), 3);
+		Review o8 = new Review(null, null, "Review!", "Mathis stinkt", null, null, 3);
 		Review o9 = null;
 		String s = "Test";
 		assertEquals(o.equals(o2), false);

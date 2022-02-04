@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -52,6 +51,7 @@ public class EmailService {
 	
 	public Message prepareMessage(Session session, String acc, String to, String subject, EmailVariablesObject evo, String file){
         try {
+        	to.trim();
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(acc));
@@ -64,7 +64,7 @@ public class EmailService {
             message.setContent(htmlService.read(file, evo), "text/html");
 
             return message;
-        } catch (MessagingException e){
+        } catch (Exception e){
             e.printStackTrace();
             return null;
         }
@@ -72,6 +72,7 @@ public class EmailService {
 	
 	public Message prepareMessageWithAttachment(Session session, String acc, String to, String subject, EmailVariablesObject evo, String file, ByteArrayInputStream stream){
         try {
+        	to.trim();
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(acc));
@@ -89,34 +90,32 @@ public class EmailService {
             message.setContent(multipart);
 
             return message;
-        } catch (MessagingException e){
+        } catch (Exception e){
             e.printStackTrace();
             return null;
-        } catch (IOException e) {
-			e.printStackTrace();
-            return null;
-		}
+        }
     }
 
     public boolean sendMail(String to, String subject, EmailVariablesObject evo, String file) {
-
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth",  "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587"); 
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
-            }
-        });
-
-        Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
         try {
+
+        	to.trim();
+            Properties properties = new Properties();
+            properties.put("mail.smtp.auth",  "true");
+            properties.put("mail.smtp.starttls.enable", "true");
+            properties.put("mail.smtp.host", "smtp.gmail.com");
+            properties.put("mail.smtp.port", "587"); 
+
+            Session session = Session.getInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
+                }
+            });
+
+            Message message = prepareMessage(session, EMAIL, to, subject, evo, file);
 			Transport.send(message);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -124,28 +123,26 @@ public class EmailService {
     }
 
     public boolean sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
-
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth",  "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
-            }
-        });
-
-        Message message;
 		try {
+
+	    	to.trim();
+	        Properties properties = new Properties();
+	        properties.put("mail.smtp.auth",  "true");
+	        properties.put("mail.smtp.starttls.enable", "true");
+	        properties.put("mail.smtp.host", "smtp.gmail.com");
+	        properties.put("mail.smtp.port", "587");
+
+	        Session session = Session.getInstance(properties, new Authenticator() {
+	            @Override
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(EMAIL, "MarslStinktNachMaggi");
+	            }
+	        });
+
+	        Message message;
 			message = prepareMessageWithAttachment(session, EMAIL, to, subject, evo, file, createDocument(evo, qrcode, tickets));
 			Transport.send(message);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}

@@ -69,6 +69,30 @@ public class EmailServiceTest {
     	
 	}
 	
+//	@Test
+//	void testPrepareMessageException() {
+//		
+//    	Properties properties = new Properties();
+//	    properties.put("mail.smtp.auth",  "true");
+//	    properties.put("mail.smtp.starttls.enable", "true");
+//	    properties.put("mail.smtp.host", "smtp.gmail.com");
+//	    properties.put("mail.smtp.port", "587");
+//	    Session session = Session.getInstance(properties, new Authenticator() {
+//            @Override
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
+//            }
+//        });
+//		assertDoesNotThrow(new Executable() {
+//            @Override
+//            public void execute() {
+//        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+//            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathisSeineMail", "Registration completed!", e, "Registration.html");          
+//            }
+//        });
+//    	
+//	}
+	
 	@Test
 	void testPrepareMessageException() {
 		
@@ -87,7 +111,7 @@ public class EmailServiceTest {
             @Override
             public void execute() {
         	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
-            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", "mathisSeineMail", "Registration completed!", e, "Registration.html");          
+            	emailService.prepareMessage(session, "wwi2020seb@gmail.com", null, "Registration completed!", e, "Registration.html");          
             }
         });
     	
@@ -105,13 +129,25 @@ public class EmailServiceTest {
 		
 	}
 	
+//	@Test
+//	void testSendMessageException() {
+//		assertDoesNotThrow(new Executable() {
+//            @Override
+//            public void execute() throws Exception {
+//        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+//            	emailService.sendMail("wwi2020seb@yes", "Test :3", e, "Registration.html");
+//            }
+//        });
+//		
+//	}
+	
 	@Test
 	void testSendMessageException() {
 		assertDoesNotThrow(new Executable() {
             @Override
             public void execute() throws Exception {
         	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
-            	emailService.sendMail("wwi2020seb@yes", "Test :3", e, "Registration.html");
+            	emailService.sendMail(null, "Test :3", e, "Registration.html");
             }
         });
 		
@@ -128,6 +164,44 @@ public class EmailServiceTest {
             }
         });
 		
+	}
+	
+	@Test
+	void testSendMessageBookingException() {
+		assertDoesNotThrow(new Executable() {
+            @SuppressWarnings("static-access")
+			@Override
+            public void execute() throws Exception {
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.sendMailBooking(null, "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets());
+            }
+        });
+		
+	}
+	
+	@Test
+	void testPrepareBookingMessageException() {
+		
+    	Properties properties = new Properties();
+	    properties.put("mail.smtp.auth",  "true");
+	    properties.put("mail.smtp.starttls.enable", "true");
+	    properties.put("mail.smtp.host", "smtp.gmail.com");
+	    properties.put("mail.smtp.port", "587");
+	    Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
+            }
+        });
+		assertDoesNotThrow(new Executable() {
+            @SuppressWarnings("static-access")
+			@Override
+            public void execute() throws Exception {
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", null, "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), getTickets()));         
+            }
+        });
+    	
 	}
 	
 }
