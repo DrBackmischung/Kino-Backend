@@ -37,11 +37,11 @@ public class EmailServiceTest {
 	
 	private List<Ticket> getTickets() {
 		List<Ticket> list = new ArrayList<>();
-		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PARQUET), new Seat(0, 0, SeatType.PARQUET, SeatState.PAID, 0, null, null)));
-		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.LODGE), new Seat(0, 0, SeatType.LODGE, SeatState.PAID, 0, null, null)));
-		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.WHEELCHAIR), new Seat(0, 0, SeatType.WHEELCHAIR, SeatState.PAID, 0, null, null)));
-		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.DOUBLESEAT), new Seat(0, 0, SeatType.DOUBLESEAT, SeatState.PAID, 0, null, null)));
-		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PREMIUM), new Seat(0, 0, SeatType.PREMIUM, SeatState.PAID, 0, null, null)));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PARQUET), new Seat(0, 0, SeatType.PARQUET, SeatState.PAID, 0, null, null), null));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.LODGE), new Seat(0, 0, SeatType.LODGE, SeatState.PAID, 0, null, null), null));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.WHEELCHAIR), new Seat(0, 0, SeatType.WHEELCHAIR, SeatState.PAID, 0, null, null), null));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.DOUBLESEAT), new Seat(0, 0, SeatType.DOUBLESEAT, SeatState.PAID, 0, null, null), null));
+		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PREMIUM), new Seat(0, 0, SeatType.PREMIUM, SeatState.PAID, 0, null, null), null));
 		return list;
 	}
 	

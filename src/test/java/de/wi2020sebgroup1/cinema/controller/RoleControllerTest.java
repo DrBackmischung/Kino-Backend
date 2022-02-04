@@ -146,6 +146,26 @@ public class RoleControllerTest {
     }
 
     @Test
+    void testChangeExceptionNoUser() throws Exception{
+
+    	when(repo.findByAuthorization("ADMIN")).thenReturn(getOptionalRole());
+        mvc.perform(
+            put("/role/ADMIN/"+uuid).accept(MediaType.APPLICATION_JSON).content(""))
+        		.andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    void testChangeExceptionNoRole() throws Exception{
+
+    	when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+        mvc.perform(
+            put("/role/ADMIN/"+uuid).accept(MediaType.APPLICATION_JSON).content(""))
+				.andExpect(status().isNotFound());
+
+    }
+
+    @Test
     void testDelete() throws Exception{
 
     	when(repo.findById(uuid)).thenReturn(getOptionalRole());
