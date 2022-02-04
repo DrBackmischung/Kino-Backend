@@ -55,7 +55,7 @@ public class Ticket {
 	@JoinColumn(name="seat_id", referencedColumnName = "id")
 	private Seat seat;
 
-	@Column
+	@Column(columnDefinition= "VARBINARY(16)")
 	@NotNull
 	private UUID bookingID;
 	
