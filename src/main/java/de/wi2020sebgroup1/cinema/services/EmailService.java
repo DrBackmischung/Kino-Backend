@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.entities.Snack;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
 import rst.pdfbox.layout.elements.Document;
@@ -122,7 +123,7 @@ public class EmailService {
         return true;
     }
 
-    public boolean sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets) {
+    public boolean sendMailBooking(String to, String subject, EmailVariablesObject evo, String file, byte[] qrcode, List<Ticket> tickets, List<Snack> snacks) {
 		try {
 
 	    	to.trim();
@@ -140,7 +141,7 @@ public class EmailService {
 	        });
 
 	        Message message;
-			message = prepareMessageWithAttachment(session, EMAIL, to, subject, evo, file, createDocument(evo, qrcode, tickets));
+			message = prepareMessageWithAttachment(session, EMAIL, to, subject, evo, file, createDocument(evo, qrcode, tickets, snacks));
 			Transport.send(message);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,7 +150,7 @@ public class EmailService {
 		return true;
     }
     
-    public ByteArrayInputStream createDocument(EmailVariablesObject evo, byte[] qrcode, List<Ticket> tickets) throws IOException {
+    public ByteArrayInputStream createDocument(EmailVariablesObject evo, byte[] qrcode, List<Ticket> tickets, List<Snack> snacks) throws IOException {
     	
     	float hMargin = 40;
     	float vMargin = 50;
@@ -200,6 +201,19 @@ public class EmailService {
         	paragraph = new Paragraph();
         	paragraph.addMarkup(text, 14, BaseFont.Helvetica);
         	document.add(paragraph);
+    	}
+
+    	paragraph.addMarkup("\n", 14, BaseFont.Helvetica);
+    	document.add(paragraph);
+
+    	if(snacks != null) {
+    		for(Snack s : snacks) {
+
+        		String text = s.getProduct()+"("+s.getSize()+") "+"Preis: "+s.getPrice()+"€\n\n";
+            	paragraph = new Paragraph();
+            	paragraph.addMarkup(text, 14, BaseFont.Helvetica);
+            	document.add(paragraph);
+        	}
     	}
 
     	paragraph = new Paragraph();
