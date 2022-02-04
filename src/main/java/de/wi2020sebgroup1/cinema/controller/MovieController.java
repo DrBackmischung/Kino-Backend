@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
 import de.wi2020sebgroup1.cinema.entities.Review;
-import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotCreatableException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.ReviewForMovieNotFoundException;

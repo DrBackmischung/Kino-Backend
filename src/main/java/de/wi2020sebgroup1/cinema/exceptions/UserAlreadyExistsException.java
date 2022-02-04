@@ -1,7 +1,5 @@
 package de.wi2020sebgroup1.cinema.exceptions;
 
-import java.util.UUID;
-
 public class UserAlreadyExistsException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
