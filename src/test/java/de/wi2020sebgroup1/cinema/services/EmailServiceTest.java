@@ -20,6 +20,7 @@ import org.springframework.test.context.TestPropertySource;
 import de.wi2020sebgroup1.cinema.configurationObject.EmailVariablesObject;
 import de.wi2020sebgroup1.cinema.entities.Price;
 import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.entities.Snack;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.enums.SeatState;
 import de.wi2020sebgroup1.cinema.enums.SeatType;
@@ -42,6 +43,13 @@ public class EmailServiceTest {
 		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.WHEELCHAIR), new Seat(0, 0, SeatType.WHEELCHAIR, SeatState.PAID, 0, null, null), null));
 		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.DOUBLESEAT), new Seat(0, 0, SeatType.DOUBLESEAT, SeatState.PAID, 0, null, null), null));
 		list.add(new Ticket(TicketState.PAID, null, null, new Price(3, SeatType.PREMIUM), new Seat(0, 0, SeatType.PREMIUM, SeatState.PAID, 0, null, null), null));
+		return list;
+	}
+	
+	private List<Snack> getSnacks() {
+		List<Snack> list = new ArrayList<>();
+		list.add(new Snack("1", "Cola", "localhost", 3.5));
+		list.add(new Snack("1", "Fanta", "localhost", 3.5));
 		return list;
 	}
 	
@@ -160,7 +168,20 @@ public class EmailServiceTest {
 			@Override
             public void execute() throws Exception {
         	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
-            	emailService.sendMailBooking("wwi2020seb@gmail.com", "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets());
+            	emailService.sendMailBooking("wwi2020seb@gmail.com", "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets(), getSnacks());
+            }
+        });
+		
+	}
+	
+	@Test
+	void testSendMessageBookingNull() {
+		assertDoesNotThrow(new Executable() {
+            @SuppressWarnings("static-access")
+			@Override
+            public void execute() throws Exception {
+        	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
+            	emailService.sendMailBooking("wwi2020seb@gmail.com", "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets(), null);
             }
         });
 		
@@ -173,7 +194,7 @@ public class EmailServiceTest {
 			@Override
             public void execute() throws Exception {
         	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
-            	emailService.sendMailBooking(null, "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets());
+            	emailService.sendMailBooking(null, "Test :3", e, "Registration.html", qrCodeGenerator.generateQRCode("Test"), getTickets(), getSnacks());
             }
         });
 		
@@ -198,7 +219,7 @@ public class EmailServiceTest {
 			@Override
             public void execute() throws Exception {
         	    EmailVariablesObject e = new EmailVariablesObject("DrBackmischung", "Mathis", "Neunzig", "", "", "", "", "", "", "", "");
-            	emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", null, "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), getTickets()));         
+            	emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", null, "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), getTickets(), getSnacks()));         
             }
         });
     	

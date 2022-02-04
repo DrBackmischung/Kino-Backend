@@ -130,7 +130,8 @@ public class BookingController {
 						new EmailVariablesObject(user.getUserName(), user.getFirstName(), user.getName(), "", "", show.getMovie().getTitle(), show.getShowDate().getDay()+"."+show.getShowDate().getMonth()+"."+show.getShowDate().getYear(), show.getStartTime().toString().substring(0,5), show.getCinemaRoom().getRoomName(), "", ""),
 						"BookingConfirmation.html",
 						qrCode,
-						tickets
+						tickets,
+						snacks
 				);
 				
 				return new ResponseEntity<Object>(bookingRepositroy.save(booking), HttpStatus.CREATED);

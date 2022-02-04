@@ -295,7 +295,7 @@ public class BookingControllerTest {
             }
         });
 	    EmailVariablesObject e = new EmailVariablesObject(getUser().getUserName(), getUser().getFirstName(), getUser().getName(), "", "", getShow().getMovie().getTitle(), getShow().getShowDate().getDay()+"."+getShow().getShowDate().getMonth()+"."+getShow().getShowDate().getYear(), getShow().getStartTime().toString().substring(0,5), getShow().getCinemaRoom().getRoomName(), "", "");
-    	when(emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), new ArrayList<>()))).thenReturn(new MimeMessage(session));
+    	when(emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), new ArrayList<>(), new ArrayList<>()))).thenReturn(new MimeMessage(session));
     	when(htmlService.read("Registration.html", e)).thenReturn("<h1>Test</h1>");
     	mvc.perform(put("/booking/add/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), getIDs(), BookingState.Paid)).getJson()))
@@ -325,7 +325,37 @@ public class BookingControllerTest {
             }
         });
 	    EmailVariablesObject e = new EmailVariablesObject(getUser().getUserName(), getUser().getFirstName(), getUser().getName(), "", "", getShow().getMovie().getTitle(), getShow().getShowDate().getDay()+"."+getShow().getShowDate().getMonth()+"."+getShow().getShowDate().getYear(), getShow().getStartTime().toString().substring(0,5), getShow().getCinemaRoom().getRoomName(), "", "");
-    	when(emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), new ArrayList<>()))).thenReturn(new MimeMessage(session));
+    	when(emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), new ArrayList<>(), new ArrayList<>()))).thenReturn(new MimeMessage(session));
+    	when(htmlService.read("Registration.html", e)).thenReturn("<h1>Test</h1>");
+    	mvc.perform(put("/booking/add/")
+        		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), null, BookingState.Paid)).getJson()))
+				.andExpect(status().isCreated());
+    }
+
+    @SuppressWarnings({ "static-access", "deprecation" })
+	@Test
+    void testPutNullSnacks2() throws Exception {
+    	
+    	when(userRepositroy.findById(uuid)).thenReturn(getOptionalUser());
+    	when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
+    	when(seatService.reserveSeats(getIDs(), uuid)).thenReturn(true);
+    	when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+    	when(snackRepository.findById(uuid)).thenReturn(getOptionalSnack());
+    	when(priceRepository.findByType(getSeat(false).getType())).thenReturn(getOptionalPrice());
+    	
+    	Properties properties = new Properties();
+	    properties.put("mail.smtp.auth",  "true");
+	    properties.put("mail.smtp.starttls.enable", "true");
+	    properties.put("mail.smtp.host", "smtp.gmail.com");
+	    properties.put("mail.smtp.port", "587");
+	    Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("wwi2020seb@gmail.com", "Kino2020SEB");
+            }
+        });
+	    EmailVariablesObject e = new EmailVariablesObject(getUser().getUserName(), getUser().getFirstName(), getUser().getName(), "", "", getShow().getMovie().getTitle(), getShow().getShowDate().getDay()+"."+getShow().getShowDate().getMonth()+"."+getShow().getShowDate().getYear(), getShow().getStartTime().toString().substring(0,5), getShow().getCinemaRoom().getRoomName(), "", "");
+    	when(emailService.prepareMessageWithAttachment(session, "wwi2020seb@gmail.com", "mathis.neunzig@gmail.com", "Registration completed!", e, "Registration.html", emailService.createDocument(e, qrCodeGenerator.generateQRCode("Test"), new ArrayList<>(), null))).thenReturn(new MimeMessage(session));
     	when(htmlService.read("Registration.html", e)).thenReturn("<h1>Test</h1>");
     	mvc.perform(put("/booking/add/")
         		.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new BookingConfigurationObject(new Date(2), uuid, uuid, getIDs(), null, BookingState.Paid)).getJson()))
