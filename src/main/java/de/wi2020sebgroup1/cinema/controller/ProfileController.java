@@ -1,0 +1,88 @@
+package de.wi2020sebgroup1.cinema.controller;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.exceptions.UserNotFoundException;
+import de.wi2020sebgroup1.cinema.repositories.BookingRepositroy;
+import de.wi2020sebgroup1.cinema.repositories.NewsRepository;
+import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
+import de.wi2020sebgroup1.cinema.repositories.TicketRepository;
+import de.wi2020sebgroup1.cinema.repositories.UserRepository;
+
+@Controller
+@RestController
+@RequestMapping("/user")
+public class ProfileController {
+	
+	@Autowired
+	BookingRepositroy bookingRepositroy;
+	
+	@Autowired
+	TicketRepository ticketRepository;
+
+	@Autowired
+	NewsRepository newsRepository;
+	
+	@Autowired
+	ReviewRepository reviewRepository;
+	
+	@Autowired
+	UserRepository userReporitory;
+	
+	@GetMapping("/{id}/tickets")
+	public ResponseEntity<Object> getTickets(@PathVariable UUID id){
+		Optional<User> u = userReporitory.findById(id);
+		try {
+			User user = u.get();
+			return new ResponseEntity<Object>(ticketRepository.findAllByUser(user), HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@GetMapping("/{id}/bookings")
+	public ResponseEntity<Object> getBookings(@PathVariable UUID id){
+		Optional<User> u = userReporitory.findById(id);
+		try {
+			User user = u.get();
+			return new ResponseEntity<Object>(bookingRepositroy.findAllByUser(user), HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@GetMapping("/{id}/reviews")
+	public ResponseEntity<Object> getReviews(@PathVariable UUID id){
+		Optional<User> u = userReporitory.findById(id);
+		try {
+			User user = u.get();
+			return new ResponseEntity<Object>(reviewRepository.findAllByUser(user), HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@GetMapping("/{id}/news")
+	public ResponseEntity<Object> getNews(@PathVariable UUID id){
+		Optional<User> u = userReporitory.findById(id);
+		try {
+			User user = u.get();
+			return new ResponseEntity<Object>(newsRepository.findAllByUser(user), HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new UserNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+
+}

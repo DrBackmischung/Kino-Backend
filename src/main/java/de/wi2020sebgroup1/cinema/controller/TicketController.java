@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgroup1.cinema.configurationObject.TicketConfigurationObject;
 import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.TicketState;
 import de.wi2020sebgroup1.cinema.exceptions.PriceNotFoundException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatAlreadyBookedException;
 import de.wi2020sebgroup1.cinema.exceptions.SeatNotFoundException;
@@ -67,16 +69,19 @@ public class TicketController {
 		try {
 			SemaphoreVault.getSemaphore(showID).acquire();;
 			toBook = seatRepository.findById(seatID).get();
-			Boolean booked = toBook.isBlocked();
-			if(booked) {
+			SeatState booked = toBook.getState();
+			if(booked == SeatState.PAID || booked == SeatState.RESERVED) {
 				return new ResponseEntity<Object>(new SeatAlreadyBookedException(seatID).getMessage(),
 						HttpStatus.NOT_ACCEPTABLE);
 			}
-			toBook.setBlocked(true);
+			toBook.setState(SeatState.RESERVED);
 			seatRepository.save(toBook);
 			
 		} 
-		catch (InterruptedException e) {
+		catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>(new SeatNotFoundException(seatID).getMessage(),
+					HttpStatus.NOT_FOUND);
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		finally
@@ -134,14 +139,14 @@ public class TicketController {
 			Ticket ticket = ticketRepository.findById(id).get();
 			try {
 				Seat seat = seatRepository.findById(ticket.getSeat().getId()).get();
-				seat.setBlocked(false);
+				seat.setState(SeatState.FREE);
 				seatRepository.save(seat);
 			}
 			catch(NoSuchElementException e) {
 				return new ResponseEntity<Object>(new SeatNotFoundException(id).getMessage(),
 						HttpStatus.NOT_FOUND);
 			}
-			ticket.setPaid(false);
+			ticket.setState(TicketState.CANCELLED);
 			ticket.setSeat(null);
 			return new ResponseEntity<Object>(ticketRepository.save(ticket), HttpStatus.OK);
 			

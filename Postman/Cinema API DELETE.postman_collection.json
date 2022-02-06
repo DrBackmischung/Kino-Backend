@@ -65,13 +65,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/show/6c1b4f08-4afb-4e82-a65d-6fac840c1caf",
+					"raw": "{{ip}}/show/023a9a69-9cea-45c4-8918-ac7b2f292e68",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
 						"show",
-						"6c1b4f08-4afb-4e82-a65d-6fac840c1caf"
+						"023a9a69-9cea-45c4-8918-ac7b2f292e68"
 					]
 				}
 			},
@@ -96,6 +96,33 @@
 			"response": []
 		},
 		{
+			"name": "Delete Seat Blueprints",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"36d36697-f023-434d-a85b-48776f83e6ad\",\"655d7369-a579-492e-b09b-856fe545d22a\",\"69f0521a-a7a7-452a-b259-b4672c374bd9\",\"bf1351c7-49dd-404a-a1cc-6bf9393bf9ef\"]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/seatsBlueprint/massDelete",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatsBlueprint",
+						"massDelete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Cancel a Ticket",
 			"request": {
 				"method": "GET",
@@ -109,6 +136,78 @@
 						"ticket",
 						"cancel",
 						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/user/6862a49e-5cbc-4e5a-8da1-14542827bc65",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"6862a49e-5cbc-4e5a-8da1-14542827bc65"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Creditcard",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/creditcard/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"creditcard",
+						"<id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a News",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/news/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"news",
+						"<id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Review",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/review/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"review",
+						"<id>"
 					]
 				}
 			},

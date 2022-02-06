@@ -27,7 +27,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Cineplex\",\r\n    \"street\": \"Biegenstraße\",\r\n    \"number\": \"1a\",\r\n    \"cinemaRooms\": 9,\r\n    \"stories\": 3,\r\n    \"city\": {\r\n        \"plz\": 35037,\r\n        \"city\": \"Marburg\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"Cineplex\",\r\n    \"street\": \"Biegenstrasse\",\r\n    \"number\": \"1a\",\r\n    \"cinemaRooms\": 7,\r\n    \"stories\": 4,\r\n    \"city\": {\r\n        \"plz\": 35037,\r\n        \"city\": \"Marburg\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -138,7 +138,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"titel\" : \"Bibi & Miyu\",\r\n    \"language\": \"Japanisch\",\r\n    \"duration\": 120,\r\n    \"director\": \"Hirara Natsume\",\r\n    \"description\": \"Bibi hat die Nase voll! Es taucht eine neue Mitschülerin auf: Miyu aus Japan!\",\r\n    \"pictureLink\": \"https://assets.thalia.media/img/artikel/0d986a36f7381752f2245381a5d844e178066865-00-00.jpeg\",\r\n    \"fsk\": 6\r\n}",
+					"raw": "{\r\n            \"title\": \"Staffel 3: High School DxD BorN\",\r\n\t\t\t\"originalTitle\" : \"ハイスクールD×D BorN\",\r\n            \"language\": \"Japanisch\",\r\n            \"duration\": 300.0,\r\n\t\t\t\"genre\": \"ecchi, harem, romance, action\",\r\n            \"director\": \"Ichiei Ishibumi\",\r\n\t\t\t\"actors\": \"Issei Hyodo, Rias Gremory\",\r\n            \"description\": \"Der Okkultismus-Club reist in die Unterwelt zu Rias’ Bruder Lucifer, um dort ein hartes Training zu absolvieren. Allerdings geschehen in der Hölle noch andere unerwartete und überraschende Dinge, so wartet dort beispielsweise bereits die Chaos-Brigade, in der der Weiße Drache Mitglied ist, auf Issei und seine Freunde. Quelle: https://www.anisearch.de/anime/9808,highschool-dxd-born\",\r\n            \"originalDescription\" : \"The Red Dragon Emperor, Issei Hyoudou, and the Occult Research Club are back in action as summer break comes for the students of Kuoh Academy. After their fight with Issei’s sworn enemy, Vali and the Chaos Brigade, it is clear just how inexperienced Rias Gremory's team is. As a result, she and Azazel lead the club on an intense training regime in the Underworld to prepare them for the challenges that lie ahead. While they slowly mature as a team, Issei will once again find himself in intimate situations with the girls of the Occult Research Club. Meanwhile, their adversaries grow stronger and more numerous as they rally their forces. And with the sudden appearance of Loki, the Evil God of Norse Mythology, the stage is set for epic fights and wickedly powerful devils in High School DxD BorN! [Written by MAL Rewrite]\",\r\n\t\t\t\"pictureLink\": \"https://media1.jpc.de/image/w412/front/0/7630017507976.jpg\",\r\n\t\t\t\"trailerLink\": \"https://www.youtube.com/watch?v=qWSVkPaH3n8\",\r\n            \"fsk\": 18\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -146,12 +146,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{ip}}/movie",
+					"raw": "{{ip}}/movie/add",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
-						"movie"
+						"movie",
+						"add"
 					]
 				}
 			},
@@ -164,7 +165,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"story\": 0,\r\n    \"wheelchairAccessible\": true,\r\n    \"cinemaID\": \"100db203-1014-4fbd-aaf0-ca72ab288c69\"\r\n}",
+					"raw": "{\r\n    \"story\": 1,\r\n    \"wheelchairAccessible\": true,\r\n    \"roomName\": \"TestRoom\",\r\n    \"cinemaID\": \"a98397ae-8295-4c7c-a919-e3751eff2393\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -191,7 +192,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"seats\": 100,\r\n    \"reihen\" : 4,\r\n    \"cinemaRoomID\": \"eee6d622-0d8c-4809-8e7f-01935ca3b313\"\r\n}",
+					"raw": "{\r\n    \"seats\": 50,\r\n    \"reihen\" : 5,\r\n    \"cinemaRoomID\": \"66af7d1d-15e7-41cd-bc40-22b6b15163a3\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -212,13 +213,67 @@
 			"response": []
 		},
 		{
+			"name": "Add new Seats to SeatingPlan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 1,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 2,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 3,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 4,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 1,\r\n        \"place\": 5,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 6,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 7,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 8,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 9,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 1,\r\n        \"place\": 10,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 2,\r\n        \"place\": 1,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 2,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 3,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 4,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 2,\r\n        \"place\": 5,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 6,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 7,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 8,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 9,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 2,\r\n        \"place\": 10,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 3,\r\n        \"place\": 1,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 2,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 3,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 4,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 3,\r\n        \"place\": 5,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 6,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 7,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 8,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 9,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 3,\r\n        \"place\": 10,\r\n        \"type\": 0,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t\r\n\t\r\n\t{\r\n        \"line\": 4,\r\n        \"place\": 1,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 4,\r\n        \"place\": 2,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 4,\r\n        \"place\": 3,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 4,\r\n        \"place\": 4,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 4,\r\n        \"place\": 5,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 4,\r\n        \"place\": 6,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 4,\r\n        \"place\": 7,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t\r\n\t\r\n\t{\r\n        \"line\": 5,\r\n        \"place\": 1,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 5,\r\n        \"place\": 2,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 5,\r\n        \"place\": 3,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 5,\r\n        \"place\": 4,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 5,\r\n        \"place\": 5,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 5,\r\n        \"place\": 6,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 5,\r\n        \"place\": 7,\r\n        \"type\": 1,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 6,\r\n        \"place\": 1,\r\n        \"type\": 2,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 6,\r\n        \"place\": 2,\r\n        \"type\": 2,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 6,\r\n        \"place\": 3,\r\n        \"type\": 2,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n\t{\r\n        \"line\": 6,\r\n        \"place\": 4,\r\n        \"type\": 2,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 6,\r\n        \"place\": 5,\r\n        \"type\": 2,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    },\r\n    {\r\n        \"line\": 6,\r\n        \"place\": 6,\r\n        \"type\": 2,\r\n        \"cinemaRoomID\": \"14f14136-6571-4f35-9895-2efd37b43049\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/seatsBlueprint/massAdd",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatsBlueprint",
+						"massAdd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a News",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2022-01-22\",\r\n    \"time\": \"18:00:00\",\r\n    \"header\": \"Header-Text\",\r\n    \"content\": \"Dies ist ein cooler Content bereich!\",\r\n    \"pictureLink\": \"hier wäre ein Link\",\r\n    \"userID\": \"17e53f3a-4c0c-40a8-b9be-b410ec6cf52a\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/news/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"news",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Add a new Show",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"date\": \"2021-12-19\",\r\n    \"start\" : \"20:00:00\",\r\n    \"end\": \"23:00:00\",\r\n    \"movieID\" : \"2c0e09d8-344c-452d-a95b-958223933693\",\r\n    \"cinemaID\" : \"100db203-1014-4fbd-aaf0-ca72ab288c69\",\r\n    \"cinemaRoomID\": \"eee6d622-0d8c-4809-8e7f-01935ca3b313\"\r\n}",
+					"raw": "{\r\n    \"date\": \"2022-01-16\",\r\n    \"start\" : \"20:00:00\",\r\n    \"end\": \"23:00:00\",\r\n    \"movieID\" : \"ea08ac61-3849-4a51-9395-de012f858afd\",\r\n    \"cinemaID\" : \"a98397ae-8295-4c7c-a919-e3751eff2393\",\r\n    \"cinemaRoomID\": \"66af7d1d-15e7-41cd-bc40-22b6b15163a3\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -245,7 +300,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"price\": 19.50\r\n}",
+					"raw": "{\r\n    \"price\": 23.50,\r\n    \"type\": 2\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -259,6 +314,114 @@
 					],
 					"path": [
 						"price",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a Creditcard",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Mueller\",\r\n    \"firstName\" : \"Tomke\",\r\n    \"cardNumber\": \"31322321943213\",\r\n    \"expiryYear\" : 2023,\r\n    \"expiryMonth\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/creditcard/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"creditcard",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Ticket",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userID\" : \"e3e13a2a-f792-4d50-88fc-6bc05514868c\",\r\n    \"seatID\": \"03e8f074-dce1-4b19-9ead-478d2e592bb3\",\r\n    \"priceID\": \"b37f1de2-44cd-45ec-bbb9-0db1175f0343\",\r\n    \"showID\": \"00045caa-306a-4cd6-bd6a-93e7d0be1551\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/ticket/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"ticket",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Booking",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookingDate\": \"2022-01-07\",\r\n    \"showID\": \"08f9e5ab-eb6e-43ab-9a30-90a65fe694a8\",\r\n    \"userID\": \"17e53f3a-4c0c-40a8-b9be-b410ec6cf52a\",\r\n    \"seatIDs\": [\r\n        \"031c8124-f32e-448b-b63f-62e1ebde36e5\", \"03813b41-5310-47f5-abf9-2b7fcb00e5f4\"\r\n    ],\r\n    \"state\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/booking/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"booking",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new Review",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2022-01-22\",\r\n    \"time\": \"12:00:00\",\r\n    \"header\": \"Der beste Film überhaupt!\",\r\n    \"content\": \"Der ist einfach krass!\",\r\n    \"movieID\": \"219b34d6-5a83-4f7b-8bb9-5b79915a61c6\",\r\n    \"userID\": \"17e53f3a-4c0c-40a8-b9be-b410ec6cf52a\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/review/add",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"review",
 						"add"
 					]
 				}
@@ -348,13 +511,13 @@
 			"response": []
 		},
 		{
-			"name": "Add a new Ticket",
+			"name": "Registierung",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userID\" : \"e3e13a2a-f792-4d50-88fc-6bc05514868c\",\r\n    \"seatID\": \"028430d6-32db-4a09-8151-b5c0cbf50592\",\r\n    \"priceID\": \"b37f1de2-44cd-45ec-bbb9-0db1175f0343\",\r\n    \"showID\": \"118e31db-145a-403d-834c-a683de7ddce2\"\r\n}",
+					"raw": "{\r\n    \"username\": \"TomkeM\",\r\n    \"firstName\": \"Tomke\",\r\n    \"name\": \"Müller\",\r\n    \"email\": \"jost-tomke-mueller@t-online.de\",\r\n    \"passwordHash\": \"9b599faac222a0dfcfab49148ce40c26\",\r\n    \"passwordConfirmHash\": \"9b599faac222a0dfcfab49148ce40c26\",\r\n    \"street\": \"Lichtenau\",\r\n    \"number\": \"5\",\r\n    \"plz\": 35315,\r\n    \"city\": \"Homberg (Ohm)\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -362,13 +525,64 @@
 					}
 				},
 				"url": {
-					"raw": "{{ip}}/ticket/add",
+					"raw": "{{ip}}/registration",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
-						"ticket",
-						"add"
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Tsawlen\",\r\n    \"passwordHash\": \"9b599faac222a0dfcfab49148ce40c26\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/login",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passwort zurücksetzen",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"valid\": true,\r\n    \"userID\": \"336655cb-9dad-47db-97f2-0d1c46435a16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/reset",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"reset"
 					]
 				}
 			},

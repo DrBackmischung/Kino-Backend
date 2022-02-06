@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
-import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.entities.Review;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotCreatableException;
 import de.wi2020sebgroup1.cinema.exceptions.MovieNotFoundException;
+import de.wi2020sebgroup1.cinema.exceptions.ReviewForMovieNotFoundException;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
+import de.wi2020sebgroup1.cinema.services.ShowService;
 
 @Controller
 @RestController
@@ -35,6 +38,18 @@ public class MovieController {
 	@Autowired
 	ShowRepository showRepository;
 	
+	@Autowired
+	ShowService showService;
+	
+	@Autowired
+	ReviewRepository reviewRepository;
+	
+	/**
+	 * Call to add a movie
+	 * 
+	 * @param movie - the movie to add
+	 * @return ResponseEntity - the added movie
+	 */
 	@PutMapping("/add")
 	public ResponseEntity<Object> addMovie(@RequestBody Movie movie){
 		
@@ -47,6 +62,13 @@ public class MovieController {
 		}
 	}
 	
+	/**
+	 * Call to update a movie
+	 * 
+	 * @param id - the movie to update
+	 * @param movie - the new movie details
+	 * @return ResponseEntity - the updated movie
+	 */
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Object> updateMovie(@PathVariable UUID id,@RequestBody Movie movie){
 		
@@ -65,11 +87,30 @@ public class MovieController {
 		
 	}
 	
+	/**
+	 * Call to get all movies in the database
+	 * 
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/getAll")
 	public ResponseEntity<Iterable<Movie>> getAll(){
 		return new ResponseEntity<Iterable<Movie>>(movieRepository.findAll(), HttpStatus.OK);	
 	}
 	
+	/*
+	@GetMapping("/getAll")
+	public ResponseEntity<Iterable<Movie>> getAllOld(){
+		
+		return getAll();
+	}
+	*/
+	
+	/**
+	 * Call to get a specific movie
+	 * 
+	 * @param id movie
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		
@@ -85,27 +126,42 @@ public class MovieController {
 		
 	}
 	
+	/**
+	 * Call to get all Shows for a given movie until the next thursday
+	 * 
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/{id}/shows")
 	public ResponseEntity<Object> getShowsForMovie(@PathVariable UUID id){
-		
-		Optional<Movie> requested = movieRepository.findById(id);
-		
-		try {
-			Optional<List<Show>> shows = showRepository.findAllByMovie(requested.get());
-			
-			try {
-				return new ResponseEntity<Object>(shows.get(), HttpStatus.OK);
-			}
-			catch (NoSuchElementException e) {
-				return new ResponseEntity<Object>(new String("No Shows for Movie with id \"" + id + "\" found!"), HttpStatus.NOT_FOUND);
-			}
-		}
-		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>(new MovieNotFoundException(id).getMessage(), HttpStatus.NOT_FOUND);
-		}
-		
+		return showService.getAllByMovie(id);
 	}
 	
+	@GetMapping("/{id}/reviews")
+	public ResponseEntity<Object> getReviewsForMovie(@PathVariable UUID id){
+		try {
+			Movie movie = movieRepository.findById(id).get();
+		
+			try {
+				List<Review> reviews = reviewRepository.findAllByMovie(movie).get();
+				return new ResponseEntity<Object>(reviews, HttpStatus.OK);
+			}
+			catch(NoSuchElementException e) {
+				return new ResponseEntity<Object>(new ReviewForMovieNotFoundException(id), HttpStatus.NOT_FOUND);
+			}
+
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>(new MovieNotFoundException(id), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	/**
+	 * Call to delete a movie
+	 * 
+	 * @param id - id of the movie to delete
+	 * @return ResponseEntity - status of delete
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteMovie(@PathVariable UUID id){
 		Optional<Movie> o = movieRepository.findById(id);

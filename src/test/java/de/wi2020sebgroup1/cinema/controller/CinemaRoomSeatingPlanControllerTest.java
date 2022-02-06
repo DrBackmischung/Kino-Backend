@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -79,7 +78,7 @@ public class CinemaRoomSeatingPlanControllerTest {
     }
     
     CinemaRoom getCinemaRoom() {
-    	CinemaRoom c = new CinemaRoom(2, true);
+    	CinemaRoom c = new CinemaRoom(2, true, "testRoom");
     	c.setId(uuid);
     	return c;
     }
@@ -167,10 +166,10 @@ public class CinemaRoomSeatingPlanControllerTest {
             	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
         		.andExpect(status().isNotFound());
 
-        when(cinemaRoomRepository.findById(uuid)).thenThrow(new NoSuchElementException());
+        when(repo.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         mvc.perform(
             put("/seatingPlan/"+uuid, uuid, getCinemaRoomSeatingPlan())
-            	.contentType(MediaType.APPLICATION_JSON).content(jt.write(getCinemaRoomSeatingPlan()).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new CinemaRoomSeattingPlanConfigurationObject(20, 20, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }

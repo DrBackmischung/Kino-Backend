@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
 @Entity	
-@Table(name="Role")
+@Table(name="role")
 public class Role {
 	
 	@Id
@@ -81,20 +81,11 @@ public class Role {
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		if (authorization == null) {
-			if (other.authorization != null)
-				return false;
-		} else if (!authorization.equals(other.authorization))
+		if (id != other.id)
 			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
+		if (authorization != other.authorization)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (description != other.description)
 			return false;
 		return true;
 	}

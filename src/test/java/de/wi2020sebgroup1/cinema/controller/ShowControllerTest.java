@@ -1,6 +1,7 @@
 package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -39,12 +40,17 @@ import de.wi2020sebgroup1.cinema.entities.CinemaRoom;
 import de.wi2020sebgroup1.cinema.entities.CinemaRoomSeatingPlan;
 import de.wi2020sebgroup1.cinema.entities.City;
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Price;
 import de.wi2020sebgroup1.cinema.entities.Seat;
+import de.wi2020sebgroup1.cinema.entities.SeatsBluePrint;
 import de.wi2020sebgroup1.cinema.entities.Show;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomRepository;
 import de.wi2020sebgroup1.cinema.repositories.CinemaRoomSeatingPlanRepository;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.SeatBluePrintRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
@@ -74,8 +80,11 @@ public class ShowControllerTest {
 	CinemaRoomSeatingPlanRepository seatingPlanRepository;
 	
 	@MockBean
+	SeatBluePrintRepository seatBluePrintRepository;
+	
+	@MockBean
 	SeatRepository seatRepository;
-    
+    	
     @Autowired
     WebApplicationContext wac;
 	
@@ -132,7 +141,7 @@ public class ShowControllerTest {
     }
     
     Movie getMovie() {
-    	Movie m = new Movie("Shrek 3", "deutsch", 2.5, "Kitty Blume", "Ein Film", "localhost/img", 0);
+    	Movie m = new Movie("Shrek 3", "deutsch", null, 2.5, "Kitty Blume", "Ein Film", "localhost/img", null, null, null, null, 0);
     	m.setId(uuid);
     	return m;
     }
@@ -143,7 +152,7 @@ public class ShowControllerTest {
     }
     
     CinemaRoom getCinemaRoom() {
-    	CinemaRoom c = new CinemaRoom(2, true);
+    	CinemaRoom c = new CinemaRoom(2, true, "testRoom");
     	c.setCinemaRoomSeatingPlan(getCinemaRoomSeatingPlan());
     	c.setId(uuid);
     	return c;
@@ -154,13 +163,37 @@ public class ShowControllerTest {
     	return Optional.of(c);
     }
     
+    Optional<CinemaRoom> getOptionalCinemaRoomWithoutLayout() {
+    	CinemaRoom c = getCinemaRoom();
+    	c.setCinemaRoomSeatingPlan(null);
+    	return Optional.of(c);
+    }
+    
     Optional<List<Seat>> getOptionalSeatList() {
     	List<Seat> l = new ArrayList<>();
-    	l.add(new Seat(0, 0, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
-    	l.add(new Seat(1, 1, false, false, 0, getCinemaRoomSeatingPlan(), getShow()));
-    	l.add(new Seat(3, 2, true, false, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(0, 0, SeatType.PARQUET, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(1, 1, SeatType.PARQUET, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
+    	l.add(new Seat(3, 2, SeatType.PREMIUM, SeatState.RESERVED, 0, getCinemaRoomSeatingPlan(), getShow()));
     	return Optional.of(l);
     }
+	
+	List<SeatsBluePrint> getSBP() {
+		List<SeatsBluePrint> l = new ArrayList<>();
+		Price p = new Price();
+		p.setId(uuid);
+		CinemaRoom c = new CinemaRoom();
+		c.setId(uuid);
+		CinemaRoomSeatingPlan cr = new CinemaRoomSeatingPlan();
+		c.setSeatingPlan(cr);
+		cr.setId(uuid);
+		SeatsBluePrint s1 = new SeatsBluePrint(1, 1, SeatType.LODGE, p, c, cr);
+		s1.setId(uuid);
+		SeatsBluePrint s2 = new SeatsBluePrint(2, 1, SeatType.LODGE, p, c, cr);
+		s2.setId(uuid);
+		l.add(s1);
+		l.add(s2);
+		return l;
+	}
     
     @Test
     void testGetAll() throws Exception {
@@ -201,6 +234,14 @@ public class ShowControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
         
+        when(repo.findById(uuid)).thenReturn(getOptionalShow());
+        mvc.perform(get("/show/"+uuid+"/seats")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        mvc.perform(get("/show/"+new UUID(0, 0)+"/seats")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        
         when(seatRepository.findAllByShow(getShow())).thenThrow(new NoSuchElementException());
         mvc.perform(get("/show/"+uuid+"/seats")
             .accept(MediaType.APPLICATION_JSON))
@@ -217,7 +258,22 @@ public class ShowControllerTest {
         when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
         when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
         when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(seatingPlanRepository.findById(uuid)).thenReturn(getOptionalCinemaRoomSeatingPlan());
         when(seatingPlanRepository.findByCinemaRoom(getCinemaRoom())).thenReturn(getOptionalCinemaRoomSeatingPlan());
+        mvc.perform(
+            put("/show/add/")
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isCreated());
+
+    }
+
+    @Test
+    void testPut2() throws Exception{
+
+        when(cinemaRepository.findById(uuid)).thenReturn(getOptionalCinema());
+        when(movieRepository.findById(uuid)).thenReturn(getOptionalMovie());
+        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
+        when(seatBluePrintRepository.findAllByCinemaRoom(any())).thenReturn(getSBP());
         mvc.perform(
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
@@ -230,24 +286,17 @@ public class ShowControllerTest {
         
         mvc.perform(
             put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, uuid, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, uuid, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
             put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, uuid)).getJson()))
+            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, null, null)).getJson()))
         		.andExpect(status().isNotFound());
         
         mvc.perform(
             put("/show/add/")
             	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), null, null, uuid)).getJson()))
-        		.andExpect(status().isNotFound());
-
-        when(cinemaRoomRepository.findById(uuid)).thenReturn(getOptionalCinemaRoom());
-        
-        mvc.perform(
-            put("/show/add/")
-            	.contentType(MediaType.APPLICATION_JSON).content(jtco.write(new ShowConfigurationObject(new Date(1), new Time(1), new Time(1), uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isNotFound());
 
     }

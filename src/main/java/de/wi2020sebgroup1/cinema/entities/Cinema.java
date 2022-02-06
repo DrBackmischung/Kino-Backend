@@ -46,7 +46,7 @@ public class Cinema {
 	@NotNull
 	private int stories;
 
-	@ManyToOne(cascade= CascadeType.ALL ,fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "city", referencedColumnName = "id")
 	private City city;
@@ -151,32 +151,17 @@ public class Cinema {
 		Cinema other = (Cinema) obj;
 		if (cinemaRooms != other.cinemaRooms)
 			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
+		if(city != other.city)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if(id != other.id)
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
+		if(name != other.name)
 			return false;
-		if (number == null) {
-			if (other.number != null)
-				return false;
-		} else if (!number.equals(other.number))
+		if(number != other.number)
 			return false;
-		if (stories != other.stories)
+		if(stories != other.stories)
 			return false;
-		if (street == null) {
-			if (other.street != null)
-				return false;
-		} else if (!street.equals(other.street))
+		if(street != other.street)
 			return false;
 		return true;
 	}

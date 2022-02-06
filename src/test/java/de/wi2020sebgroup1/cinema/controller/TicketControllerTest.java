@@ -1,6 +1,7 @@
 package de.wi2020sebgroup1.cinema.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +35,9 @@ import de.wi2020sebgroup1.cinema.entities.Seat;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.entities.Ticket;
 import de.wi2020sebgroup1.cinema.entities.User;
+import de.wi2020sebgroup1.cinema.enums.SeatState;
+import de.wi2020sebgroup1.cinema.enums.SeatType;
+import de.wi2020sebgroup1.cinema.helper.SemaphoreVault;
 import de.wi2020sebgroup1.cinema.repositories.PriceRepository;
 import de.wi2020sebgroup1.cinema.repositories.SeatRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
@@ -60,6 +65,9 @@ public class TicketControllerTest {
 	
 	@MockBean
 	ShowRepository showRepository;
+	
+	@MockBean
+	SemaphoreVault semaphoreVault;
     
 	@Autowired
     WebApplicationContext wac;
@@ -106,7 +114,10 @@ public class TicketControllerTest {
     Seat getSeat(boolean blocked) {
     	Seat s = new Seat();
     	s.setId(uuid);
-    	s.setBlocked(blocked);
+    	if(blocked)
+    		s.setState(SeatState.RESERVED);
+    	else
+    		s.setState(SeatState.FREE);
     	return s;
     }
     
@@ -116,7 +127,7 @@ public class TicketControllerTest {
     }
     
     Price getPrice() {
-    	Price s = new Price(20);
+    	Price s = new Price(20, SeatType.PARQUET);
     	s.setId(uuid);
     	return s;
     }
@@ -164,7 +175,10 @@ public class TicketControllerTest {
     @Test
     void testPut() throws Exception{
     	
-        when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+    	Optional<Seat> ss = getOptionalSeat(false);
+    	Seat s = ss.get();
+    	s.setState(SeatState.FREE);
+        when(seatRepository.findById(uuid)).thenReturn(Optional.of(s));
         when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
         when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
         when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
@@ -176,7 +190,11 @@ public class TicketControllerTest {
     }
 
     @Test
-    void testPutException() throws Exception{
+    void testPutException() throws Exception {
+        
+        mvc.perform(
+            put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
+        		.andExpect(status().isNotFound());
     	
         when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(true));
         when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
@@ -187,6 +205,22 @@ public class TicketControllerTest {
             put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()))
         		.andExpect(status().isNotAcceptable());
 
+    }
+    
+    @Test
+    void testPutSemaphore() throws Exception {
+        when(seatRepository.findById(uuid)).thenReturn(getOptionalSeat(false));
+        when(showRepository.findById(uuid)).thenReturn(getOptionalShow());
+        when(priceRepository.findById(uuid)).thenReturn(getOptionalPrice());
+        when(userRepository.findById(uuid)).thenReturn(getOptionalUser());
+		Thread.currentThread().interrupt();
+		assertDoesNotThrow(new Executable() {
+            @Override
+            public void execute() throws Exception {
+            	mvc.perform(
+                        put("/ticket/add/").contentType(MediaType.APPLICATION_JSON).content(jtco.write(new TicketConfigurationObject(uuid, uuid, uuid, uuid)).getJson()));       
+            }
+        });
     }
 
     @Test

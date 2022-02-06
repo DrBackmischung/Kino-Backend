@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +31,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.wi2020sebgroup1.cinema.entities.Movie;
+import de.wi2020sebgroup1.cinema.entities.Review;
 import de.wi2020sebgroup1.cinema.entities.Show;
 import de.wi2020sebgroup1.cinema.repositories.MovieRepository;
+import de.wi2020sebgroup1.cinema.repositories.ReviewRepository;
 import de.wi2020sebgroup1.cinema.repositories.ShowRepository;
 
 @SpringBootTest
@@ -46,6 +49,9 @@ public class MovieControllerTest {
 	
 	@MockBean
 	ShowRepository showRepository;
+	
+	@MockBean
+	ReviewRepository reviewRepository;
     
     @Autowired
     WebApplicationContext wac;
@@ -66,7 +72,7 @@ public class MovieControllerTest {
     }
     
     Movie getMovie() {
-    	Movie m = new Movie("Shrek 3", "deutsch", 2.5, "Kitty Blume", "Ein Film", "localhost/img", 0);
+    	Movie m = new Movie("Shrek 3", "deutsch", null, 2.5, "Kitty Blume", "Ein Film", "localhost/img", null, null, null, null, 0);
     	m.setId(uuid);
     	return m;
     }
@@ -79,6 +85,8 @@ public class MovieControllerTest {
     Show getShow() {
     	Show s = new Show();
     	s.setId(uuid);
+    	s.setMovie(getMovie());
+    	s.setShowDate(java.sql.Date.valueOf(LocalDate.now()));
     	return s;
     }
     
@@ -89,6 +97,12 @@ public class MovieControllerTest {
     	l.add(s);
     	l.add(s2);
     	return Optional.of(l);
+    }
+    
+    Optional<List<Review>> getOptionalReviews(){
+    	List<Review> list = new ArrayList<>();
+    	list.add(new Review());
+    	return Optional.of(list);
     }
     
     @Test
@@ -116,12 +130,24 @@ public class MovieControllerTest {
     }
     
     @Test
-    void testGetShowsById() throws Exception {
+    void testGetReview() throws Exception {
         when(repo.findById(uuid)).thenReturn(getOptionalMovie());
-        when(showRepository.findAllByMovie(any())).thenReturn(getOptionalShows());
-        mvc.perform(get("/movie/"+uuid+"/shows")
+        when(reviewRepository.findAllByMovie(getMovie())).thenReturn(getOptionalReviews());
+        mvc.perform(get("/movie/"+uuid+"/reviews")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
+    }
+    
+    @Test
+    void testGetReviewException() throws Exception {
+        mvc.perform(get("/movie/"+uuid+"/reviews")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+        
+        when(repo.findById(uuid)).thenReturn(getOptionalMovie());
+        mvc.perform(get("/movie/"+uuid+"/reviews")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
     }
     
     @Test

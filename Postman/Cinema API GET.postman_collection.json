@@ -180,6 +180,60 @@
 			"response": []
 		},
 		{
+			"name": "Get all News",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/news/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"news",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Seat Blueprints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/seatsBlueprint/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"seatsBlueprint",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Bookings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/booking/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"booking",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Tickets",
 			"request": {
 				"method": "GET",
@@ -198,18 +252,55 @@
 			"response": []
 		},
 		{
+			"name": "Get all News for year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/news/q/2021",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"news",
+						"q",
+						"2021"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Reviews",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/review/getAll",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"review",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Seats for Show",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/show/118e31db-145a-403d-834c-a683de7ddce2/seats",
+					"raw": "{{ip}}/show/08f9e5ab-eb6e-43ab-9a30-90a65fe694a8/seats",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
 						"show",
-						"118e31db-145a-403d-834c-a683de7ddce2",
+						"08f9e5ab-eb6e-43ab-9a30-90a65fe694a8",
 						"seats"
 					]
 				}
@@ -222,14 +313,71 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}/movie/2c0e09d8-344c-452d-a95b-958223933693/shows",
+					"raw": "{{ip}}/movie/ea08ac61-3849-4a51-9395-de012f858afd/shows",
 					"host": [
 						"{{ip}}"
 					],
 					"path": [
 						"movie",
-						"2c0e09d8-344c-452d-a95b-958223933693",
+						"ea08ac61-3849-4a51-9395-de012f858afd",
 						"shows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Bookings for User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/user/<id>/bookings",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"<id>",
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Reviews by User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/user/<id>/reviews",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"<id>",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all News by User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/user/<id>/news",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"user",
+						"<id>",
+						"news"
 					]
 				}
 			},
@@ -305,6 +453,24 @@
 			"response": []
 		},
 		{
+			"name": "Get News by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/news/<id>",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"news",
+						"<id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get specific Ticket",
 			"request": {
 				"method": "GET",
@@ -317,6 +483,24 @@
 					"path": [
 						"ticket",
 						"84fd264f-b8e0-48a8-b8b7-d80cb36749d7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get QR-Code for Booking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}/<id>/qrCode",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"<id>",
+						"qrCode"
 					]
 				}
 			},
